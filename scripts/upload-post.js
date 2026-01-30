@@ -37,6 +37,7 @@ async function main() {
   const timezone = arg('timezone');
   const asyncUpload = arg('async_upload');
   const firstComment = arg('first_comment');
+  const caption = arg('caption');
 
   if (!videoPath || !user) {
     console.error('Usage: node scripts/upload-post.js --video <path.mp4> --user <managed_user> [--title "..."] [--platform instagram]...');
@@ -70,6 +71,7 @@ async function main() {
   if (timezone) form.append('timezone', timezone);
   if (asyncUpload !== undefined) form.append('async_upload', String(asyncUpload));
   if (firstComment) form.append('first_comment', firstComment);
+  if (caption) form.append('caption', caption);
 
   const res = await fetch(endpoint, {
     method: 'POST',

@@ -20,12 +20,13 @@ function run(cmd, args, opts = {}) {
   return execFileSync(cmd, args, { encoding: 'utf8', stdio: ['inherit', 'pipe', 'pipe'], ...opts });
 }
 
-function scheduleOne({ profile, title, scheduled_date, timezone, uploadPostUser, videoPath, videoFile }) {
+function scheduleOne({ profile, title, caption, scheduled_date, timezone, uploadPostUser, videoPath, videoFile }) {
   const args = [
     path.join(__dirname, 'upload-post.js'),
     '--video', videoPath,
     '--user', uploadPostUser,
     '--title', title,
+    '--caption', caption || '',
     '--platform', 'instagram',
     '--scheduled_date', scheduled_date,
     '--timezone', timezone,
@@ -139,9 +140,13 @@ function main() {
     const title = `Reels ${profile.toUpperCase()} - ${t.hh}:${String(t.mm).padStart(2, '0')}`;
 
     console.log(`Scheduling ${videoFile} -> ${scheduled_date} (${tz})`);
+    const { buildCaption } = require('./igaming-captions');
+    const cap = buildCaption({ profile });
+
     scheduleOne({
       profile,
       title,
+      caption: cap.caption,
       scheduled_date,
       timezone: tz,
       uploadPostUser: cfg.uploadPostUser,

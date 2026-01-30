@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "hashtags": [
+    "#lifestyle",
+    "#luxurylifestyle",
+    "#estilodevida",
+    "#lifestylebr",
+    "#vidalifestyle"
+  ],
+  "templates": {
+    "question_choice": [
+      "Qual valor mudaria seu dia hoje? Comenta 👇",
+      "Quanto no P!X te ajudaria agora? Comenta 👇",
+      "Qual conta mais pesa no seu mês?",
+      "Se entrasse um dinheiro hoje, quanto seria?",
+      "Qual boleto você queria quitar agora?",
+      "Quanto você precisa pra respirar esse mês?",
+      "Qual valor faria diferença HOJE?",
+      "Qual despesa tá tirando seu sono?",
+      "Se fosse escolhido, quanto te ajudaria?",
+      "Me conta o valor que você precisa agora. 🎁"
+    ],
+    "choose_bless": [
+      "Vou escolher alguns seguidores hoje 🎁",
+      "Hoje vou abençoar quem comentar 🙏",
+      "Escolho ainda hoje alguns daqui",
+      "Não é pra todos, mas alguém sai feliz",
+      "Vou escolher nos comentários",
+      "Hoje tem gente sendo abençoada",
+      "Quem comentar participa",
+      "Vou escolher de forma aleatória",
+      "Hoje alguém vai sorrir",
+      "Estou escolhendo ainda hoje"
+    ],
+    "spell_word": [
+      "Acerte a palavra 🔥 Valendo R$ 300,00",
+      "Digite letra por letra sem errar 🎁",
+      "Quem completar a palavra leva",
+      "Primeiros que acertarem participam 👀",
+      "Palavra simples, prêmio real",
+      "Atenção às letras. Errar sai",
+      "Últimos segundos 👇"
+    ],
+    "pix_emoji": [
+      "Me manda um 🔥 nos comentários",
+      "Comenta 🙏 se você acredita",
+      "Me manda um 💰 aqui",
+      "Um emoji já participa",
+      "Comenta “AMÉM”",
+      "Comenta “EU”",
+      "Só comenta. Participação simples",
+      "Um comentário muda tudo"
+    ],
+    "list": [
+      "Qual dia você nasceu?",
+      "Seu número da sorte é qual?",
+      "Escolhe um número de 1 a 10",
+      "Qual mês você escolhe?",
+      "Que horas você está vendo isso? (manhã/tarde/noite)",
+      "Escolhe uma cor",
+      "Responde rápido 👇"
+    ]
+  }
+}
