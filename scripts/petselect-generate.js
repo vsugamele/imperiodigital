@@ -85,6 +85,22 @@ async function geminiGenerateImage({ prompt, refs, label }) {
         try {
           const resp = JSON.parse(body);
           const part = resp.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
+
+          // Telemetry: log usage (tokens/cost) if present
+          try {
+            const { appendAiUsage } = require('./ai-usage');
+            const usage = resp.usageMetadata || {};
+            appendAiUsage({
+              ts: new Date().toISOString(),
+              provider: 'gemini',
+              model: 'gemini-3-pro-image-preview',
+              project: 'petselectuk',
+              inputTokens: usage.promptTokenCount || usage.promptTokens || 0,
+              outputTokens: usage.candidatesTokenCount || usage.candidatesTokens || 0,
+              meta: { kind: 'image', label }
+            });
+          } catch {}
+
           resolve(part ? Buffer.from(part.inlineData.data, 'base64') : null);
         } catch (e) {
           console.log('❌ Gemini parse error', label || '', e.message);

@@ -216,6 +216,22 @@ CRITICAL:
                 try {
                     const resp = JSON.parse(body);
                     const part = resp.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
+
+                    // Telemetry: log usage (tokens/cost) if present
+                    try {
+                        const { appendAiUsage } = require('./ai-usage');
+                        const usage = resp.usageMetadata || {};
+                        appendAiUsage({
+                            ts: new Date().toISOString(),
+                            provider: 'gemini',
+                            model: 'gemini-3-pro-image-preview',
+                            project: profileConfig?.project || profileConfig?.name || 'igaming',
+                            inputTokens: usage.promptTokenCount || usage.promptTokens || 0,
+                            outputTokens: usage.candidatesTokenCount || usage.candidatesTokens || 0,
+                            meta: { kind: 'image', scenario: sc.name }
+                        });
+                    } catch {}
+
                     resolve(part ? { buffer: Buffer.from(part.inlineData.data, 'base64'), scenario: sc } : null);
                 } catch (e) { resolve(null); }
             });
