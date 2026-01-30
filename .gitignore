@@ -1,0 +1,64 @@
+# --- Global
+.DS_Store
+Thumbs.db
+*.log
+
+# Secrets
+.env
+.env.*
+!.env.example
+!.env.local.example
+config/token.json
+config/oauth-credentials.json
+config/imperio-service-account.json
+MEMORY.md
+memory/
+
+# Clawdbot runtime/state
+.clawdbot/
+
+# Node
+node_modules/
+.npm/
+.pnpm-store/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Build artifacts
+.next/
+dist/
+out/
+coverage/
+
+# Large / generated assets
+videos/
+audio/
+images/generated/
+tmp/
+logs/
+backups/
+results/runs/
+results/*.csv
+results/*.json
+results/*.md
+
+# Media / binaries
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+*.mp4
+*.mov
+*.wav
+*.mp3
+*.zip
+*.exe
+*.dll
+
+# Allow a few tracked docs/media if needed later
+!docs/**/*.png
+!docs/**/*.jpg
