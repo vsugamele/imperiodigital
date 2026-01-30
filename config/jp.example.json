@@ -1,0 +1,17 @@
+{
+  "project": "jp",
+  "drive": {
+    "rootFolderId": "P4DFsGYSz2YLsK0QU5bQrJe4iQvkQFKP",
+    "videosFolderId": "1QfbkZUZMn6SICYQwovnyuQITlj95wYPw",
+    "usedFolderName": "Usados"
+  },
+  "schedule": {
+    "timezone": "America/Sao_Paulo",
+    "uploadPostHour": 22,
+    "uploadPostMinute": 0
+  },
+  "uploadPost": {
+    "mainProfileKey": "jp_main",
+    "fanProfileKey": "jp_fan"
+  }
+}
