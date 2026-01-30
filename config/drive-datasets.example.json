@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "datasets": [
+    {
+      "name": "posting-log-v2",
+      "type": "file",
+      "description": "Posting log CSV (Upload-Post scheduling + status).",
+      "rcloneRemote": "gdrive,root_folder_id=1rd94GIgRGfIr9lR02JYF9qquJJjLPjLO:",
+      "remotePath": "/results/posting-log-v2.csv",
+      "localPath": "results/posting-log-v2.csv"
+    }
+  ]
+}
