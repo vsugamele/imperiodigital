@@ -133,7 +133,8 @@ function main() {
   try {
     mainRes = scheduleUpload({
       uploadPostUser: mainCfg.uploadPostUser,
-      platforms: ['tiktok', 'youtube', 'facebook', 'instagram'],
+      // Upload-Post expects platform[] values; keep using our existing names.
+      platforms: (mainCfg.platforms && mainCfg.platforms.length) ? mainCfg.platforms : ['tiktok', 'youtube', 'facebook', 'instagram'],
       videoPath: localPath,
       title: caption,
       caption,
@@ -187,7 +188,7 @@ function main() {
   try {
     fanRes = scheduleUpload({
       uploadPostUser: fanCfg.uploadPostUser,
-      platforms: ['instagram'],
+      platforms: (fanCfg.platforms && fanCfg.platforms.length) ? fanCfg.platforms : ['instagram'],
       videoPath: localPath,
       title: caption,
       caption,
