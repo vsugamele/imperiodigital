@@ -117,7 +117,9 @@ function main() {
   }
 
   const runId = Date.now();
-  const caption = captionFromFilename(sel.name);
+  const { buildJpCaption } = require('./jp-captions');
+  const captionBase = captionFromFilename(sel.name);
+  const caption = buildJpCaption(captionBase);
   const dateParts = getTomorrowDateParts(tz);
   const scheduled_date = localDateTimeString(dateParts, hour, minute);
 
@@ -136,7 +138,7 @@ function main() {
       // Upload-Post expects platform[] values; keep using our existing names.
       platforms: (mainCfg.platforms && mainCfg.platforms.length) ? mainCfg.platforms : ['tiktok', 'youtube', 'facebook', 'instagram'],
       videoPath: localPath,
-      title: caption,
+      title: captionBase,
       caption,
       scheduled_date,
       timezone: tz,
@@ -190,7 +192,7 @@ function main() {
       uploadPostUser: fanCfg.uploadPostUser,
       platforms: (fanCfg.platforms && fanCfg.platforms.length) ? fanCfg.platforms : ['instagram'],
       videoPath: localPath,
-      title: caption,
+      title: captionBase,
       caption,
       scheduled_date,
       timezone: tz,
