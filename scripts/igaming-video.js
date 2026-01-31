@@ -14,7 +14,11 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 // Configurações
-const GEMINI_API_KEY = 'AIzaSyAerWKegKaAUh5idI-Ra0sjEXcSSTXkp90';
+// NEVER hardcode API keys in repo. Set GEMINI_API_KEY in ops-dashboard/.env.local.
+const GEMINI_API_KEY = (process.env.GEMINI_API_KEY || '').trim();
+if (!GEMINI_API_KEY) {
+    console.log('❌ Missing GEMINI_API_KEY (set it in ops-dashboard/.env.local)');
+}
 const RCLONE_PATH = 'C:\\Users\\vsuga\\clawd\\rclone.exe';
 const OUTPUT_DIR = 'C:\\Users\\vsuga\\clawd\\images\\generated';
 const VIDEO_DIR = 'C:\\Users\\vsuga\\clawd\\videos';

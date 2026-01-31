@@ -14,8 +14,11 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-// NOTE: reuse existing Gemini key from igaming-video.js for now
-const GEMINI_API_KEY = 'AIzaSyAerWKegKaAUh5idI-Ra0sjEXcSSTXkp90';
+// Gemini key must be provided via env (ops-dashboard/.env.local)
+const GEMINI_API_KEY = (process.env.GEMINI_API_KEY || '').trim();
+if (!GEMINI_API_KEY) {
+  throw new Error('Missing GEMINI_API_KEY (set it in ops-dashboard/.env.local)');
+}
 const RCLONE_PATH = 'C:\\Users\\vsuga\\clawd\\rclone.exe';
 
 const ROOT_2026_ID = '1rtxKtTlZ6MHR0iv1Kcmh5DDfSN-clyEp';

@@ -1,6 +1,10 @@
 const https = require('https');
 
-const key = process.env.GEMINI_API_KEY || 'AIzaSyAerWKegKaAUh5idI-Ra0sjEXcSSTXkp90';
+const key = (process.env.GEMINI_API_KEY || '').trim();
+if (!key) {
+  console.error('Missing GEMINI_API_KEY in env');
+  process.exit(2);
+}
 const payload = JSON.stringify({
   contents: [{ parts: [{ text: 'ping' }] }],
   generationConfig: {
