@@ -1,0 +1,172 @@
+{
+  "name": "Salva Link",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0],
+      "id": "53b72c2a-8143-4429-98cf-8d531a1725db",
+      "name": "When clicking 'Execute workflow'"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1KrRUF0kzBYlke1EoApGwVNnnzRsbrNpB",
+            "mode": "id"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [208, 0],
+      "id": "d2988a26-0674-47ee-8ae6-16aa04b26736",
+      "name": "Search files and folders",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "rcWZtljpPHHu0Ozv",
+          "name": "Imperio Digital"
+        }
+      }
+    },
+    {
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [336, 0],
+      "name": "Generate Share Links",
+      "id": "function-generate-links",
+      "parameters": {
+        "jsCode": "// Pega cada arquivo do resultado anterior\nconst files = $input.all();\nconst items = [];\n\nfor (const file of files) {\n  const fileId = file.json.id;\n  const fileName = file.json.name;\n  const shareLink = `https://drive.google.com/file/d/${fileId}/view?usp=sharing`;\n  const downloadLink = `https://drive.google.com/uc?export=download&id=${fileId}`;\n  items.push({\n    ...file.json,\n    share_link: shareLink,\n    download_link: downloadLink\n  });\n}\nreturn items;"
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Ezr6cfn5eNBdk2wB5_7et54TkAkv8P7GshknGLkmOFY",
+          "mode": "list",
+          "cachedResultName": "Estrutura Orgânica - Post V1 - Jonathan- Perfil Fan01",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Ezr6cfn5eNBdk2wB5_7et54TkAkv8P7GshknGLkmOFY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 456945396,
+          "mode": "list",
+          "cachedResultName": "Post_Video_Redes"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Status"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [464, 0],
+      "id": "b5e7f1e0-b289-4e67-bdab-511360ba7c3d",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "5zC5pTE8YXmIBn60",
+          "name": "Conexão Google - vsugamele"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1Ezr6cfn5eNBdk2wB5_7et54TkAkv8P7GshknGLkmOFY",
+          "mode": "list"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 456945396,
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Row": "={{ $json.row_number }}",
+            "Status": "Pendente",
+            "url_post_blotato": "={{ $json.download_link }}"
+          },
+          "matchingColumns": ["Row"],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [688, -16],
+      "id": "6d6ec749-7e6e-47f7-a577-8116137f1395",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "5zC5pTE8YXmIBn60",
+          "name": "Conexão Google - vsugamele"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When clicking 'Execute workflow'": {
+      "main": [
+        [
+          {
+            "node": "Search files and folders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search files and folders": {
+      "main": [
+        [
+          {
+            "node": "Generate Share Links",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Share Links": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  }
+}

@@ -1,0 +1,17 @@
+// PATCH PARA: /home/cliccombr/public_html/templates/view/footer.php
+// LINHA: 72
+// PROBLEMA: Variável $header não inicializada e tentando acessar ->link
+
+// ANTES (linha 72):
+// echo $header->link;  // ← Erro se $header não existe ou é NULL
+
+// DEPOIS (linha 72):
+if (isset($header) && is_object($header) && property_exists($header, 'link')) {
+    echo $header->link;
+} else {
+    error_log("AVISO: footer.php linha 72 - $header não definida ou não é objeto");
+    echo '';  // Mostra vazio ao invés de erro
+}
+
+// OU usar null coalescing:
+echo $header?->link ?? '';

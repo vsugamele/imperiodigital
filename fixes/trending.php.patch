@@ -1,0 +1,22 @@
+// PATCH PARA: /home/cliccombr/public_html/templates/view/home/trending.php
+// LINHA: 40
+// PROBLEMA: Variável $header não inicializada e tentando acessar ->link
+
+// ANTES (linha 40):
+// echo $header->link;  // ← Erro se $header não existe ou é NULL
+
+// DEPOIS (linha 40):
+if (isset($header) && is_object($header) && property_exists($header, 'link')) {
+    echo $header->link;
+} else {
+    error_log("AVISO: trending.php linha 40 - $header não definida ou não é objeto");
+    echo '';  // Mostra vazio ao invés de erro
+}
+
+// OU usar null coalescing (PHP 8+):
+echo $header?->link ?? '';
+
+// OU mais simples:
+if (!empty($header) && isset($header->link)) {
+    echo $header->link;
+}

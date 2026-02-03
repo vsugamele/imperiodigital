@@ -1,0 +1,43 @@
+{
+  "id": "proj-petselectuk",
+  "name": "PetSelectUK",
+  "niche": "pets",
+  "status": "active",
+  "platforms": {
+    "instagram": {
+      "handle": "petselectuk",
+      "connected": true
+    },
+    "facebook": {
+      "page": "PetSelectUK",
+      "connected": true
+    },
+    "tiktok": null,
+    "youtube": null,
+    "pinterest": null,
+    "linkedin": null,
+    "blog": null,
+    "ecommerce": null,
+    "email": null
+  },
+  "features": {
+    "hasLeadMagnet": false,
+    "hasFunnel": false,
+    "hasMembership": false,
+    "hasEmailSequence": false,
+    "hasPaidAds": false,
+    "hasAutomation": false,
+    "hasChatbot": false,
+    "hasCRM": false
+  },
+  "content": {
+    "types": [
+      "posts",
+      "stories"
+    ],
+    "frequency": "daily"
+  },
+  "strategies": [],
+  "createdAt": "2026-02-03T21:57:31.021Z",
+  "updatedAt": "2026-02-03T21:57:31.024Z"
+}

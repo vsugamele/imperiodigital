@@ -1,0 +1,93 @@
+{
+  "projectId": "proj-petselectuk",
+  "projectName": "PetSelectUK",
+  "niche": "pets",
+  "analyzedAt": "2026-02-03T22:02:47.255Z",
+  "overallScore": 48,
+  "platforms": {
+    "connected": [
+      "instagram",
+      "facebook"
+    ],
+    "missing": [
+      {
+        "platform": "tiktok",
+        "severity": "ALTA",
+        "reason": "Viralidade e alcance jovem"
+      },
+      {
+        "platform": "pinterest",
+        "severity": "MÉDIA",
+        "reason": "Tráfego orgânico de produtos"
+      },
+      {
+        "platform": "youtube",
+        "severity": "MÉDIA",
+        "reason": "Reviews e tutoriais"
+      }
+    ]
+  },
+  "content": {
+    "current": [
+      "posts",
+      "stories"
+    ],
+    "gaps": [
+      {
+        "type": "reels",
+        "reason": "Formato com maior engajamento",
+        "opportunity": 80
+      },
+      {
+        "type": "ugc",
+        "reason": "Alta conversão e confiança",
+        "opportunity": 75
+      },
+      {
+        "type": "carousels",
+        "reason": "Educação e CTAs",
+        "opportunity": 70
+      }
+    ]
+  },
+  "features": {
+    "connected": [],
+    "missing": [
+      {
+        "feature": "lead_magnet",
+        "label": "Lead Magnet",
+        "severity": "MÉDIA",
+        "opportunity": 75
+      },
+      {
+        "feature": "funnel",
+        "label": "Funil de Vendas",
+        "severity": "ALTA",
+        "opportunity": 85
+      },
+      {
+        "feature": "email_sequence",
+        "label": "Sequência de E-mails",
+        "severity": "MÉDIA",
+        "opportunity": 70
+      }
+    ]
+  },
+  "priorities": [
+    {
+      "action": "Conectar TikTok para pets",
+      "priority": "ALTA",
+      "impact": "+30% alcance"
+    },
+    {
+      "action": "Criar Funil de Vendas",
+      "priority": "ALTA",
+      "impact": "+50% conversão"
+    },
+    {
+      "action": "Implementar Lead Magnet",
+      "priority": "MÉDIA",
+      "impact": "+40% leads"
+    }
+  ]
+}

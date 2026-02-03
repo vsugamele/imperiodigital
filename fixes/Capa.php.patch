@@ -1,0 +1,33 @@
+// PATCH PARA: /home/cliccombr/public_html/vendors/Capa.php
+// LINHAS: 85, 102
+// PROBLEMA: Tentando acessar propriedades de objeto NULL
+
+// ANTES (linha 85):
+// echo $capa->combo1_tipo;  // ← Erro se $capa for NULL
+
+// DEPOIS (linha 85):
+if (isset($capa) && is_object($capa)) {
+    echo $capa->combo1_tipo ?? '';
+    echo $capa->combo1_id_artigo ?? '';
+    echo $capa->combo2_tipo ?? '';
+    echo $capa->combo2_id_artigo ?? '';
+    echo $capa->combo3_tipo ?? '';
+    echo $capa->combo3_id_artigo ?? '';
+    echo $capa->combo4_tipo ?? '';
+    echo $capa->combo4_id_artigo ?? '';
+    echo $capa->combo5_tipo ?? '';
+    echo $capa->combo5_id_artigo ?? '';
+} else {
+    // Log erro
+    error_log("ERRO: Capa.php - objeto $capa é NULL");
+}
+
+// ANTES (linha 102):
+// echo $capa->destaque_tipo;  // ← Erro se $capa for NULL
+
+// DEPOIS (linha 102):
+if (isset($capa) && is_object($capa) && property_exists($capa, 'destaque_tipo')) {
+    echo $capa->destaque_tipo;
+} else {
+    error_log("ERRO: Capa.php linha 102 - destaque_tipo não encontrado");
+}

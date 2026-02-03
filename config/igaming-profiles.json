@@ -1,0 +1,54 @@
+{
+    "projectFolder": "1UDHOmJXo6Ixhd9MVqWsYNsbRtHAnoVms",
+    "referenceFolder": "19w3WefIuH18POsomvRpEhAZZzyrjqj50",
+    "profiles": {
+        "jonathan": {
+            "name": "Jhonatan Vieira",
+            "folderId": "1-pRp7UtxfBVBNw1-5WJPCtzF5PnTmNUZ",
+            "referencePhoto": "jonathan.jpg",
+            "style": "igaming-luxury"
+        },
+        "pedro": {
+            "name": "Pedro vlEIRA",
+            "folderId": "16Mhy_ydDXeq2RuvWq3F1FQ9Ehei5tsa7",
+            "referencePhoto": "pedro.jpg",
+            "style": "igaming-luxury"
+        },
+        "laise": {
+            "name": "Laise",
+            "folderId": "18vm4Fv1hYM8B89m-qhr-eUeZjxKmm9Zm",
+            "referencePhoto": "laise.jpg",
+            "style": "lifestyle-adventure"
+        },
+        "teo": {
+            "name": "Teo Martins",
+            "folderId": "1jDY5HSjJOtZw2yCxXzuEy_gTt9uRTObP",
+            "referencePhoto": "teo.jpg",
+            "style": "igaming-luxury"
+        },
+        "fernandes": {
+            "name": "Fernandes Vieira",
+            "folderId": null,
+            "referencePhoto": "fernandes.jpg",
+            "style": "igaming-luxury",
+            "note": "Precisa do folder ID"
+        }
+    },
+    "copys": {
+        "igaming": [
+            "Manda aqui e concorra 🎁🔥",
+            "Participa aqui 🫡💰",
+            "Manda que eu to sorteando 🎁😎",
+            "Comenta aqui e ganha 🔥🫡",
+            "Manda aqui pro prêmio 💰👇🏻",
+            "Participa que eu to de 👀🎁",
+            "Manda aqui e boa sorte 🫡🔥",
+            "Comenta e concorre 😎💰"
+        ]
+    },
+    "models": {
+        "imageGeneration": "gemini-3-pro-image-preview",
+        "copyGeneration": "openai/gpt-5.2-codex",
+        "fallback": "google/gemini-2.0-flash"
+    }
+}

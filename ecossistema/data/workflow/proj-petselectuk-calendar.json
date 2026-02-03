@@ -1,0 +1,74 @@
+{
+  "projectId": "proj-petselectuk",
+  "duration": "30 dias",
+  "schedule": [
+    {
+      "week": 1,
+      "phase": "Awareness",
+      "types": [
+        "reels",
+        "stories"
+      ],
+      "posts": 14
+    },
+    {
+      "week": 2,
+      "phase": "Consideration",
+      "types": [
+        "carousels",
+        "ugc"
+      ],
+      "posts": 14
+    },
+    {
+      "week": 3,
+      "phase": "Conversion",
+      "types": [
+        "ads",
+        "landing_pages"
+      ],
+      "posts": 10
+    },
+    {
+      "week": 4,
+      "phase": "Retention",
+      "types": [
+        "email",
+        "community"
+      ],
+      "posts": 7
+    }
+  ],
+  "postingSchedule": {
+    "instagram": {
+      "times": [
+        "09:00",
+        "12:00",
+        "18:00"
+      ],
+      "frequency": "2x/dia"
+    },
+    "tiktok": {
+      "times": [
+        "10:00",
+        "15:00",
+        "20:00"
+      ],
+      "frequency": "3x/dia"
+    },
+    "facebook": {
+      "times": [
+        "08:00",
+        "13:00",
+        "17:00"
+      ],
+      "frequency": "1x/dia"
+    }
+  },
+  "contentThemes": [
+    "Educação sobre o nicho",
+    "Prova social (cases)",
+    "CTA para ofertas",
+    "Community building"
+  ]
+}

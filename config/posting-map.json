@@ -1,0 +1,32 @@
+{
+  "profiles": {
+    "teo": {
+      "uploadPostUser": "Theo_viieiraa",
+      "platforms": ["instagram"]
+    },
+    "jonathan": {
+      "uploadPostUser": "jonathanbk",
+      "platforms": ["instagram"]
+    },
+    "laise": {
+      "uploadPostUser": "Laise_fan",
+      "platforms": ["instagram"]
+    },
+    "pedro": {
+      "uploadPostUser": "pedrovieira",
+      "platforms": ["instagram"]
+    },
+    "petselectuk": {
+      "uploadPostUser": "petselectuk",
+      "platforms": ["instagram"]
+    },
+    "jp_main": {
+      "uploadPostUser": "JPFreitas",
+      "platforms": ["tiktok","youtube","facebook","instagram"]
+    },
+    "jp_fan": {
+      "uploadPostUser": "Fans_JpFreitas",
+      "platforms": ["instagram"]
+    }
+  }
+}

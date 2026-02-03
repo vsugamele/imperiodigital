@@ -1,0 +1,28 @@
+{
+  "name": "Vanessa Equilibre ON",
+  "description": "Projeto de saúde/lifestyle luxury da Vanessa",
+  "folderId": "1UDHOmJXo6Ixhd9MVqWsYNsbRtHAnoVms",
+  "style": "luxury-health-editorial",
+  "colors": {
+    "primary": "#FFFFFF",
+    "accent": "#3D6B58",
+    "secondary": "#C8B2A7",
+    "text": "#1A1A1A",
+    "background": "#F8F6F3"
+  },
+  "typography": {
+    "headline": "Playfair Display",
+    "body": "Montserrat"
+  },
+  "social": {
+    "instagram": "@vanessaequilibre",
+    "niche": "Medical Wellness / High-Ticket Health"
+  },
+  "copyThemes": [
+    "Autoridade clínica com tom de irmã mais velha rica",
+    "Quebra de objeções sobre saúde/bem-estar",
+    "Dor oculta do público-alvo (mulheres 30-50, alto ticket)",
+    "Transformação e lifestyle aspiracional"
+  ],
+  "referenceFolder": "19w3WefIuH18POsomvRpEhAZZzyrjqj50"
+}

@@ -1,0 +1,11 @@
+{
+  "name": "clawd-igaming",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "description": "iGaming reels generator + upload-post integration",
+  "dependencies": {
+    "form-data": "^4.0.4",
+    "mammoth": "^1.11.0"
+  }
+}

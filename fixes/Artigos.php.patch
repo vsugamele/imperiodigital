@@ -1,0 +1,22 @@
+// PATCH PARA: /home/cliccombr/public_html/vendors/Artigos.php
+// LINHA: 272
+// PROBLEMA: Variável $amountImages não inicializada
+
+// ANTES (linha 272):
+// echo $amountImages;  // ← Erro se variável não existe
+
+// DEPOIS (linha 272):
+$amountImages = $amountImages ?? 0;  // Inicializa com valor padrão
+echo $amountImages;
+
+// OU verificar se existe:
+if (isset($amountImages)) {
+    echo $amountImages;
+} else {
+    $amountImages = 0;
+    echo $amountImages;
+    error_log("AVISO: Artigos.php linha 272 - amountImages não definida, usando padrão: 0");
+}
+
+// OU usar isset ternário:
+echo isset($amountImages) ? $amountImages : 0;

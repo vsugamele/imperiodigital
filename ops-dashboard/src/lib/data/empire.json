@@ -1,0 +1,252 @@
+{
+    "architecture": {
+        "nodes": [
+            {
+                "id": "alex_core",
+                "label": "Alex (Clawdbot)",
+                "type": "agent",
+                "desc": "Cérebro orquestrador. Gerencia decisões, scripts e logs em tempo real.",
+                "details": "Roda sob PM2. Responsável por disparar triggers de automação e analisar performance de marketing."
+            },
+            {
+                "id": "igaming_engine",
+                "label": "iGaming Vertical",
+                "type": "module",
+                "desc": "Motor de geração de conteúdo para nicho de apostas.",
+                "details": "Scripts principais: igaming-video.js, igaming-gemini.js. Gera vídeos 4K com legendas dinâmicas."
+            },
+            {
+                "id": "vaas_module",
+                "label": "VaaS (Posting)",
+                "type": "module",
+                "desc": "Postings as a Service. Automação de upload social.",
+                "details": "Escala conteúdos para múltiplos perfis (Jonathan, Laise, Pedro, Teo) via drivers automatizados. Posting API p/ 6 slots diários."
+            },
+            {
+                "id": "petselect_engine",
+                "label": "PetSelect UK",
+                "type": "module",
+                "desc": "Monitoramento e curadoria de conteúdo viral pet.",
+                "details": "Focado no mercado UK. Scripts: petselect-generate.js, petselect-schedule-next-day.js."
+            },
+            {
+                "id": "supabase_db",
+                "label": "Supabase (Infra)",
+                "type": "database",
+                "desc": "Nuvem de dados e gestão de Kanban.",
+                "details": "Armazena cards, logs de postagem e métricas consolidadas dos agentes."
+            },
+            {
+                "id": "elevenlabs_tts",
+                "label": "ElevenLabs API",
+                "type": "external",
+                "desc": "Motor de narração ultra-realista.",
+                "details": "Integrado via scripts python/js para vozes de alta fidelidade em PT-BR e EN."
+            }
+        ],
+        "edges": [
+            {
+                "from": "alex_core",
+                "to": "igaming_engine",
+                "label": "Trigger"
+            },
+            {
+                "from": "alex_core",
+                "to": "vaas_module",
+                "label": "Orchestrate"
+            },
+            {
+                "from": "alex_core",
+                "to": "petselect_engine",
+                "label": "Monitor"
+            },
+            {
+                "from": "igaming_engine",
+                "to": "elevenlabs_tts",
+                "label": "Audio Gen"
+            },
+            {
+                "from": "vaas_module",
+                "to": "supabase_db",
+                "label": "Log"
+            },
+            {
+                "from": "alex_core",
+                "to": "supabase_db",
+                "label": "Sync"
+            }
+        ]
+    },
+    "routines": [
+        {
+            "time": "07:00",
+            "task": "Geração iGaming Daily (VaaS)",
+            "project": "iGaming",
+            "status": "active",
+            "flow": [
+                "1. Vigilância GDrive: pastas /no_cost/images",
+                "2. Lógica IA: Gemini 3 Pro (se images vazio)",
+                "3. Produção: FFmpeg + Ken Burns + Trading Audio",
+                "4. Distribuição: API Upload-Post (6x slots/dia)"
+            ]
+        },
+        {
+            "time": "07:00",
+            "task": "Daily Curation PetSelect UK",
+            "project": "PetSelect UK",
+            "status": "active",
+            "flow": [
+                "1. Varredura de hashtags virais",
+                "2. Download de refs sem marca d'água",
+                "3. Tradução estratégica via Claude",
+                "4. Agendamento automático"
+            ]
+        },
+        {
+            "time": "14:00",
+            "task": "Autopilot Backlog Worker",
+            "project": "Ops",
+            "status": "active",
+            "flow": [
+                "1. Busca cards [AUTO] no Kanban",
+                "2. Executa comandos clawdbot correspondentes",
+                "3. Move para DONE e comenta log"
+            ]
+        },
+        {
+            "time": "22:00",
+            "task": "Backup & Intelligence Sync",
+            "project": "Ops",
+            "status": "active",
+            "flow": [
+                "1. Consolidado de gastos (results/ai-usage)",
+                "2. Backup de base para Google Drive",
+                "3. Geração do Daily Intel Report"
+            ]
+        }
+    ],
+    "projects": [
+        {
+            "name": "iGaming Empire",
+            "status": "Production",
+            "cost": "$$$",
+            "blueprint": "Escalabilidade infinita via perfis de massa. Fluxo: Captura -> IA Logic -> High-End Video -> Social Post.",
+            "stack": [
+                "Clawdbot",
+                "Gemini 1.5 Pro",
+                "FFmpeg",
+                "Supabase"
+            ],
+            "flow": [
+                "1. [CURADORIA] Alimentar GDrive (/no_cost/images) - Teo/Laise",
+                "2. [IA LOGIC] Alex monitora GDrive e gera imagens (Gemini 3 Pro) se vazio",
+                "3. [PRODUCTION] FFmpeg aplica Ken Burns + Mixagem de Áudio em Alta",
+                "4. [VAAS] Agendamento via API para 6 slots fixos por perfil"
+            ]
+        },
+        {
+            "name": "PetSelect UK (Dropship)",
+            "status": "Active",
+            "cost": "$$",
+            "blueprint": "Foco em ROI e retenção. Conteúdo curado para o público britânico com triggers de compra.",
+            "stack": [
+                "Claude 3.5 Sonnet",
+                "TikTok Scraping",
+                "Rclone"
+            ],
+            "flow": [
+                "1. [SCRAPING] Varredura de hashtags virais no TikTok UK",
+                "2. [CURATION] Download de referências sem marca d'água via Rclone",
+                "3. [IA EDIT] Tradução estratégica e adaptação de copy via Claude 3.5",
+                "4. [POST] Agendamento automático para horários de pico UK"
+            ]
+        },
+        {
+            "name": "VaaS (Software)",
+            "status": "Planning",
+            "cost": "$$$$",
+            "blueprint": "Transformação da infra interna em produto comercial para agências de conteúdo.",
+            "stack": [
+                "Next.js",
+                "Supabase Auth",
+                "Stripe API"
+            ],
+            "flow": [
+                "1. [UX/UI] Prototipagem do Dashboard Comercial em Next.js",
+                "2. [BACKEND] Implementação de Auth e Tenancy via Supabase",
+                "3. [PAYMENT] Integração de Webhooks do Stripe para assinaturas",
+                "4. [BETA] Lançamento de MVP para primeiros parceiros"
+            ]
+        }
+    ],
+    "strategic_roadmap": [
+        {
+            "category": "Fundação & Pesquisa",
+            "items": [
+                {
+                    "task": "Mapear ativos existentes",
+                    "status": "done"
+                },
+                {
+                    "task": "Analisar scripts legados",
+                    "status": "done"
+                },
+                {
+                    "task": "Definir Arquitetura Empire (Macro/Micro)",
+                    "status": "done"
+                },
+                {
+                    "task": "Migração OpenClaw v1.0",
+                    "status": "done"
+                }
+            ]
+        },
+        {
+            "category": "Implementação (O Cérebro)",
+            "items": [
+                {
+                    "task": "Configuração Clawdbot 4.5",
+                    "status": "done"
+                },
+                {
+                    "task": "Implementar PM2 Background",
+                    "status": "done"
+                },
+                {
+                    "task": "Monitor de Saúde do Império",
+                    "status": "done"
+                }
+            ]
+        },
+        {
+            "category": "Automação de Conteúdo",
+            "items": [
+                {
+                    "task": "Motor de Vídeo YouTube",
+                    "status": "in_progress"
+                },
+                {
+                    "task": "Integração Narração ElevenLabs",
+                    "status": "todo"
+                },
+                {
+                    "task": "Gerador de Thumbs Virais",
+                    "status": "todo"
+                }
+            ]
+        },
+        {
+            "category": "Expansão & Escala",
+            "items": [
+                {
+                    "task": "Novos Nichos (Diabetes/Estética)",
+                    "status": "todo"
+                },
+                {
+                    "task": "Escalar Autopilot Local",
+                    "status": "in_progress"
+                }
+            ]
+        }
+    ]
+}

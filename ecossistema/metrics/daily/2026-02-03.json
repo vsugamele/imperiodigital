@@ -1,0 +1,62 @@
+{
+  "timestamp": "2026-02-03T20:00:51.738Z",
+  "date": "2026-02-03",
+  "profiles": [
+    {
+      "name": "TEO",
+      "platform": "instagram",
+      "type": "igaming",
+      "followers": 12500,
+      "postsToday": 24,
+      "engagementRate": 4.2,
+      "lastPost": "2026-02-03T20:00:51.739Z",
+      "growth": 2.5
+    },
+    {
+      "name": "JONATHAN",
+      "platform": "instagram",
+      "type": "igaming",
+      "followers": 8200,
+      "postsToday": 24,
+      "engagementRate": 3.8,
+      "lastPost": "2026-02-03T20:00:51.742Z",
+      "growth": 1.8
+    },
+    {
+      "name": "LAISE",
+      "platform": "instagram",
+      "type": "igaming",
+      "followers": 15700,
+      "postsToday": 24,
+      "engagementRate": 5.1,
+      "lastPost": "2026-02-03T20:00:51.743Z",
+      "growth": 3.2
+    },
+    {
+      "name": "PEDRO",
+      "platform": "instagram",
+      "type": "igaming",
+      "followers": 9800,
+      "postsToday": 24,
+      "engagementRate": 3.5,
+      "lastPost": "2026-02-03T20:00:51.744Z",
+      "growth": 1.5
+    },
+    {
+      "name": "PETSELECTUK",
+      "platform": "instagram",
+      "type": "petshop",
+      "followers": 4200,
+      "postsToday": 0,
+      "engagementRate": 4.8,
+      "lastPost": "2026-02-03T20:00:51.744Z",
+      "growth": 4.1
+    }
+  ],
+  "summary": {
+    "totalFollowers": 50400,
+    "totalPostsToday": 96,
+    "avgEngagement": 4.28,
+    "topPerformer": "LAISE"
+  }
+}

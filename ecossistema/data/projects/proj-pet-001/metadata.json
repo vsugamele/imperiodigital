@@ -1,0 +1,113 @@
+{
+  "id": "proj-pet-001",
+  "name": "PetSelectUK V2",
+  "niche": "pets",
+  "status": "active",
+  "createdAt": "2026-01-27T21:00:59.648Z",
+  "updatedAt": "2026-02-03T21:00:59.648Z",
+  "owner": "VINICIUS",
+  "workers": [
+    "GARY",
+    "EUGENE",
+    "ALEX",
+    "RUSSELL"
+  ],
+  "metrics": {
+    "followers": {
+      "current": 4200,
+      "target": 10000,
+      "growth": 2.5
+    },
+    "engagement": {
+      "current": 4.8,
+      "target": 6,
+      "growth": 0.1
+    },
+    "revenue": {
+      "current": 1500,
+      "target": 5000,
+      "growth": 200
+    },
+    "conversion": {
+      "current": 2.1,
+      "target": 3.5,
+      "growth": 0.2
+    },
+    "postsToday": 3,
+    "postsThisWeek": 18,
+    "avgLikes": 250,
+    "avgComments": 15
+  },
+  "insights": [
+    {
+      "id": "ins-1",
+      "type": "positive",
+      "message": "Engagement aumentou 10%",
+      "date": "2026-02-03T21:00:59.648Z"
+    },
+    {
+      "id": "ins-2",
+      "type": "warning",
+      "message": "Stories com baixa interação",
+      "date": "2026-02-03T21:00:59.648Z"
+    },
+    {
+      "id": "ins-3",
+      "type": "gap",
+      "message": "Falta conteúdo em Reels",
+      "date": "2026-02-03T21:00:59.648Z"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "t-1",
+      "name": "Criar 10 Reels",
+      "status": "completed",
+      "worker": "GARY"
+    },
+    {
+      "id": "t-2",
+      "name": "Otimizar headlines",
+      "status": "completed",
+      "worker": "EUGENE"
+    },
+    {
+      "id": "t-3",
+      "name": "Testar novo funnel",
+      "status": "in_progress",
+      "worker": "RUSSELL"
+    },
+    {
+      "id": "t-4",
+      "name": "Criar upsell",
+      "status": "pending",
+      "worker": "ALEX"
+    }
+  ],
+  "gaps": [
+    {
+      "severity": "alta",
+      "type": "conteúdo",
+      "description": "Falta conteúdo em Reels",
+      "opportunity": 85
+    },
+    {
+      "severity": "média",
+      "type": "engajamento",
+      "description": "Stories com baixa interação",
+      "opportunity": 65
+    },
+    {
+      "severity": "baixa",
+      "type": "produto",
+      "description": "Necessário mais produtos",
+      "opportunity": 45
+    }
+  ],
+  "content": {
+    "postsThisMonth": 45,
+    "topFormat": "carousel",
+    "bestTime": "12:00",
+    "bestDay": "Sábado"
+  }
+}

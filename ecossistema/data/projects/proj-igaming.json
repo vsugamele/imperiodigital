@@ -1,0 +1,43 @@
+{
+  "id": "proj-igaming",
+  "name": "iGaming Profiles",
+  "niche": "igaming",
+  "status": "active",
+  "platforms": {
+    "instagram": {
+      "handle": "teo,jonathan,laise,pedro",
+      "connected": true
+    },
+    "tiktok": null,
+    "facebook": null,
+    "youtube": null,
+    "pinterest": null,
+    "linkedin": null,
+    "blog": null,
+    "ecommerce": null,
+    "email": null
+  },
+  "features": {
+    "hasLeadMagnet": false,
+    "hasFunnel": false,
+    "hasMembership": false,
+    "hasEmailSequence": false,
+    "hasPaidAds": false,
+    "hasAutomation": true,
+    "hasChatbot": false,
+    "hasCRM": false
+  },
+  "content": {
+    "types": [
+      "posts",
+      "reels",
+      "stories"
+    ],
+    "frequency": "daily"
+  },
+  "strategies": [
+    "ugc_campaigns"
+  ],
+  "createdAt": "2026-02-03T21:57:31.028Z",
+  "updatedAt": "2026-02-03T21:57:31.028Z"
+}

@@ -1,0 +1,20 @@
+// PATCH PARA: /home/cliccombr/public_html/vendors/SubCapa.php
+// LINHA: 91
+// PROBLEMA: Tentando acessar propriedades de objeto NULL
+
+// ANTES (linha 91):
+// echo $subcapa->combo1_id_artigo;  // ← Erro se $subcapa for NULL
+
+// DEPOIS (linha 91):
+if (isset($subcapa) && is_object($subcapa)) {
+    echo $subcapa->combo1_id_artigo ?? '';
+    echo $subcapa->combo2_id_artigo ?? '';
+    echo $subcapa->combo3_id_artigo ?? '';
+} else {
+    error_log("ERRO: SubCapa.php linha 91 - objeto $subcapa é NULL");
+}
+
+// OU se preferir usar null coalescing operator:
+echo $subcapa?->combo1_id_artigo ?? '';
+echo $subcapa?->combo2_id_artigo ?? '';
+echo $subcapa?->combo3_id_artigo ?? '';

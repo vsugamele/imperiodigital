@@ -1,0 +1,71 @@
+{
+  "projectId": "proj-petselectuk",
+  "niche": "pets",
+  "valueLadder": [
+    {
+      "tier": "free",
+      "name": "Lead Magnet",
+      "price": 0,
+      "deliverables": [
+        "E-book",
+        "Checklist",
+        "Template"
+      ],
+      "goal": "Capturar leads"
+    },
+    {
+      "tier": "tripwire",
+      "name": "Starter",
+      "price": 47,
+      "deliverables": [
+        "Mini-curso",
+        "Acesso 30 dias"
+      ],
+      "goal": "Primeira venda"
+    },
+    {
+      "tier": "front",
+      "name": "Principal",
+      "price": 197,
+      "deliverables": [
+        "Curso completo",
+        "Bônus 1",
+        "Bônus 2"
+      ],
+      "goal": "Conversão principal"
+    },
+    {
+      "tier": "upsell",
+      "name": "Premium",
+      "price": 497,
+      "deliverables": [
+        "Mentoria",
+        "Acesso vitalício",
+        "Comunidade"
+      ],
+      "goal": "Alta-ticket"
+    }
+  ],
+  "bonuses": [
+    {
+      "name": "Bônus 1",
+      "value": 197,
+      "type": "related"
+    },
+    {
+      "name": "Bônus 2",
+      "value": 297,
+      "type": "aspirational"
+    },
+    {
+      "name": "Bônus 3",
+      "value": 497,
+      "type": "urgent"
+    }
+  ],
+  "guarantees": [
+    "7 dias para pedir dinheiro de volta",
+    "Suporte por 30 dias",
+    "Atualizações futuras grátis"
+  ]
+}

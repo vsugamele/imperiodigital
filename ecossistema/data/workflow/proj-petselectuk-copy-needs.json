@@ -1,0 +1,15 @@
+{
+  "projectId": "proj-petselectuk",
+  "needs": [
+    {
+      "type": "landing_page",
+      "count": 1,
+      "sections": [
+        "hero",
+        "benefits",
+        "testimonials",
+        "cta"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+    "empire_name": "Sugamele Digital Empire",
+    "verticals": {
+        "igaming": {
+            "status": "active",
+            "profiles": [
+                "teo",
+                "jonathan",
+                "laise",
+                "pedro"
+            ],
+            "kpis": [
+                "daily_post_count",
+                "engagement_rate",
+                "follower_growth"
+            ],
+            "description": "High-luxury lifestyle and betting conversion"
+        },
+        "dropshipping_uk": {
+            "status": "active",
+            "profiles": [
+                "petselectuk"
+            ],
+            "kpis": [
+                "sales_count",
+                "ad_spend_return"
+            ],
+            "description": "Pet niche in the UK market"
+        },
+        "encapsulated_eu": {
+            "status": "active",
+            "niche": "Diabetes",
+            "region": "Europe",
+            "description": "Health supplements for diabetes management"
+        },
+        "hairdresser": {
+            "status": "active",
+            "model": "Infoproduct/Launch",
+            "description": "Educational content and products for hair professionals"
+        },
+        "vaas": {
+            "status": "planning",
+            "name": "Postings as a Service",
+            "description": "Selling automated posting infrastructure to clients"
+        }
+    },
+    "global_kpis": {
+        "target_revenue": 100000,
+        "current_runrate": 20000
+    }
+}

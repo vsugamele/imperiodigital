@@ -1,0 +1,79 @@
+{
+  "projectId": "proj-petselectuk",
+  "type": "landing_to_membership",
+  "pages": [
+    {
+      "name": "Landing Page Principal",
+      "type": "squeeze",
+      "elements": [
+        "Headline",
+        "Video",
+        "Form",
+        "CTA"
+      ],
+      "copy": "baseado em análise EUGENE"
+    },
+    {
+      "name": "Thank You + Tripwire",
+      "type": "upsell_1",
+      "offer": {
+        "tier": "tripwire",
+        "name": "Starter",
+        "price": 47,
+        "deliverables": [
+          "Mini-curso",
+          "Acesso 30 dias"
+        ],
+        "goal": "Primeira venda"
+      },
+      "offerPrice": 47
+    },
+    {
+      "name": "Upsell 2",
+      "type": "upsell_2",
+      "offer": {
+        "tier": "front",
+        "name": "Principal",
+        "price": 197,
+        "deliverables": [
+          "Curso completo",
+          "Bônus 1",
+          "Bônus 2"
+        ],
+        "goal": "Conversão principal"
+      },
+      "offerPrice": 197
+    },
+    {
+      "name": "Membership Area",
+      "type": "delivery",
+      "access": [
+        "Curso completo",
+        "Bônus 1",
+        "Bônus 2"
+      ]
+    }
+  ],
+  "automations": [
+    {
+      "trigger": "Lead capture",
+      "action": "Send lead magnet",
+      "delay": 0
+    },
+    {
+      "trigger": "Tripwire decline",
+      "action": "Send follow-up",
+      "delay": 24
+    },
+    {
+      "trigger": "Purchase",
+      "action": "Give access",
+      "delay": 0
+    },
+    {
+      "trigger": "7 days no login",
+      "action": "Send engagement email",
+      "delay": 7
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+    "version": 1,
+    "hashtags": [
+        "#lifestyle",
+        "#luxurylifestyle",
+        "#estilodevida",
+        "#lifestylebr",
+        "#vidalifestyle",
+        "#conquistas",
+        "#sucesso",
+        "#empreendedorismo"
+    ],
+    "templates": {
+        "money_prizes": [
+            "💰 Sorteio de R$500 HOJE! Comenta aqui para participar 👇",
+            "🎁 Vou sortear R$300 entre quem comentar AGORA!",
+            "🔥 Prontos para o prêmio? Comenta e concorra a R$500!",
+            "💸 Sorteio relâmpago! Comenta 'PRÊMIO' e boa sorte!",
+            "👀 Olha só: R$400 em jogo! Comenta seu número da sorte!",
+            "🎯 Tou sorteando R$600 hoje. Quer participar? Comenta aqui!",
+            "💰 Resultado amanhã! Comenta agora e concorra a R$500!",
+            "🔥imoto giveaway! Comenta e遏 entra no sorteio de R$300!"
+        ],
+        "direct_engagement": [
+            "Vou escolher 3 pessoas que comentarem 'P!X' agora! 👇🔥",
+            "Quem aqui tá precisando de uma força no boleto? Comenta o valor! 💰🙏",
+            "Hoje é dia de abençoar quem tá sempre aqui acompanhando. Comenta seu @! 🎁😎",
+            "Se eu te mandasse R$ 500 agora, o que você faria? Responde aí! 👇💰",
+            "Vou escolher aleatoriamente nos comentários para o prêmio de hoje! 👀💎"
+        ],
+        "lifestyle_wealth": [
+            "O luxo é apenas a consequência do foco. Quer participar do sorteio? Comenta! 🏎️💨",
+            "Um brinde aos que não desistem. Comenta seu número da sorte! 🥂💰",
+            "A vida que você sempre quis começa com um passo. Qual seu sonho hoje? 👇✨"
+        ],
+        "interactive_quiz": [
+            "Diga seu mês de nascimento e concorra ao presente surpresa! 🎂🎁",
+            "Qual cor você escolhe: 🟢 ou 🔵? O prêmio depende da sua escolha! 👇",
+            "Deixe seu emoji favorito. Vou escolher pelos emojis! 🔥💎💰"
+        ]
+    }
+}

@@ -1,0 +1,61 @@
+{
+  "enabled": true,
+  "auto_switch": true,
+  "default_model": "haiku",
+  "log_routing": true,
+  "models": {
+    "haiku": {
+      "name": "Claude Haiku 4.5",
+      "cost": "muito barato",
+      "speed": "muito rápido",
+      "best_for": ["quick questions", "simple tasks"],
+      "enabled": true
+    },
+    "sonnet": {
+      "name": "Claude Sonnet 3.5",
+      "cost": "moderado",
+      "speed": "rápido",
+      "best_for": ["analysis", "writing", "medium complexity"],
+      "enabled": true
+    },
+    "opus": {
+      "name": "Claude Opus 4.5",
+      "cost": "caro",
+      "speed": "normal",
+      "best_for": ["complex coding", "deep analysis", "reasoning"],
+      "enabled": true
+    },
+    "gemini": {
+      "name": "Gemini 2.0 Flash",
+      "cost": "barato",
+      "speed": "muito rápido",
+      "best_for": ["web search", "research", "real-time data"],
+      "enabled": true
+    },
+    "gpt4": {
+      "name": "GPT-4",
+      "cost": "caro",
+      "speed": "normal",
+      "best_for": ["specific tasks", "specialized"],
+      "enabled": false
+    }
+  },
+  "routing_rules": {
+    "complexity_thresholds": {
+      "haiku": [0, 3],
+      "sonnet": [4, 7],
+      "opus": [8, 10]
+    },
+    "category_overrides": {
+      "coding_high": "opus",
+      "coding_medium": "sonnet",
+      "coding_low": "haiku",
+      "research": "gemini",
+      "writing": "sonnet",
+      "analysis_high": "opus",
+      "analysis_medium": "sonnet"
+    },
+    "web_search_model": "gemini",
+    "always_use": null
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "model": {
+    "default": "minimax-portal/MiniMax-M2.1"
+  },
+  "agents": {
+    "default": {
+      "model": "minimax-portal/MiniMax-M2.1"
+    }
+  }
+}

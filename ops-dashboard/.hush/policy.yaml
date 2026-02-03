@@ -1,0 +1,45 @@
+version: "clawdstrike-v1.0"
+
+# Enterprise Governance Policy for Alex Command Center
+
+# Network Egress Controls
+egress:
+  mode: allowlist
+  allowed_domains:
+    - "api.github.com"
+    - "registry.npmjs.org"
+    - "pypi.org"
+    - "api.openai.com"
+    - "api.anthropic.com"
+    - "generativelanguage.googleapis.com" # Google AI/Gemini
+    - "supabase.co"
+
+# Filesystem Protection
+filesystem:
+  forbidden_paths:
+    - "~/.ssh/*"
+    - "~/.aws/*"
+    - "~/.gnupg/*"
+    - "**/.env"
+    - "C:/Windows/*"
+    
+# Action Tool Interception
+tools:
+  interception_mode: strict
+  rules:
+    - action_type: "shell"
+      command_pattern: "rm -rf *"
+      priority: 100
+      effect: deny
+      
+    - action_type: "shell"
+      command_pattern: "curl *"
+      priority: 50
+      effect: monitor # Signed receipt required but allowed
+
+# Violation Handling
+on_violation: cancel
+signed_receipts: true
+storage:
+  path: "./.hush/receipts"
+  retention_days: 30

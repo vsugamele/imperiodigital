@@ -1,0 +1,323 @@
+{
+  "niche": "diabetes",
+  "analyzedAt": "2026-02-03T21:05:36.169Z",
+  "platforms": {
+    "instagram": {
+      "platform": "instagram",
+      "profile": "amor_diabetes",
+      "niche": "diabetes",
+      "analyzedAt": "2026-02-03T21:05:36.169Z",
+      "metrics": {
+        "followers": 39934,
+        "following": 815,
+        "posts": 383,
+        "engagementRate": "5.72",
+        "avgLikes": 961,
+        "avgComments": 49,
+        "reach": 5736,
+        "impressions": 13639
+      },
+      "contentAnalysis": {
+        "topPosts": [
+          {
+            "type": "carousel",
+            "engagement": 8.5,
+            "topic": "antes/depois"
+          },
+          {
+            "type": "reel",
+            "engagement": 7.2,
+            "topic": "tutorial"
+          },
+          {
+            "type": "image",
+            "engagement": 5.8,
+            "topic": "produto"
+          }
+        ],
+        "bestTimes": [
+          "09:00",
+          "12:00",
+          "18:00",
+          "21:00"
+        ],
+        "bestDays": [
+          "Terça",
+          "Quinta",
+          "Sábado"
+        ],
+        "hashtagsTop": [
+          "#diabetes",
+          "#brasil",
+          "#amor",
+          "#style",
+          "#follow"
+        ]
+      },
+      "gaps": [
+        {
+          "type": "conteúdo",
+          "severity": "média",
+          "description": "Falta conteúdo consistente",
+          "opportunity": 70
+        },
+        {
+          "type": "engajamento",
+          "severity": "média",
+          "description": "Baixo engajamento com audiência",
+          "opportunity": 65
+        },
+        {
+          "type": "diversificação",
+          "severity": "baixa",
+          "description": "Necessário diversificar formatos",
+          "opportunity": 55
+        }
+      ],
+      "recommendations": [
+        {
+          "action": "Criar série de Reels",
+          "reason": "Formato com maior engajamento no nicho",
+          "priority": "alta",
+          "expectedImpact": "+30% seguidores"
+        },
+        {
+          "action": "Aumentar frequência de Stories",
+          "reason": "Stories aumentam conexão com audiência",
+          "priority": "média",
+          "expectedImpact": "+15% engajamento"
+        },
+        {
+          "action": "Testar UGC (User Generated Content)",
+          "reason": "UGC tem alta conversão",
+          "priority": "média",
+          "expectedImpact": "+25% conversão"
+        },
+        {
+          "action": "Implementar CTA consistente",
+          "reason": "CTAs claros aumentam conversões",
+          "priority": "alta",
+          "expectedImpact": "+40% cliques"
+        }
+      ]
+    },
+    "youtube": {
+      "platform": "youtube",
+      "channel": "Dicas de diabetes",
+      "niche": "diabetes",
+      "analyzedAt": "2026-02-03T21:05:36.169Z",
+      "metrics": {
+        "subscribers": 19810,
+        "totalViews": 192053,
+        "videoCount": 91,
+        "avgViewsPerVideo": 9734,
+        "avgEngagement": "5.90",
+        "watchTime": 476461,
+        "subscribersGrowth": "7.33"
+      },
+      "contentAnalysis": {
+        "bestPerforming": [
+          {
+            "type": "tutorial",
+            "views": 50000,
+            "title": "Como fazer X"
+          },
+          {
+            "type": "listicle",
+            "views": 35000,
+            "title": "5 erros em Y"
+          },
+          {
+            "type": "review",
+            "views": 28000,
+            "title": "Review de Z"
+          }
+        ],
+        "avgDuration": "10-15 minutos",
+        "bestPublishDays": [
+          "Segunda",
+          "Quarta",
+          "Sábado"
+        ]
+      },
+      "gaps": [
+        {
+          "type": "conteúdo",
+          "severity": "média",
+          "description": "Falta conteúdo consistente",
+          "opportunity": 70
+        },
+        {
+          "type": "engajamento",
+          "severity": "média",
+          "description": "Baixo engajamento com audiência",
+          "opportunity": 65
+        },
+        {
+          "type": "diversificação",
+          "severity": "baixa",
+          "description": "Necessário diversificar formatos",
+          "opportunity": 55
+        }
+      ],
+      "recommendations": [
+        {
+          "action": "Criar série de Reels",
+          "reason": "Formato com maior engajamento no nicho",
+          "priority": "alta",
+          "expectedImpact": "+30% seguidores"
+        },
+        {
+          "action": "Aumentar frequência de Stories",
+          "reason": "Stories aumentam conexão com audiência",
+          "priority": "média",
+          "expectedImpact": "+15% engajamento"
+        },
+        {
+          "action": "Testar UGC (User Generated Content)",
+          "reason": "UGC tem alta conversão",
+          "priority": "média",
+          "expectedImpact": "+25% conversão"
+        },
+        {
+          "action": "Implementar CTA consistente",
+          "reason": "CTAs claros aumentam conversões",
+          "priority": "alta",
+          "expectedImpact": "+40% cliques"
+        }
+      ]
+    },
+    "tiktok": {
+      "platform": "tiktok",
+      "profile": "dicasdiabetes",
+      "niche": "diabetes",
+      "analyzedAt": "2026-02-03T21:05:36.169Z",
+      "metrics": {
+        "followers": 49772,
+        "following": 416,
+        "likes": 460876,
+        "videos": 171,
+        "avgViews": 25357,
+        "engagementRate": "3.86",
+        "viralVideos": 3
+      },
+      "contentAnalysis": {
+        "viralFormats": [
+          "duet",
+          "stitch",
+          "trend"
+        ],
+        "bestDuration": "15-30 segundos",
+        "trendingSounds": [
+          "som1.mp3",
+          "som2.mp3",
+          "som3.mp3"
+        ],
+        "trendingHashtags": [
+          "#diabetes",
+          "#fyp",
+          "#paravc",
+          "#brasil"
+        ]
+      },
+      "gaps": [
+        {
+          "type": "conteúdo",
+          "severity": "média",
+          "description": "Falta conteúdo consistente",
+          "opportunity": 70
+        },
+        {
+          "type": "engajamento",
+          "severity": "média",
+          "description": "Baixo engajamento com audiência",
+          "opportunity": 65
+        },
+        {
+          "type": "diversificação",
+          "severity": "baixa",
+          "description": "Necessário diversificar formatos",
+          "opportunity": 55
+        }
+      ],
+      "recommendations": [
+        {
+          "action": "Criar série de Reels",
+          "reason": "Formato com maior engajamento no nicho",
+          "priority": "alta",
+          "expectedImpact": "+30% seguidores"
+        },
+        {
+          "action": "Aumentar frequência de Stories",
+          "reason": "Stories aumentam conexão com audiência",
+          "priority": "média",
+          "expectedImpact": "+15% engajamento"
+        },
+        {
+          "action": "Testar UGC (User Generated Content)",
+          "reason": "UGC tem alta conversão",
+          "priority": "média",
+          "expectedImpact": "+25% conversão"
+        },
+        {
+          "action": "Implementar CTA consistente",
+          "reason": "CTAs claros aumentam conversões",
+          "priority": "alta",
+          "expectedImpact": "+40% cliques"
+        }
+      ]
+    }
+  },
+  "consolidatedGaps": [
+    {
+      "type": "conteúdo",
+      "severity": "média",
+      "description": "Falta conteúdo consistente",
+      "opportunity": 70
+    },
+    {
+      "type": "engajamento",
+      "severity": "média",
+      "description": "Baixo engajamento com audiência",
+      "opportunity": 65
+    },
+    {
+      "type": "diversificação",
+      "severity": "baixa",
+      "description": "Necessário diversificar formatos",
+      "opportunity": 55
+    }
+  ],
+  "recommendations": [
+    {
+      "action": "Criar série de Reels",
+      "reason": "Formato com maior engajamento no nicho",
+      "priority": "alta",
+      "expectedImpact": "+30% seguidores"
+    },
+    {
+      "action": "Aumentar frequência de Stories",
+      "reason": "Stories aumentam conexão com audiência",
+      "priority": "média",
+      "expectedImpact": "+15% engajamento"
+    },
+    {
+      "action": "Testar UGC (User Generated Content)",
+      "reason": "UGC tem alta conversão",
+      "priority": "média",
+      "expectedImpact": "+25% conversão"
+    },
+    {
+      "action": "Implementar CTA consistente",
+      "reason": "CTAs claros aumentam conversões",
+      "priority": "alta",
+      "expectedImpact": "+40% cliques"
+    }
+  ],
+  "scores": {
+    "opportunity": 85,
+    "competition": 46,
+    "growth": 79,
+    "recommendation": 87
+  }
+}

@@ -1,0 +1,347 @@
+{
+  "niche": "pets",
+  "analyzedAt": "2026-02-03T21:00:14.718Z",
+  "platforms": {
+    "instagram": {
+      "platform": "instagram",
+      "profile": "amor_pets",
+      "niche": "pets",
+      "analyzedAt": "2026-02-03T21:00:14.718Z",
+      "metrics": {
+        "followers": 1829,
+        "following": 875,
+        "posts": 333,
+        "engagementRate": "1.44",
+        "avgLikes": 166,
+        "avgComments": 33,
+        "reach": 8450,
+        "impressions": 8170
+      },
+      "contentAnalysis": {
+        "topPosts": [
+          {
+            "type": "carousel",
+            "engagement": 8.5,
+            "topic": "antes/depois"
+          },
+          {
+            "type": "reel",
+            "engagement": 7.2,
+            "topic": "tutorial"
+          },
+          {
+            "type": "image",
+            "engagement": 5.8,
+            "topic": "produto"
+          }
+        ],
+        "bestTimes": [
+          "09:00",
+          "12:00",
+          "18:00",
+          "21:00"
+        ],
+        "bestDays": [
+          "Terça",
+          "Quinta",
+          "Sábado"
+        ],
+        "hashtagsTop": [
+          "#pets",
+          "#brasil",
+          "#amor",
+          "#style",
+          "#follow"
+        ]
+      },
+      "gaps": [
+        {
+          "type": "conteúdo",
+          "severity": "alta",
+          "description": "Falta conteúdo em português sobre ração natural",
+          "opportunity": 85
+        },
+        {
+          "type": "vídeos",
+          "severity": "alta",
+          "description": "Poucos vídeos curtos no TikTok/Reels",
+          "opportunity": 78
+        },
+        {
+          "type": "educacional",
+          "severity": "média",
+          "description": "Necessário mais conteúdo educacional",
+          "opportunity": 65
+        },
+        {
+          "type": "engajamento",
+          "severity": "média",
+          "description": "Baixa interação nos Stories",
+          "opportunity": 55
+        }
+      ],
+      "recommendations": [
+        {
+          "action": "Criar série de Reels",
+          "reason": "Formato com maior engajamento no nicho",
+          "priority": "alta",
+          "expectedImpact": "+30% seguidores"
+        },
+        {
+          "action": "Aumentar frequência de Stories",
+          "reason": "Stories aumentam conexão com audiência",
+          "priority": "média",
+          "expectedImpact": "+15% engajamento"
+        },
+        {
+          "action": "Testar UGC (User Generated Content)",
+          "reason": "UGC tem alta conversão",
+          "priority": "média",
+          "expectedImpact": "+25% conversão"
+        },
+        {
+          "action": "Implementar CTA consistente",
+          "reason": "CTAs claros aumentam conversões",
+          "priority": "alta",
+          "expectedImpact": "+40% cliques"
+        }
+      ]
+    },
+    "youtube": {
+      "platform": "youtube",
+      "channel": "Dicas de pets",
+      "niche": "pets",
+      "analyzedAt": "2026-02-03T21:00:14.718Z",
+      "metrics": {
+        "subscribers": 53485,
+        "totalViews": 463850,
+        "videoCount": 20,
+        "avgViewsPerVideo": 1990,
+        "avgEngagement": "3.43",
+        "watchTime": 346396,
+        "subscribersGrowth": "1.43"
+      },
+      "contentAnalysis": {
+        "bestPerforming": [
+          {
+            "type": "tutorial",
+            "views": 50000,
+            "title": "Como fazer X"
+          },
+          {
+            "type": "listicle",
+            "views": 35000,
+            "title": "5 erros em Y"
+          },
+          {
+            "type": "review",
+            "views": 28000,
+            "title": "Review de Z"
+          }
+        ],
+        "avgDuration": "10-15 minutos",
+        "bestPublishDays": [
+          "Segunda",
+          "Quarta",
+          "Sábado"
+        ]
+      },
+      "gaps": [
+        {
+          "type": "conteúdo",
+          "severity": "alta",
+          "description": "Falta conteúdo em português sobre ração natural",
+          "opportunity": 85
+        },
+        {
+          "type": "vídeos",
+          "severity": "alta",
+          "description": "Poucos vídeos curtos no TikTok/Reels",
+          "opportunity": 78
+        },
+        {
+          "type": "educacional",
+          "severity": "média",
+          "description": "Necessário mais conteúdo educacional",
+          "opportunity": 65
+        },
+        {
+          "type": "engajamento",
+          "severity": "média",
+          "description": "Baixa interação nos Stories",
+          "opportunity": 55
+        }
+      ],
+      "recommendations": [
+        {
+          "action": "Criar série de Reels",
+          "reason": "Formato com maior engajamento no nicho",
+          "priority": "alta",
+          "expectedImpact": "+30% seguidores"
+        },
+        {
+          "action": "Aumentar frequência de Stories",
+          "reason": "Stories aumentam conexão com audiência",
+          "priority": "média",
+          "expectedImpact": "+15% engajamento"
+        },
+        {
+          "action": "Testar UGC (User Generated Content)",
+          "reason": "UGC tem alta conversão",
+          "priority": "média",
+          "expectedImpact": "+25% conversão"
+        },
+        {
+          "action": "Implementar CTA consistente",
+          "reason": "CTAs claros aumentam conversões",
+          "priority": "alta",
+          "expectedImpact": "+40% cliques"
+        }
+      ]
+    },
+    "tiktok": {
+      "platform": "tiktok",
+      "profile": "dicaspets",
+      "niche": "pets",
+      "analyzedAt": "2026-02-03T21:00:14.718Z",
+      "metrics": {
+        "followers": 23894,
+        "following": 216,
+        "likes": 66000,
+        "videos": 121,
+        "avgViews": 8169,
+        "engagementRate": "2.06",
+        "viralVideos": 8
+      },
+      "contentAnalysis": {
+        "viralFormats": [
+          "duet",
+          "stitch",
+          "trend"
+        ],
+        "bestDuration": "15-30 segundos",
+        "trendingSounds": [
+          "som1.mp3",
+          "som2.mp3",
+          "som3.mp3"
+        ],
+        "trendingHashtags": [
+          "#pets",
+          "#fyp",
+          "#paravc",
+          "#brasil"
+        ]
+      },
+      "gaps": [
+        {
+          "type": "conteúdo",
+          "severity": "alta",
+          "description": "Falta conteúdo em português sobre ração natural",
+          "opportunity": 85
+        },
+        {
+          "type": "vídeos",
+          "severity": "alta",
+          "description": "Poucos vídeos curtos no TikTok/Reels",
+          "opportunity": 78
+        },
+        {
+          "type": "educacional",
+          "severity": "média",
+          "description": "Necessário mais conteúdo educacional",
+          "opportunity": 65
+        },
+        {
+          "type": "engajamento",
+          "severity": "média",
+          "description": "Baixa interação nos Stories",
+          "opportunity": 55
+        }
+      ],
+      "recommendations": [
+        {
+          "action": "Criar série de Reels",
+          "reason": "Formato com maior engajamento no nicho",
+          "priority": "alta",
+          "expectedImpact": "+30% seguidores"
+        },
+        {
+          "action": "Aumentar frequência de Stories",
+          "reason": "Stories aumentam conexão com audiência",
+          "priority": "média",
+          "expectedImpact": "+15% engajamento"
+        },
+        {
+          "action": "Testar UGC (User Generated Content)",
+          "reason": "UGC tem alta conversão",
+          "priority": "média",
+          "expectedImpact": "+25% conversão"
+        },
+        {
+          "action": "Implementar CTA consistente",
+          "reason": "CTAs claros aumentam conversões",
+          "priority": "alta",
+          "expectedImpact": "+40% cliques"
+        }
+      ]
+    }
+  },
+  "consolidatedGaps": [
+    {
+      "type": "conteúdo",
+      "severity": "alta",
+      "description": "Falta conteúdo em português sobre ração natural",
+      "opportunity": 85
+    },
+    {
+      "type": "vídeos",
+      "severity": "alta",
+      "description": "Poucos vídeos curtos no TikTok/Reels",
+      "opportunity": 78
+    },
+    {
+      "type": "educacional",
+      "severity": "média",
+      "description": "Necessário mais conteúdo educacional",
+      "opportunity": 65
+    },
+    {
+      "type": "engajamento",
+      "severity": "média",
+      "description": "Baixa interação nos Stories",
+      "opportunity": 55
+    }
+  ],
+  "recommendations": [
+    {
+      "action": "Criar série de Reels",
+      "reason": "Formato com maior engajamento no nicho",
+      "priority": "alta",
+      "expectedImpact": "+30% seguidores"
+    },
+    {
+      "action": "Aumentar frequência de Stories",
+      "reason": "Stories aumentam conexão com audiência",
+      "priority": "média",
+      "expectedImpact": "+15% engajamento"
+    },
+    {
+      "action": "Testar UGC (User Generated Content)",
+      "reason": "UGC tem alta conversão",
+      "priority": "média",
+      "expectedImpact": "+25% conversão"
+    },
+    {
+      "action": "Implementar CTA consistente",
+      "reason": "CTAs claros aumentam conversões",
+      "priority": "alta",
+      "expectedImpact": "+40% cliques"
+    }
+  ],
+  "scores": {
+    "opportunity": 94,
+    "competition": 43,
+    "growth": 85,
+    "recommendation": 93
+  }
+}

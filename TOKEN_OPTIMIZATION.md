@@ -1,0 +1,1 @@
+Batch operations whenever possible to reduce API overhead. Cache frequently accessed data to avoid redundant API calls. Implement lazy loading for non-essential tasks. Aim for a 30% metadata reduction.

@@ -1,0 +1,106 @@
+{
+  "date": "2026-02-03",
+  "trends": [
+    {
+      "name": "Café especial",
+      "growth": 340,
+      "category": "Alimentos",
+      "opportunity": 85,
+      "sources": [
+        "Google Trends",
+        "TikTok",
+        "Instagram"
+      ],
+      "monetizacao": "Alta",
+      "competitors": 5,
+      "score": 85
+    },
+    {
+      "name": "Pets",
+      "growth": 210,
+      "category": "Animais",
+      "opportunity": 78,
+      "sources": [
+        "Amazon",
+        "Shopify"
+      ],
+      "monetizacao": "Alta",
+      "competitors": 12,
+      "score": 85
+    },
+    {
+      "name": "Skincare Masculino",
+      "growth": 120,
+      "category": "Beleza",
+      "opportunity": 62,
+      "sources": [
+        "TikTok"
+      ],
+      "monetizacao": "Alta",
+      "competitors": 8,
+      "score": 75
+    },
+    {
+      "name": "Educação Financeira",
+      "growth": 180,
+      "category": "Finanças",
+      "opportunity": 72,
+      "sources": [
+        "YouTube",
+        "Instagram"
+      ],
+      "monetizacao": "Alta",
+      "competitors": 25,
+      "score": 70
+    },
+    {
+      "name": "Pet Insurance",
+      "growth": 98,
+      "category": "Pets",
+      "opportunity": 58,
+      "sources": [
+        "Google Trends"
+      ],
+      "monetizacao": "Alta",
+      "competitors": 3,
+      "score": 70
+    },
+    {
+      "name": "Suplementos Naturais",
+      "growth": 156,
+      "category": "Saúde",
+      "opportunity": 68,
+      "sources": [
+        "Google Trends"
+      ],
+      "monetizacao": "Média",
+      "competitors": 18,
+      "score": 60
+    },
+    {
+      "name": "Móveis Sustentáveis",
+      "growth": 87,
+      "category": "Casa",
+      "opportunity": 55,
+      "sources": [
+        "Pinterest"
+      ],
+      "monetizacao": "Média",
+      "competitors": 6,
+      "score": 55
+    },
+    {
+      "name": "Gadgets para Home Office",
+      "growth": 145,
+      "category": "Tecnologia",
+      "opportunity": 65,
+      "sources": [
+        "Amazon"
+      ],
+      "monetizacao": "Média",
+      "competitors": 30,
+      "score": 50
+    }
+  ],
+  "generatedAt": "2026-02-03T20:15:35.267Z"
+}

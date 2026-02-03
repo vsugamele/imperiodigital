@@ -1,0 +1,48 @@
+{
+  "gemini": {
+    "gemini-3-pro-image-preview": {
+      "inputPer1M": 0.01,
+      "outputPer1M": 0.04,
+      "description": "Gemini 3 Pro Image - PetSelectUK carousel/image generation"
+    },
+    "gemini-2.0-flash": {
+      "inputPer1M": 0.10,
+      "outputPer1M": 0.40,
+      "description": "Gemini 2.0 Flash - Orchestration (Clawdbot)"
+    },
+    "gemini-1.5-flash": {
+      "inputPer1M": 0.075,
+      "outputPer1M": 0.30,
+      "description": "Gemini 1.5 Flash - Text/copy generation"
+    }
+  },
+  "replicate": {
+    "flux-schnell": {
+      "inputPer1M": 0.003,
+      "outputPer1M": 0.003,
+      "description": "FLUX Schnell - iGaming video background generation"
+    }
+  },
+  "openai": {
+    "gpt-4o": {
+      "inputPer1M": 2.50,
+      "outputPer1M": 10.00,
+      "description": "GPT-4o - High-quality copy generation"
+    },
+    "gpt-4o-mini": {
+      "inputPer1M": 0.15,
+      "outputPer1M": 0.60,
+      "description": "GPT-4o-mini - Lightweight tasks"
+    }
+  },
+ "local": {
+    "ffmpeg": {
+      "costPerRun": 0,
+      "description": "Local FFmpeg - Video editing (no cloud cost)"
+    },
+    "rclone": {
+      "costPerRun": 0,
+      "description": "Local RClone - Drive sync (no cloud cost)"
+    }
+  }
+}

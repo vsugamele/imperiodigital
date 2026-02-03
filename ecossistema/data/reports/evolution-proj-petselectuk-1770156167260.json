@@ -1,0 +1,425 @@
+{
+  "projectId": "proj-petselectuk",
+  "projectName": "PetSelectUK",
+  "generatedAt": "2026-02-03T22:02:47.260Z",
+  "summary": {
+    "currentScore": 48,
+    "projectedScore": 85,
+    "gapReduction": 37,
+    "estimatedTime": "30 dias"
+  },
+  "gapAnalysis": {
+    "projectId": "proj-petselectuk",
+    "projectName": "PetSelectUK",
+    "niche": "pets",
+    "analyzedAt": "2026-02-03T22:02:47.255Z",
+    "overallScore": 48,
+    "platforms": {
+      "connected": [
+        "instagram",
+        "facebook"
+      ],
+      "missing": [
+        {
+          "platform": "tiktok",
+          "severity": "ALTA",
+          "reason": "Viralidade e alcance jovem"
+        },
+        {
+          "platform": "pinterest",
+          "severity": "MÉDIA",
+          "reason": "Tráfego orgânico de produtos"
+        },
+        {
+          "platform": "youtube",
+          "severity": "MÉDIA",
+          "reason": "Reviews e tutoriais"
+        }
+      ]
+    },
+    "content": {
+      "current": [
+        "posts",
+        "stories"
+      ],
+      "gaps": [
+        {
+          "type": "reels",
+          "reason": "Formato com maior engajamento",
+          "opportunity": 80
+        },
+        {
+          "type": "ugc",
+          "reason": "Alta conversão e confiança",
+          "opportunity": 75
+        },
+        {
+          "type": "carousels",
+          "reason": "Educação e CTAs",
+          "opportunity": 70
+        }
+      ]
+    },
+    "features": {
+      "connected": [],
+      "missing": [
+        {
+          "feature": "lead_magnet",
+          "label": "Lead Magnet",
+          "severity": "MÉDIA",
+          "opportunity": 75
+        },
+        {
+          "feature": "funnel",
+          "label": "Funil de Vendas",
+          "severity": "ALTA",
+          "opportunity": 85
+        },
+        {
+          "feature": "email_sequence",
+          "label": "Sequência de E-mails",
+          "severity": "MÉDIA",
+          "opportunity": 70
+        }
+      ]
+    },
+    "priorities": [
+      {
+        "action": "Conectar TikTok para pets",
+        "priority": "ALTA",
+        "impact": "+30% alcance"
+      },
+      {
+        "action": "Criar Funil de Vendas",
+        "priority": "ALTA",
+        "impact": "+50% conversão"
+      },
+      {
+        "action": "Implementar Lead Magnet",
+        "priority": "MÉDIA",
+        "impact": "+40% leads"
+      }
+    ]
+  },
+  "copyRequirements": {
+    "projectId": "proj-petselectuk",
+    "needs": [
+      {
+        "type": "landing_page",
+        "count": 1,
+        "sections": [
+          "hero",
+          "benefits",
+          "testimonials",
+          "cta"
+        ]
+      }
+    ]
+  },
+  "offerStructure": {
+    "projectId": "proj-petselectuk",
+    "niche": "pets",
+    "valueLadder": [
+      {
+        "tier": "free",
+        "name": "Lead Magnet",
+        "price": 0,
+        "deliverables": [
+          "E-book",
+          "Checklist",
+          "Template"
+        ],
+        "goal": "Capturar leads"
+      },
+      {
+        "tier": "tripwire",
+        "name": "Starter",
+        "price": 47,
+        "deliverables": [
+          "Mini-curso",
+          "Acesso 30 dias"
+        ],
+        "goal": "Primeira venda"
+      },
+      {
+        "tier": "front",
+        "name": "Principal",
+        "price": 197,
+        "deliverables": [
+          "Curso completo",
+          "Bônus 1",
+          "Bônus 2"
+        ],
+        "goal": "Conversão principal"
+      },
+      {
+        "tier": "upsell",
+        "name": "Premium",
+        "price": 497,
+        "deliverables": [
+          "Mentoria",
+          "Acesso vitalício",
+          "Comunidade"
+        ],
+        "goal": "Alta-ticket"
+      }
+    ],
+    "bonuses": [
+      {
+        "name": "Bônus 1",
+        "value": 197,
+        "type": "related"
+      },
+      {
+        "name": "Bônus 2",
+        "value": 297,
+        "type": "aspirational"
+      },
+      {
+        "name": "Bônus 3",
+        "value": 497,
+        "type": "urgent"
+      }
+    ],
+    "guarantees": [
+      "7 dias para pedir dinheiro de volta",
+      "Suporte por 30 dias",
+      "Atualizações futuras grátis"
+    ]
+  },
+  "funnelDesign": {
+    "projectId": "proj-petselectuk",
+    "type": "landing_to_membership",
+    "pages": [
+      {
+        "name": "Landing Page Principal",
+        "type": "squeeze",
+        "elements": [
+          "Headline",
+          "Video",
+          "Form",
+          "CTA"
+        ],
+        "copy": "baseado em análise EUGENE"
+      },
+      {
+        "name": "Thank You + Tripwire",
+        "type": "upsell_1",
+        "offer": {
+          "tier": "tripwire",
+          "name": "Starter",
+          "price": 47,
+          "deliverables": [
+            "Mini-curso",
+            "Acesso 30 dias"
+          ],
+          "goal": "Primeira venda"
+        },
+        "offerPrice": 47
+      },
+      {
+        "name": "Upsell 2",
+        "type": "upsell_2",
+        "offer": {
+          "tier": "front",
+          "name": "Principal",
+          "price": 197,
+          "deliverables": [
+            "Curso completo",
+            "Bônus 1",
+            "Bônus 2"
+          ],
+          "goal": "Conversão principal"
+        },
+        "offerPrice": 197
+      },
+      {
+        "name": "Membership Area",
+        "type": "delivery",
+        "access": [
+          "Curso completo",
+          "Bônus 1",
+          "Bônus 2"
+        ]
+      }
+    ],
+    "automations": [
+      {
+        "trigger": "Lead capture",
+        "action": "Send lead magnet",
+        "delay": 0
+      },
+      {
+        "trigger": "Tripwire decline",
+        "action": "Send follow-up",
+        "delay": 24
+      },
+      {
+        "trigger": "Purchase",
+        "action": "Give access",
+        "delay": 0
+      },
+      {
+        "trigger": "7 days no login",
+        "action": "Send engagement email",
+        "delay": 7
+      }
+    ]
+  },
+  "contentPlan": {
+    "projectId": "proj-petselectuk",
+    "duration": "30 dias",
+    "schedule": [
+      {
+        "week": 1,
+        "phase": "Awareness",
+        "types": [
+          "reels",
+          "stories"
+        ],
+        "posts": 14
+      },
+      {
+        "week": 2,
+        "phase": "Consideration",
+        "types": [
+          "carousels",
+          "ugc"
+        ],
+        "posts": 14
+      },
+      {
+        "week": 3,
+        "phase": "Conversion",
+        "types": [
+          "ads",
+          "landing_pages"
+        ],
+        "posts": 10
+      },
+      {
+        "week": 4,
+        "phase": "Retention",
+        "types": [
+          "email",
+          "community"
+        ],
+        "posts": 7
+      }
+    ],
+    "postingSchedule": {
+      "instagram": {
+        "times": [
+          "09:00",
+          "12:00",
+          "18:00"
+        ],
+        "frequency": "2x/dia"
+      },
+      "tiktok": {
+        "times": [
+          "10:00",
+          "15:00",
+          "20:00"
+        ],
+        "frequency": "3x/dia"
+      },
+      "facebook": {
+        "times": [
+          "08:00",
+          "13:00",
+          "17:00"
+        ],
+        "frequency": "1x/dia"
+      }
+    },
+    "contentThemes": [
+      "Educação sobre o nicho",
+      "Prova social (cases)",
+      "CTA para ofertas",
+      "Community building"
+    ]
+  },
+  "actionItems": [
+    {
+      "week": 1,
+      "action": "Criar 14 posts de reels, stories",
+      "owner": "GARY",
+      "deadline": "Dia 7",
+      "status": "pending"
+    },
+    {
+      "week": 2,
+      "action": "Desenvolver landing page principal",
+      "owner": "RUSSELL",
+      "deadline": "Dia 10",
+      "status": "pending"
+    },
+    {
+      "week": 2,
+      "action": "Criar copy para posts e ads",
+      "owner": "EUGENE",
+      "deadline": "Dia 10",
+      "status": "pending"
+    },
+    {
+      "week": 3,
+      "action": "Estruturar Value Ladder",
+      "owner": "ALEX_HORMOZI",
+      "deadline": "Dia 18",
+      "status": "pending"
+    },
+    {
+      "week": 3,
+      "action": "Implementar automações do funil",
+      "owner": "RUSSELL",
+      "deadline": "Dia 21",
+      "status": "pending"
+    },
+    {
+      "week": 4,
+      "action": "Lançar funil e campanhas",
+      "owner": "GARY",
+      "deadline": "Dia 28",
+      "status": "pending"
+    }
+  ],
+  "timeline": [
+    {
+      "week": 1,
+      "phase": "Awareness",
+      "focus": "reels, stories",
+      "posts": 14,
+      "milestones": [
+        "Primeiros posts no ar"
+      ]
+    },
+    {
+      "week": 2,
+      "phase": "Consideration",
+      "focus": "carousels, ugc",
+      "posts": 14,
+      "milestones": [
+        "Landing page no ar"
+      ]
+    },
+    {
+      "week": 3,
+      "phase": "Conversion",
+      "focus": "ads, landing_pages",
+      "posts": 10,
+      "milestones": [
+        "Funil operacional"
+      ]
+    },
+    {
+      "week": 4,
+      "phase": "Retention",
+      "focus": "email, community",
+      "posts": 7,
+      "milestones": [
+        "Primeiras conversões"
+      ]
+    }
+  ]
+}

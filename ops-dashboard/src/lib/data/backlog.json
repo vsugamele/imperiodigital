@@ -1,0 +1,100 @@
+{
+    "projects": [
+        {
+            "id": "igaming",
+            "name": "🎰 iGaming Empire",
+            "color": "#ffd93d",
+            "profiles": [
+                "teo",
+                "laise",
+                "jonathan",
+                "pedro",
+                "fernandes"
+            ],
+            "tasks": [
+                {
+                    "id": "1",
+                    "title": "Configurar folder ID para Fernandes",
+                    "status": "todo",
+                    "priority": "high"
+                },
+                {
+                    "id": "2",
+                    "title": "Implementar curadoria automática de imagens",
+                    "status": "todo",
+                    "priority": "medium"
+                },
+                {
+                    "id": "3",
+                    "title": "Otimizar pipeline de upload para TikTok",
+                    "status": "in-progress",
+                    "priority": "high"
+                }
+            ]
+        },
+        {
+            "id": "petselect",
+            "name": "🐾 PetSelect UK",
+            "color": "#4edc88",
+            "profiles": [
+                "petselectuk"
+            ],
+            "tasks": [
+                {
+                    "id": "4",
+                    "title": "Implementar scraping de TikTok UK",
+                    "status": "todo",
+                    "priority": "medium"
+                },
+                {
+                    "id": "5",
+                    "title": "Configurar legendagem automática com Claude",
+                    "status": "todo",
+                    "priority": "low"
+                }
+            ]
+        },
+        {
+            "id": "vaas",
+            "name": "🚀 VaaS Platform",
+            "color": "#60a5fa",
+            "profiles": [],
+            "tasks": [
+                {
+                    "id": "6",
+                    "title": "Configurar Supabase Auth para multitenancy",
+                    "status": "todo",
+                    "priority": "high"
+                },
+                {
+                    "id": "7",
+                    "title": "Implementar Job Queue para processamento",
+                    "status": "todo",
+                    "priority": "medium"
+                }
+            ]
+        },
+        {
+            "id": "infrastructure",
+            "name": "⚙️ Infraestrutura",
+            "color": "#a855f7",
+            "profiles": [],
+            "tasks": [
+                {
+                    "id": "8",
+                    "title": "Whisper local para Telegram",
+                    "status": "todo",
+                    "priority": "high",
+                    "note": "Do OPS_BACKLOG.md"
+                },
+                {
+                    "id": "9",
+                    "title": "Disaster recovery pack",
+                    "status": "todo",
+                    "priority": "medium",
+                    "note": "Do OPS_BACKLOG.md"
+                }
+            ]
+        }
+    ]
+}

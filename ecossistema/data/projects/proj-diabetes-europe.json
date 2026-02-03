@@ -1,0 +1,37 @@
+{
+  "id": "proj-diabetes-europe",
+  "name": "Diabetes Europe",
+  "niche": "health",
+  "status": "active",
+  "platforms": {
+    "instagram": null,
+    "youtube": null,
+    "tiktok": null,
+    "facebook": null,
+    "pinterest": {
+      "account": "diabeteseurope",
+      "connected": true
+    },
+    "linkedin": null,
+    "blog": null,
+    "ecommerce": null,
+    "email": null
+  },
+  "features": {
+    "hasLeadMagnet": false,
+    "hasFunnel": false,
+    "hasMembership": false,
+    "hasEmailSequence": false,
+    "hasPaidAds": false,
+    "hasAutomation": false,
+    "hasChatbot": false,
+    "hasCRM": false
+  },
+  "content": {
+    "types": [],
+    "frequency": "daily"
+  },
+  "strategies": [],
+  "createdAt": "2026-02-03T21:57:31.028Z",
+  "updatedAt": "2026-02-03T21:57:31.028Z"
+}
