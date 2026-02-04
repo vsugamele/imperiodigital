@@ -6,7 +6,7 @@
       "id": "1",
       "title": "Corrigir scheduler do no_cost",
       "description": "Verificar por que imagens no_cost não estão sendo usadas",
-      "status": "doing",
+      "status": "blocked",
       "priority": "high",
       "labels": [
         "bug",
@@ -14,8 +14,8 @@
       ],
       "assignee": "Alex",
       "createdAt": "2026-01-26T00:00:00Z",
-      "updatedAt": "2026-02-02T06:00:00Z",
-      "notes": ""
+      "updatedAt": "2026-02-04T00:30:00Z",
+      "notes": "BLOCKED: Necesário input do Vinicius. O que é 'no_cost'? Quais scripts/images estão envolvidos? Quais logs verificar?"
     },
     {
       "id": "2",
@@ -36,15 +36,15 @@
       "id": "3",
       "title": "Criar alerts automáticos",
       "description": "Enviar Telegram quando pipeline falhar",
-      "status": "doing",
+      "status": "blocked",
       "priority": "high",
       "labels": [
         "automation"
       ],
       "assignee": "Alex",
       "createdAt": "2026-01-28T00:00:00Z",
-      "updatedAt": "2026-02-02T06:03:07Z",
-      "notes": ""
+      "updatedAt": "2026-02-04T00:30:00Z",
+      "notes": "BLOCKED: Necesário input do Vinicius. Quais eventos dispara alert? Template da mensagem? Channel priority?"
     },
     {
       "id": "4",

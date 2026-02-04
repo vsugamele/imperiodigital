@@ -1,5 +1,30 @@
 # Alex Activity Log
 
+## 2026-02-04
+
+### 🌙 Midnight Autopilot (00:00-03:00)
+**Status:** standby
+
+**Decisões do Autopilot:**
+1. 🔴 Tarefa 1 (no_cost scheduler) → BLOCKED
+   - Motivo: Necesário input do Vinicius
+   - Nota: "O que é 'no_cost'? Quais scripts/images estão envolvidos?"
+
+2. 🔴 Tarefa 3 (alerts automáticos) → BLOCKED
+   - Motivo: Necesário input do Vinicius
+   - Nota: "Quais eventos dispara alert? Template da mensagem?"
+
+**Estado Atual:**
+- Doing: 0 tarefas
+- Blocked: 4 tarefas (V1, B0, 1, 3) - todas esperando input
+- In Progress: 3 tarefas (E7, E8, E9)
+- Done Today: 0
+
+**Ação Requerida:**
+- Vinicius precisa responder às tarefas bloqueadas para destravar
+
+---
+
 ## 2026-02-03
 
 ### 🌙 Evening Session (18:00-21:00)
