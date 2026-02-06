@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import OfertasHub from "./OfertasHub";
 
 type AlexStatus = {
   status: "thinking" | "working" | "standby" | "error";
@@ -92,7 +93,7 @@ export default function CommandCenter() {
   const [pipelines, setPipelines] = useState<PipelineStatus[]>([]);
   const [cronJobs, setCronJobs] = useState<CronJob[]>([]);
   const [metrics, setMetrics] = useState<SystemMetric[]>([]);
-  const [activeTab, setActiveTab] = useState<"overview" | "pipelines" | "alex" | "architecture" | "schedule" | "crabwalk" | "chat">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "pipelines" | "alex" | "architecture" | "schedule" | "crabwalk" | "chat" | "research" | "ofertas">("overview");
   const [currentTime, setCurrentTime] = useState(new Date());
   const [chatMessages, setChatMessages] = useState<Array<{
     role: 'user' | 'assistant',
@@ -228,6 +229,8 @@ export default function CommandCenter() {
     { id: "overview", label: "📊 Overview", icon: "📊" },
     { id: "pipelines", label: "🔄 Pipelines", icon: "🔄" },
     { id: "alex", label: "🤖 Alex Live", icon: "🤖" },
+    { id: "research", label: "🔍 Research", icon: "🔍" },
+    { id: "ofertas", label: "🚀 Lançamentos", icon: "🚀" },
     { id: "architecture", label: "🏗️ Arquitetura", icon: "🏗️" },
     { id: "schedule", label: "📅 Cronograma", icon: "📅" },
     { id: "crabwalk", label: "🦀 Crabwalk", icon: "🦀" },
@@ -632,6 +635,38 @@ export default function CommandCenter() {
           </div>
         )}
 
+        {/* RESEARCH HUB */}
+        {activeTab === "research" && (
+          <div style={{ height: 'calc(100vh - 200px)', borderRadius: '16px', overflow: 'hidden' }}>
+            <div style={{
+              padding: '16px 20px',
+              borderBottom: '1px solid rgba(255,255,255,0.1)',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              background: 'rgba(0,0,0,0.3)'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <span style={{ fontSize: '24px' }}>🔍</span>
+                <div>
+                  <h3 style={{ margin: 0, fontSize: '16px', fontWeight: 700 }}>YouTube Research Hub</h3>
+                  <p style={{ margin: 0, fontSize: '11px', opacity: 0.6 }}>Analise comentários e identifique oportunidades</p>
+                </div>
+              </div>
+            </div>
+            <iframe
+              src="/dashboard?tab=research-hub"
+              style={{
+                width: '100%',
+                height: 'calc(100% - 60px)',
+                border: 'none',
+                background: '#0a0a0a'
+              }}
+              title="Research Hub"
+            />
+          </div>
+        )}
+
         {/* CRABWALK */}
         {activeTab === "crabwalk" && (
           <div style={{ height: 'calc(100vh - 200px)', borderRadius: '16px', overflow: 'hidden' }}>
@@ -677,6 +712,11 @@ export default function CommandCenter() {
               title="Crabwalk Monitor"
             />
           </div>
+        )}
+
+        {/* OFERTAS HUB */}
+        {activeTab === "ofertas" && (
+          <OfertasHub />
         )}
 
         {/* CHAT */}
