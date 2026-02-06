@@ -16,7 +16,7 @@ function ensureLog() {
   if (!fs.existsSync(LOG_PATH)) {
     fs.writeFileSync(
       LOG_PATH,
-      'date_time,profile,run_id,video_file,image_file,drive_video_path,drive_image_path,uploadpost_user,platform,status,scheduled_date,timezone,job_id,request_id,uploadpost_response,error\n'
+      'date_time,profile,run_id,video_file,image_file,drive_video_path,drive_image_path,uploadpost_user,platform,status,caption,scheduled_date,timezone,job_id,request_id,uploadpost_response,error\n'
     );
   }
 }
@@ -34,6 +34,7 @@ function appendLog(row) {
     row.uploadpost_user,
     row.platform,
     row.status,
+    row.caption || '',
     row.scheduled_date,
     row.timezone,
     row.job_id,

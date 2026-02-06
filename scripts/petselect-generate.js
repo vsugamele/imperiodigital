@@ -1,41 +1,100 @@
 /**
- * PetSelectUK generator
- * - Downloads a random product image from Drive (2026/PetSelectUK/products)
- * - Uses style refs from Drive (2026/PetSelectUK/style_refs)
- * - Generates:
- *   - 1 image 4:5
- *   - 5 carousel slides (4:5)
- *   - 1 reels base image 9:16 (derived prompt) + MP4 9:16 10s zoom
- * - Uploads outputs to Drive (2026/PetSelectUK/outputs/...)
+ * PetSelectUK generator - Vertex AI OAuth2
+ * Service Account Authentication (no external deps)
  */
 
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
+const fetch = globalThis.fetch;
+const crypto = require('crypto');
 
 const { loadOpsEnv } = require('./_load-ops-env');
 loadOpsEnv();
 
-// Gemini key must be provided via env (ops-dashboard/.env.local)
-const GEMINI_API_KEY = (process.env.GEMINI_API_KEY || '').trim();
-if (!GEMINI_API_KEY) {
-  throw new Error('Missing GEMINI_API_KEY (set it in ops-dashboard/.env.local)');
+// Load Service Account
+const SA_PATH = path.join(__dirname, '..', 'ops-dashboard', 'vertex-sa.json');
+let SA;
+try {
+  SA = JSON.parse(fs.readFileSync(SA_PATH, 'utf8'));
+} catch {
+  throw new Error('Service account not found: ' + SA_PATH);
 }
-const RCLONE_PATH = 'C:\\Users\\vsuga\\clawd\\rclone.exe';
 
+// Create JWT for OAuth2
+function createJwt() {
+  const now = Math.floor(Date.now() / 1000);
+  const header = { alg: 'RS256', typ: 'JWT' };
+  const payload = {
+    iss: SA.client_email,
+    sub: SA.client_email,
+    aud: 'https://oauth2.googleapis.com/token',
+    iat: now,
+    exp: now + 3600,
+    scope: 'https://www.googleapis.com/auth/cloud-platform'
+  };
+  
+  const headerB64 = Buffer.from(JSON.stringify(header)).toString('base64url');
+  const payloadB64 = Buffer.from(JSON.stringify(payload)).toString('base64url');
+  const signingInput = headerB64 + '.' + payloadB64;
+  
+  const sign = crypto.createSign('RSA-SHA256');
+  sign.update(signingInput);
+  sign.end();
+  const signature = sign.sign(SA.private_key, 'base64url');
+  
+  return signingInput + '.' + signature;
+}
+
+// Get OAuth2 Token
+let accessToken = null;
+let tokenExpiry = 0;
+
+async function getAccessToken() {
+  const now = Date.now();
+  if (accessToken && now < tokenExpiry) return accessToken;
+
+  console.log('🔐 Getting OAuth2 token...');
+  const jwt = createJwt();
+
+  try {
+    const response = await fetch('https://oauth2.googleapis.com/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+        assertion: jwt
+      })
+    });
+
+    const data = await response.json();
+    if (data.error) throw new Error(data.error_description || data.error);
+
+    accessToken = data.access_token;
+    tokenExpiry = now + (data.expires_in * 1000) - 60000;
+    console.log('✅ Token obtained');
+    return accessToken;
+  } catch (e) {
+    console.log('❌ OAuth error:', e.message);
+    throw e;
+  }
+}
+
+const RCLONE_PATH = 'C:\\Users\\vsuga\\clawd\\rclone.exe';
 const ROOT_2026_ID = '1rtxKtTlZ6MHR0iv1Kcmh5DDfSN-clyEp';
 const BASE_REMOTE = `gdrive,root_folder_id=${ROOT_2026_ID}:PetSelectUK`;
 
 const LOCAL_DIR = 'C:\\Users\\vsuga\\clawd\\petselectuk';
 const LOCAL_PRODUCTS = path.join(LOCAL_DIR, 'products');
 const LOCAL_STYLE = path.join(LOCAL_DIR, 'style_refs');
+const LOCAL_REF = path.join(LOCAL_DIR, 'references');
 const LOCAL_OUT = path.join(LOCAL_DIR, 'outputs');
 const LOCAL_IMG = path.join(LOCAL_OUT, 'images');
 const LOCAL_CAR = path.join(LOCAL_OUT, 'carousels');
 const LOCAL_REELS = path.join(LOCAL_OUT, 'reels');
 
-[LOCAL_DIR, LOCAL_PRODUCTS, LOCAL_STYLE, LOCAL_OUT, LOCAL_IMG, LOCAL_CAR, LOCAL_REELS].forEach(d => {
+[LOCAL_DIR, LOCAL_PRODUCTS, LOCAL_STYLE, LOCAL_REF, LOCAL_OUT, LOCAL_IMG, LOCAL_CAR, LOCAL_REELS].forEach(d => {
   if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: true });
 });
 
@@ -46,232 +105,173 @@ function rclone(args) {
 }
 
 function listRemoteFiles(remotePath) {
-  const out = rclone(`lsf "${remotePath}" --files-only`);
-  return out.trim().split('\n').filter(Boolean);
+  try {
+    const out = rclone(`lsf "${remotePath}" --files-only`);
+    return out.trim().split('\n').filter(Boolean);
+  } catch { return []; }
 }
 
 function copyRandom(remoteBase, localDestDir) {
   const files = listRemoteFiles(remoteBase).filter(f => f.match(/\.(png|jpg|jpeg)$/i));
-  if (!files.length) throw new Error('No images in remote: ' + remoteBase);
+  if (!files.length) return null;
   const sel = rand(files);
   const dest = path.join(localDestDir, sel.replace(/[^a-z0-9._-]/gi, '_'));
-  execSync(`"${RCLONE_PATH}" copyto "${remoteBase}/${sel}" "${dest}"`, { stdio: 'pipe' });
-  return dest;
+  try {
+    execSync(`"${RCLONE_PATH}" copyto "${remoteBase}/${sel}" "${dest}"`, { stdio: 'pipe' });
+    return dest;
+  } catch { return null; }
 }
 
-async function geminiGenerateImage({ prompt, refs, label }) {
-  const parts = [{ text: prompt }];
-  for (const p of refs) {
-    const buf = fs.readFileSync(p);
-    const b64 = buf.toString('base64');
-    const ext = path.extname(p).toLowerCase();
-    const mime = ext === '.png' ? 'image/png' : 'image/jpeg';
-    parts.push({ inline_data: { mime_type: mime, data: b64 } });
-  }
-
-  const payload = {
-    contents: [{ parts }],
-    generationConfig: {
-      responseModalities: ['IMAGE'],
-      imageConfig: { imageSize: '2K' }
-    }
-  };
-
-  return new Promise((resolve) => {
-    const req = https.request({
-      hostname: 'generativelanguage.googleapis.com',
-      path: `/v1beta/models/gemini-3-pro-image-preview:generateContent?key=${GEMINI_API_KEY}`,
+// Generate Image
+async function vertexGenerateImage({ prompt, label, size }) {
+  console.log(`🎨 ${label}...`);
+  try {
+    const token = await getAccessToken();
+    
+    // Try the publisher model endpoint (simpler format)
+    const url = `https://us-central1-aiplatform.googleapis.com/v1beta1/projects/${SA.project_id}/locations/us-central1/publishers/google/models/imagen-4.0-generate-001:predict`;
+    
+    console.log(`📡 Trying endpoint...`);
+    
+    const response = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      timeout: 180000
-    }, (res) => {
-      let body = '';
-      res.on('data', (c) => body += c);
-      res.on('end', () => {
-        try {
-          const resp = JSON.parse(body);
-          const part = resp.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
-
-          // Telemetry: log usage (tokens/cost) if present
-          try {
-            const { appendAiUsage } = require('./ai-usage');
-            const usage = resp.usageMetadata || {};
-            appendAiUsage({
-              ts: new Date().toISOString(),
-              provider: 'gemini',
-              model: 'gemini-3-pro-image-preview',
-              project: 'petselectuk',
-              inputTokens: usage.promptTokenCount || usage.promptTokens || 0,
-              outputTokens: usage.candidatesTokenCount || usage.candidatesTokens || 0,
-              meta: { kind: 'image', label }
-            });
-          } catch {}
-
-          resolve(part ? Buffer.from(part.inlineData.data, 'base64') : null);
-        } catch (e) {
-          console.log('❌ Gemini parse error', label || '', e.message);
-          resolve(null);
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        instances: [{ prompt: prompt }],
+        parameters: {
+          imageSize: size,
+          outputMimeType: 'image/png'
         }
+      })
+    });
+
+    const text = await response.text();
+    console.log(`📡 Status: ${response.status}`);
+    
+    if (response.status === 404) {
+      // Try another format
+      const url2 = `https://${SA.project_id}.googleapis.com/v1/projects/${SA.project_id}/locations/us-central1/publishers/google/models/imagen-4.0-generate-001:predict`;
+      console.log(`📡 Trying alternate...`);
+      
+      const response2 = await fetch(url2, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          instances: [{ prompt: prompt }],
+          parameters: {
+            imageSize: size,
+            outputMimeType: 'image/png'
+          }
+        })
       });
-    });
-
-    req.on('timeout', () => {
-      console.log('❌ Gemini timeout', label || '');
-      req.destroy(new Error('timeout'));
-      resolve(null);
-    });
-
-    req.on('error', (e) => {
-      console.log('❌ Gemini request error', label || '', e.message);
-      resolve(null);
-    });
-
-    req.write(JSON.stringify(payload));
-    req.end();
-  });
+      
+      const text2 = await response2.text();
+      console.log(`📡 Status2: ${response2.status}`);
+      
+      if (response2.status >= 400) {
+        console.log(`   → Error:`, text2.substring(0, 300));
+        return null;
+      }
+      
+      try {
+        const data = JSON.parse(text2);
+        if (data.predictions?.[0]?.bytesBase64Encoded) {
+          console.log(`✅ ${label} OK`);
+          return Buffer.from(data.predictions[0].bytesBase64Encoded, 'base64');
+        }
+      } catch {}
+      return null;
+    }
+    
+    if (response.status >= 400) {
+      console.log(`   → Error:`, text.substring(0, 300));
+      return null;
+    }
+    
+    try {
+      const data = JSON.parse(text);
+      if (data.predictions?.[0]?.bytesBase64Encoded) {
+        console.log(`✅ ${label} OK`);
+        return Buffer.from(data.predictions[0].bytesBase64Encoded, 'base64');
+      }
+      console.log(`⚠️ Data:`, JSON.stringify(data).substring(0, 200));
+    } catch {}
+    return null;
+  } catch (e) {
+    console.log(`❌ ${label}:`, e.message);
+    return null;
+  }
 }
 
 function createReelVideo(imgPath, outMp4) {
-  const zoomFilter = "scale=1200:-1,zoompan=z='min(zoom+0.0006,1.12)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=250:s=1080x1920"; // ~10s @25fps
-  const cmd = `ffmpeg -y -loop 1 -r 25 -i "${imgPath}" -vf "${zoomFilter}" -c:v libx264 -preset veryfast -pix_fmt yuv420p -t 10 "${outMp4}"`;
-  execSync(cmd, { stdio: 'ignore' });
+  const cmd = `ffmpeg -y -loop 1 -r 25 -i "${imgPath}" -vf "scale=1200:-1,zoompan=z='min(zoom+0.0006,1.12)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=250:s=1080x1920" -c:v libx264 -preset veryfast -pix_fmt yuv420p -t 10 "${outMp4}"`;
+  try { execSync(cmd, { stdio: 'ignore' }); } catch { console.log('⚠️ FFmpeg unavailable'); }
 }
 
-function uploadOutputsToDrive({ runId, files }) {
-  // files: { images:[], carousels:[], reels:[] }
-  const up = (local, remote) => execSync(`"${RCLONE_PATH}" copyto "${local}" "${remote}"`, { stdio: 'pipe' });
-
-  for (const p of files.images || []) {
-    const remote = `${BASE_REMOTE}/outputs/images/${path.basename(p)}`;
-    up(p, remote);
-  }
-  for (const p of files.carousels || []) {
-    const remote = `${BASE_REMOTE}/outputs/carousels/${path.basename(p)}`;
-    up(p, remote);
-  }
-  for (const p of files.reels || []) {
-    const remote = `${BASE_REMOTE}/outputs/reels/${path.basename(p)}`;
-    up(p, remote);
-  }
+function uploadOutputs(files) {
+  const up = (local, remote) => {
+    try { execSync(`"${RCLONE_PATH}" copyto "${local}" "${remote}"`, { stdio: 'pipe' }); } 
+    catch { console.log(`⚠️ Upload failed: ${path.basename(local)}`); }
+  };
+  for (const p of files.images || []) up(p, `${BASE_REMOTE}/outputs/images/${path.basename(p)}`);
+  for (const p of files.carousels || []) up(p, `${BASE_REMOTE}/outputs/carousels/${path.basename(p)}`);
+  for (const p of files.reels || []) up(p, `${BASE_REMOTE}/outputs/reels/${path.basename(p)}`);
 }
 
 async function main() {
   const runId = Date.now();
+  console.log('📦 Downloading references...');
 
-  // download one product + 2 style refs
   const product = copyRandom(`${BASE_REMOTE}/products`, LOCAL_PRODUCTS);
   const style1 = copyRandom(`${BASE_REMOTE}/style_refs`, LOCAL_STYLE);
   const style2 = copyRandom(`${BASE_REMOTE}/style_refs`, LOCAL_STYLE);
+  const personRef = copyRandom(`${BASE_REMOTE}/references`, LOCAL_REF);
 
-  const baseRefs = [product, style1, style2];
+  // Main Image 4:5
+  const imgPrompt = `Create premium UK pet e-commerce Instagram post (4:5). Product from reference. Keep packaging/logo. ${personRef ? 'IMPORTANT: Include the SAME PERSON from reference image in ALL shots with consistent face and appearance. The person must look identical across all images.' : ''} Big headline, 3 bullet points. Footer: "PetSelectUK" + "UK Delivery".`;
 
-  // IMAGE 4:5
-  const imgPrompt = `Create a premium UK pet e-commerce Instagram post (4:5 portrait).
-
-Use the real PRODUCT from reference image. Keep the exact product packaging/logo unchanged.
-Style inspiration: use the STYLE references for typography/layout vibe (clean, playful doodles, UK premium).
-
-Content theme: PetSelectUK (UK-based, ethical, friendly). British humour is welcome but keep it subtle.
-
-Design rules:
-- 4:5 aspect ratio
-- Clean background, product + pet context (dog/cat) but do NOT change the product branding
-- Big readable headline (max 6 words)
-- 3 short bullet points
-- Small footer: "PetSelectUK" + "UK Delivery"
-
-No medical claims. If mentioning health, use generic language only.
-`; 
-
-  console.log('🖼️  Generating image 4:5...');
-  const imgBuf = await geminiGenerateImage({ prompt: imgPrompt, refs: baseRefs, label: 'image_4x5' });
-  if (!imgBuf) throw new Error('Failed to generate image');
+  const imgBuf = await vertexGenerateImage({ prompt: imgPrompt, label: '🖼️ Image', size: { width: 1024, height: 1280 } });
+  if (!imgBuf) throw new Error('Failed main image');
   const imgPath = path.join(LOCAL_IMG, `petselectuk_image_${runId}.png`);
   fs.writeFileSync(imgPath, imgBuf);
 
-  // CAROUSEL 5 slides 4:5
-  const carouselTopics = [
-    'Bath day mistakes (UK edition)',
-    'Rainy day walk essentials',
-    'Dog-friendly pub etiquette',
-    'Sensitive skin: what to look for (ask your vet)',
-    'Quick recap + CTA'
-  ];
-
+  // Carousel 5 slides
+  const topics = ['Bath day mistakes (UK)', 'Rainy day walk essentials', 'Dog-friendly pub etiquette', 'Sensitive skin tips', 'Quick recap + CTA'];
   const carouselPaths = [];
+  
   for (let i = 0; i < 5; i++) {
-    const slidePrompt = `Create slide ${i + 1}/5 of a UK pet Instagram carousel (4:5 portrait).
-
-Keep style consistent across slides. Use PetSelectUK brand vibe.
-Use the PRODUCT reference but you may show it smaller as a corner element.
-
-Slide topic: ${carouselTopics[i]}
-
-Rules:
-- 4:5 aspect
-- Very large headline + 2-3 short lines max
-- Clean layout, doodles ok
-- Footer: "@petselectuk".
-No medical claims.
-`;
-    console.log(`🧩 Generating carousel slide ${i + 1}/5...`);
-    // Delay para evitar rate limit da Gemini API
-    if (i > 0) {
-      console.log('⏳ Waiting 5s to avoid rate limit...');
-      await new Promise(r => setTimeout(r, 5000));
-    }
-    const buf = await geminiGenerateImage({ prompt: slidePrompt, refs: baseRefs, label: `carousel_${i + 1}` });
-    if (!buf) throw new Error('Failed to generate carousel slide ' + (i + 1));
-    const p = path.join(LOCAL_CAR, `petselectuk_carousel_${runId}_${i + 1}.png`);
+    const buf = await vertexGenerateImage({ 
+      prompt: `Slide ${i+1}/5: ${topics[i]}. Instagram carousel 4:5. Product corner. PetSelectUK. ${personRef ? 'IMPORTANT: Include the SAME PERSON from reference with consistent face and appearance across ALL images.' : ''}`, 
+      label: `🧩 Carousel ${i+1}/5`, size: { width: 1024, height: 1280 } 
+    });
+    if (!buf) throw new Error(`Carousel ${i+1} failed`);
+    const p = path.join(LOCAL_CAR, `petselectuk_carousel_${runId}_${i+1}.png`);
     fs.writeFileSync(p, buf);
     carouselPaths.push(p);
+    if (i < 4) await new Promise(r => setTimeout(r, 3000));
   }
 
-  // REELS 9:16 base image + mp4
-  const reelsPrompt = `Create a 9:16 Instagram Reels cover image for UK pet e-commerce.
-
-Use the real PRODUCT from reference image and keep branding unchanged.
-Style inspiration: the STYLE references (clean, UK premium, subtle humour).
-
-Text overlay (big, readable): "UK Delivery. Properly."\nSmaller line: "PetSelectUK"
-
-Rules:
-- 9:16 aspect ratio
-- Modern typography, high contrast
-- Clean background, product hero
-`;
-
-  console.log('🎞️  Generating reels 9:16 cover...');
-  const reelsBuf = await geminiGenerateImage({ prompt: reelsPrompt, refs: baseRefs, label: 'reels_9x16' });
-  if (!reelsBuf) throw new Error('Failed to generate reels image');
+  // Reels 9:16
+  const reelsBuf = await vertexGenerateImage({ 
+    prompt: `Instagram Reels cover 9:16. Text: "UK Delivery. Properly." + "PetSelectUK". Product shown. ${personRef ? 'IMPORTANT: Show the SAME PERSON from reference with consistent face.' : ''}`, 
+    label: '🎞️ Reels', size: { width: 1024, height: 1792 } 
+  });
+  if (!reelsBuf) throw new Error('Reels failed');
   const reelsImg = path.join(LOCAL_REELS, `petselectuk_reels_${runId}.png`);
   fs.writeFileSync(reelsImg, reelsBuf);
 
   const reelsMp4 = path.join(LOCAL_REELS, `petselectuk_reels_${runId}.mp4`);
   createReelVideo(reelsImg, reelsMp4);
 
-  // upload outputs to Drive
-  uploadOutputsToDrive({ runId, files: { images: [imgPath], carousels: carouselPaths, reels: [reelsImg, reelsMp4] } });
+  uploadOutputs({ images: [imgPath], carousels: carouselPaths, reels: [reelsImg, reelsMp4] });
 
-  // write local meta
-  const metaDir = path.join('C:\\Users\\vsuga\\clawd', 'results', 'runs', 'petselectuk');
-  if (!fs.existsSync(metaDir)) fs.mkdirSync(metaDir, { recursive: true });
-  fs.writeFileSync(path.join(metaDir, `${runId}.json`), JSON.stringify({
-    runId,
-    createdAt: new Date(runId).toISOString(),
-    product: path.basename(product),
-    refs: baseRefs.map(p => path.basename(p)),
-    outputs: {
-      image: path.basename(imgPath),
-      carousel: carouselPaths.map(p => path.basename(p)),
-      reels: [path.basename(reelsImg), path.basename(reelsMp4)]
-    }
-  }, null, 2));
-
-  console.log(JSON.stringify({ ok: true, runId, imgPath, carouselPaths, reelsMp4 }, null, 2));
+  console.log('\n✅ DONE!', { runId });
 }
 
-main().catch((e) => {
-  console.error(e);
-  process.exit(1);
-});
+main().catch(e => { console.error(e); process.exit(1); });

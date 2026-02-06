@@ -8,7 +8,10 @@ function loadJson(p) {
 }
 
 function buildCaption({ profile, imageCopy } = {}) {
-  // Carrega configuração de hashtags
+  // Copy fixa para iGaming
+  const copy = "🔥 *Manda aqui 🔥👇🏻*";
+  
+  // Hashtags (opcional - pode ser removido se necessário)
   const cfgPath = fs.existsSync(path.join(ROOT, 'config', 'igaming-captions.json'))
     ? path.join(ROOT, 'config', 'igaming-captions.json')
     : path.join(ROOT, 'config', 'igaming-captions.example.json');
@@ -16,7 +19,7 @@ function buildCaption({ profile, imageCopy } = {}) {
   const cfg = loadJson(cfgPath);
   const tags = cfg.hashtags || [];
 
-  // Seleciona 1-2 hashtags aleatórias
+  // Seleciona 1 hashtag aleatória
   const count = Math.random() < 0.25 ? 2 : 1;
   const chosen = [];
   while (chosen.length < Math.min(count, tags.length)) {
@@ -24,21 +27,8 @@ function buildCaption({ profile, imageCopy } = {}) {
     if (!chosen.includes(t)) chosen.push(t);
   }
 
-  // Sempre usa "Manda aqui! 🔥" como base
-  let text = "Manda aqui! 🔥";
-
-  // Se tiver o copy da imagem, adiciona variação
-  if (imageCopy) {
-    const variations = [
-      `Manda aqui! 🔥\n\n${imageCopy}`,
-      `${imageCopy}\n\nManda aqui! 🔥`,
-      `Viu isso? ${imageCopy}\n\nManda aqui! 🔥`,
-    ];
-    text = variations[Math.floor(Math.random() * variations.length)];
-  }
-
-  // Hashtags no final
-  const caption = [text, chosen.join(' ')].filter(Boolean).join('\n\n').trim();
+  // Caption final
+  const caption = [copy, chosen.join(' ')].filter(Boolean).join('\n\n').trim();
 
   return { caption, bucket: 'manda_aqui', profile: profile || null, hashtags: chosen };
 }

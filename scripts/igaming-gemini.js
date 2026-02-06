@@ -101,23 +101,8 @@ const SCENARIOS = {
     ]
 };
 
-// Copys iGaming (baseadas nas referências)
-const COPYS = [
-    "QUAL O SEU BOLETO MAIS CARO? DEIXA AQUI NOS COMENTÁRIOS 👇🔥",
-    "Manda aqui e concorra 🎁🔥",
-    "Participa aqui 🫡💰",
-    "Manda que eu to sorteando 🎁😎",
-    "Comenta aqui e ganha 🔥🫡",
-    "Manda aqui pro prêmio 💰👇",
-    "Quer saber como eu faço? Comenta EU QUERO 👇",
-    "Quem quer participar? Deixa o 🔥 nos comentários",
-    "Isso aqui é real, comenta pra participar 💰",
-    "Manda a reação e participa 🎲✨",
-    "Próximo ganhador pode ser você 🎁💰",
-    "Manda que eu to de olho 👀🫡",
-    "Comenta e concorre 😎💰",
-    "Tá esperando o que? Comenta aqui! 🔥🫡"
-];
+// Copy iGaming
+const COPY = "🔥 *Manda aqui 🔥👇🏻*";
 
 function getRandomItem(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
@@ -299,7 +284,7 @@ async function generateForProfile(profileName, category, count, aspectRatio, res
 
     for (let i = 0; i < selected.length; i++) {
         const scenario = selected[i];
-        const copy = getRandomItem(COPYS);
+        const copy = COPY;
 
         console.log(`\n[${i + 1}/${count}] 🎬 ${scenario.substring(0, 50)}...`);
 

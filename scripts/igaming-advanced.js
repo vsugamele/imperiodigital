@@ -68,15 +68,8 @@ const SCENARIOS = {
     cassino: ["em cassino luxuoso de Las Vegas", "em mesa de poker VIP", "em sala de roleta"]
 };
 
-// Copys iGaming Base
-const BASE_COPYS = [
-    "QUER GANHAR UM P!X DE PRESENTE? COMENTA 'EU QUERO' 👇🔥",
-    "ESTOU ESCOLHENDO 5 PESSOAS PARA DAR UM PRESENTE NO P!X! COMENTA 👇🎁",
-    "MANDA O SEU P!X NOS COMENTÁRIOS E CONCORRA AGORA! 🚀💰",
-    "PRESENTE SURPRESA PARA QUEM COMENTAR MAIS! 👇🔥",
-    "COMENTA 'MEU P!X' E REZE PARA SER ESCOLHIDO! 🙏💰",
-    "VOU MANDAR UM P!X PRA QUEM COMENTAR ESTOQUE! 👇💎"
-];
+// Copy iGaming Base
+const BASE_COPY = "🔥 *Manda aqui 🔥👇🏻*";
 
 function getRandomItem(arr) {
     if (!arr || arr.length === 0) return null;
@@ -230,7 +223,7 @@ async function runProfile(profileName, category, count, aspect, resolution) {
 
     for (let i = 0; i < selected.length; i++) {
         const scenario = selected[i];
-        const copy = getRandomItem(BASE_COPYS);
+        const copy = BASE_COPY;
 
         console.log(`\n[${i + 1}/${count}] 🎬 ${category || 'LIFESTYLE'} -> ${scenario}`);
 
