@@ -1,3 +1,4 @@
+// Version: 1.2.3 - PIN Security Implementation
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
