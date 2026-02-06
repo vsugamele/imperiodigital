@@ -1,5 +1,7 @@
-// Version: 1.2.4 - PIN Security Implementation (No Supabase dependency in middleware)
+// Version: 2.0.0 - PIN Security with Environment Variable
 import { NextResponse, type NextRequest } from "next/server";
+
+const AUTH_PIN = process.env.AUTH_PIN || "000000";
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -18,7 +20,7 @@ export async function middleware(request: NextRequest) {
   const authPin = request.cookies.get("auth_pin")?.value;
   const isLoginPage = pathname === "/login";
 
-  if (authPin === "464321") {
+  if (authPin === AUTH_PIN) {
     if (isLoginPage) {
       const url = request.nextUrl.clone();
       url.pathname = "/dashboard";

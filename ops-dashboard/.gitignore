@@ -39,3 +39,19 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# credentials & secrets
+vertex-sa.json
+*.json.bak
+*.key
+*.pem
+*.p12
+
+# temp files
+tmp/
+tmp_ffmpeg/
+*.log
+
+# IDE
+.vscode/
+.idea/

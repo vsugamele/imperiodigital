@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import fs from "node:fs";
+import * as fs from "fs";
 
 // Local-only endpoint: reads Clawdbot cron jobs store.
 // NOTE: This dashboard runs on the same machine, so we can read the file directly.
