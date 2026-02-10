@@ -3,18 +3,24 @@ import { NextResponse, type NextRequest } from "next/server";
 
 const AUTH_PIN = process.env.AUTH_PIN || "000000";
 
-// Force edge runtime explicitly if needed, though it's default
-export const runtime = 'experimental-edge';
+// Use standard edge runtime
+export const runtime = 'edge';
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // 1. Skip static assets, internal next and auth api
+  // 1. Skip static assets and internal paths
+  // Using a more robust check for extensions
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/api/auth') ||
-    pathname.includes('favicon.ico') ||
-    pathname.match(/\.(.*)$/)
+    pathname.includes('favicon.') ||
+    pathname.includes('icon-') ||
+    pathname.includes('.png') ||
+    pathname.includes('.jpg') ||
+    pathname.includes('.jpeg') ||
+    pathname.includes('.ico') ||
+    pathname.includes('.svg')
   ) {
     return NextResponse.next();
   }
@@ -43,5 +49,14 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api/auth|_next/static|_next/image|favicon.ico).*)"],
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api/auth (auth api)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico, sitemap.xml, robots.txt (metadata files)
+     */
+    '/((?!api/auth|_next/static|_next/image|favicon.ico|favicon.png|.*\\.).*)',
+  ],
 };
