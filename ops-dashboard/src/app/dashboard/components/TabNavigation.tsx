@@ -25,62 +25,101 @@
 import React from "react";
 
 export type TabId =
-    | "overview"
-    | "pipelines"
-    | "alex"
-    | "research"
-    | "ofertas"
-    | "architecture"
-    | "schedule"
-    | "crabwalk"
-    | "chat";
-
-interface Tab {
-    id: TabId;
-    label: string;
-    icon: string;
-}
+    | "overview" | "alex" | "architecture" | "chat"
+    | "bu_hub" | "ofertas" | "verticais"
+    | "pipelines" | "schedule" | "seguranca" | "financeiro" | "operacional" | "mapa" | "research" | "crabwalk"
+    | "docs";
 
 interface TabNavigationProps {
     activeTab: TabId;
-    onTabChange: (tabId: TabId) => void;
+    onTabChange: (tab: TabId) => void;
 }
 
-const TABS: Tab[] = [
-    { id: "overview", label: "Overview", icon: "📊" },
-    { id: "pipelines", label: "Pipelines", icon: "🔄" },
-    { id: "alex", label: "Alex Live", icon: "🤖" },
-    { id: "research", label: "Research", icon: "🔍" },
-    { id: "ofertas", label: "Lançamentos", icon: "🚀" },
-    { id: "architecture", label: "Arquitetura", icon: "🏗️" },
-    { id: "schedule", label: "Cronograma", icon: "📅" },
-    { id: "crabwalk", label: "Crabwalk", icon: "🦀" },
-    { id: "chat", label: "Chat", icon: "💬" },
+const CATEGORIES = [
+    {
+        label: "Commands",
+        tabs: [
+            { id: "overview", label: "Overview", icon: "📊" },
+            { id: "alex", label: "Alex Core", icon: "🤖" },
+            { id: "architecture", label: "Architecture", icon: "🏗️" },
+            { id: "docs", label: "Docs", icon: "📚" },
+            { id: "chat", label: "Chat", icon: "💬" },
+        ]
+    },
+    {
+        label: "Business Units",
+        tabs: [
+            { id: "bu_hub", label: "BU Hub", icon: "🏢" },
+            { id: "ofertas", label: "Ofertas", icon: "💰" },
+            { id: "verticais", label: "Verticais", icon: "🚀" },
+        ]
+    },
+    {
+        label: "Control Plane",
+        tabs: [
+            { id: "pipelines", label: "Pipelines", icon: "⛓️" },
+            { id: "schedule", label: "Schedule", icon: "📅" },
+            { id: "seguranca", label: "Segurança", icon: "🛡️" },
+            { id: "financeiro", label: "Financeiro", icon: "📈" },
+            { id: "operacional", label: "Operacional", icon: "⚙️" },
+            { id: "mapa", label: "Mapa", icon: "🗺️" },
+        ]
+    }
 ];
 
 export function TabNavigation({ activeTab, onTabChange }: TabNavigationProps) {
     return (
-        <nav style={{
-            padding: "16px 40px",
+        <nav className="tab-navigation" style={{
+            padding: "0 40px",
+            borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
+            background: "rgba(0,0,0,0.2)",
             display: "flex",
-            gap: "8px",
-            borderBottom: "1px solid rgba(255,255,255,0.05)",
-            overflowX: "auto"
+            gap: "32px"
         }}>
-            {TABS.map(tab => (
-                <TabButton
-                    key={tab.id}
-                    tab={tab}
-                    isActive={activeTab === tab.id}
-                    onClick={() => onTabChange(tab.id)}
-                />
+            {CATEGORIES.map(category => (
+                <div key={category.label} style={{ display: "flex", flexDirection: "column" }}>
+                    <span style={{
+                        fontSize: "10px",
+                        textTransform: "uppercase",
+                        letterSpacing: "1px",
+                        color: "rgba(255,255,255,0.3)",
+                        padding: "12px 0 4px",
+                        fontWeight: 600
+                    }}>
+                        {category.label}
+                    </span>
+                    <div style={{ display: "flex", gap: "8px", paddingBottom: "12px" }}>
+                        {category.tabs.map(tab => (
+                            <button
+                                key={tab.id}
+                                onClick={() => onTabChange(tab.id as TabId)}
+                                style={{
+                                    padding: "8px 16px",
+                                    borderRadius: "8px",
+                                    border: "none",
+                                    background: activeTab === tab.id ? "rgba(255,255,255,0.08)" : "transparent",
+                                    color: activeTab === tab.id ? "#fff" : "rgba(255,255,255,0.5)",
+                                    cursor: "pointer",
+                                    fontSize: "13px",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "8px",
+                                    transition: "all 0.2s ease"
+                                }}
+                            >
+                                <span>{tab.icon}</span>
+                                <span style={{ fontWeight: activeTab === tab.id ? 600 : 400 }}>{tab.label}</span>
+                            </button>
+                        ))}
+                    </div>
+                </div>
             ))}
         </nav>
     );
 }
 
 // Componente auxiliar para botão de tab
-function TabButton({ tab, isActive, onClick }: { tab: Tab; isActive: boolean; onClick: () => void }) {
+function TabButton({ tab, isActive, onClick }: { tab: { id: TabId; label: string; icon: string; }; isActive: boolean; onClick: () => void }) {
     return (
         <button
             onClick={onClick}

@@ -16,17 +16,16 @@
 
 "use client";
 
-import React from "react";
 import type { PipelineStatus, CronJob, SystemMetric } from "@/types";
+import { Clock } from "./Clock";
 
 interface HeaderProps {
     pipelines: PipelineStatus[];
     cronJobs: CronJob[];
     metrics: SystemMetric[];
-    currentTime: Date;
 }
 
-export function Header({ pipelines, cronJobs, metrics, currentTime }: HeaderProps) {
+export function Header({ pipelines, cronJobs, metrics }: HeaderProps) {
     const healthyPipelines = pipelines.filter(p => p.status === "healthy").length;
     const okJobs = cronJobs.filter(c => c.status === "ok").length;
     const costToday = metrics.find(m => m.name === "Cost Today")?.value ?? 0;
@@ -50,12 +49,13 @@ export function Header({ pipelines, cronJobs, metrics, currentTime }: HeaderProp
                     🎛️ <span style={{ color: "var(--accent)" }}>COMMAND</span> CENTER
                 </h1>
                 <p style={{ margin: "4px 0 0 0", opacity: 0.5, fontSize: "13px" }}>
-                    Empire Control System v2.0 • {currentTime.toLocaleString("pt-BR")}
+                    Empire Control System v2.0
                 </p>
             </div>
 
-            {/* Quick Stats */}
-            <div style={{ display: "flex", gap: "24px" }}>
+            {/* Right Side: Clock & Stats */}
+            <div style={{ display: "flex", alignItems: "center", gap: "32px" }}>
+                <Clock />
                 <QuickStat
                     value={`${healthyPipelines}/${pipelines.length}`}
                     label="Pipelines OK"

@@ -1,0 +1,19 @@
+{
+  "extractedAt": [
+    "2026-02-05T03:01:45.559Z"
+  ],
+  "data": {
+    "https://www.youtube.com/@thiagofinch": {
+      "platform": "youtube",
+      "username": "thiagofinch",
+      "url": "https://www.youtube.com/@thiagofinch",
+      "followers": null,
+      "following": null,
+      "posts": null,
+      "source": null,
+      "extractedAt": "2026-02-05T03:01:45.554Z",
+      "status": "pending_browser",
+      "message": "Aguardando browser relay para extração completa"
+    }
+  }
+}

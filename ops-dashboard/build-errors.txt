@@ -1,0 +1,39 @@
+﻿src/app/api/copy-generator/route.ts(78,52): error TS7006: Parameter 'd' implicitly has an 'any' type.
+src/app/api/copy-generator/route.ts(82,31): error TS7006: Parameter 'dir' implicitly has an 'any' type.
+src/app/api/copy-generator/route.ts(90,14): error TS7006: Parameter 'a' implicitly has an 'any' type.
+src/app/api/copy-generator/route.ts(90,17): error TS7006: Parameter 'b' implicitly has an 'any' type.
+src/app/api/ofertas/hackerverso/route.ts(53,43): error TS2339: Property 'full' does not exist on type 'string | { n: string; name: string; full: string; stat: Stats; }'.
+  Property 'full' does not exist on type 'string'.
+src/app/api/ofertas/hackerverso/route.ts(56,38): error TS2339: Property 'full' does not exist on type 'string | { n: string; name: string; full: string; stat: Stats; }'.
+  Property 'full' does not exist on type 'string'.
+src/app/api/ofertas/hackerverso/route.ts(70,23): error TS2339: Property 'name' does not exist on type 'string | { n: string; name: string; full: string; stat: Stats; }'.
+  Property 'name' does not exist on type 'string'.
+src/app/api/ofertas/hackerverso/route.ts(71,27): error TS2339: Property 'full' does not exist on type 'string | { n: string; name: string; full: string; stat: Stats; }'.
+  Property 'full' does not exist on type 'string'.
+src/app/api/ofertas/hackerverso/route.ts(73,53): error TS2339: Property 'name' does not exist on type 'string | { n: string; name: string; full: string; stat: Stats; }'.
+  Property 'name' does not exist on type 'string'.
+src/app/copy-generator/page.tsx(117,21): error TS2345: Argument of type '(p: Project[]) => (Project | { status: string; etapa: undefined; outputDir: any; id: string; tema: string; produto: string; etapas?: number[] | undefined; createdAt: string; })[]' is not assignable to parameter of type 'SetStateAction<Project[]>'.
+  Type '(p: Project[]) => (Project | { status: string; etapa: undefined; outputDir: any; id: string; tema: string; produto: string; etapas?: number[] | undefined; createdAt: string; })[]' is not assignable to type '(prevState: Project[]) => Project[]'.
+    Type '(Project | { status: string; etapa: undefined; outputDir: any; id: string; tema: string; produto: string; etapas?: number[] | undefined; createdAt: string; })[]' is not assignable to type 'Project[]'.
+      Type 'Project | { status: string; etapa: undefined; outputDir: any; id: string; tema: string; produto: string; etapas?: number[] | undefined; createdAt: string; }' is not assignable to type 'Project'.
+        Type '{ status: string; etapa: undefined; outputDir: any; id: string; tema: string; produto: string; etapas?: number[]; createdAt: string; }' is not assignable to type 'Project'.
+          Types of property 'status' are incompatible.
+            Type 'string' is not assignable to type '"error" | "running" | "completed" | "idle"'.
+src/app/copy-generator/page.tsx(118,25): error TS2345: Argument of type '{ status: string; etapa: undefined; outputDir: any; id: string; tema: string; produto: string; etapas?: number[]; createdAt: string; }' is not assignable to parameter of type 'SetStateAction<Project | null>'.
+  Type '{ status: string; etapa: undefined; outputDir: any; id: string; tema: string; produto: string; etapas?: number[]; createdAt: string; }' is not assignable to type 'Project'.
+    Types of property 'status' are incompatible.
+      Type 'string' is not assignable to type '"error" | "running" | "completed" | "idle"'.
+src/app/copy-generator/page.tsx(127,19): error TS2345: Argument of type '(p: Project[]) => { status: string; id: string; tema: string; produto: string; etapa?: number | undefined; etapas?: number[] | undefined; createdAt: string; outputDir?: string | undefined; }[]' is not assignable to parameter of type 'SetStateAction<Project[]>'.
+  Type '(p: Project[]) => { status: string; id: string; tema: string; produto: string; etapa?: number | undefined; etapas?: number[] | undefined; createdAt: string; outputDir?: string | undefined; }[]' is not assignable to type '(prevState: Project[]) => Project[]'.
+    Type '{ status: string; id: string; tema: string; produto: string; etapa?: number | undefined; etapas?: number[] | undefined; createdAt: string; outputDir?: string | undefined; }[]' is not assignable to type 'Project[]'.
+      Type '{ status: string; id: string; tema: string; produto: string; etapa?: number; etapas?: number[]; createdAt: string; outputDir?: string; }' is not assignable to type 'Project'.
+        Types of property 'status' are incompatible.
+          Type 'string' is not assignable to type '"error" | "running" | "completed" | "idle"'.
+src/app/copy-generator/page.tsx(128,23): error TS2345: Argument of type '{ status: string; id: string; tema: string; produto: string; etapa?: number; etapas?: number[]; createdAt: string; outputDir?: string; }' is not assignable to parameter of type 'SetStateAction<Project | null>'.
+  Type '{ status: string; id: string; tema: string; produto: string; etapa?: number; etapas?: number[]; createdAt: string; outputDir?: string; }' is not assignable to type 'Project'.
+    Types of property 'status' are incompatible.
+      Type 'string' is not assignable to type '"error" | "running" | "completed" | "idle"'.
+src/app/dashboard/IGamingReport.tsx(55,27): error TS7006: Parameter 'date' implicitly has an 'any' type.
+src/app/dashboard/IGamingReport.tsx(63,26): error TS7006: Parameter 'direction' implicitly has an 'any' type.
+src/app/dashboard/IGamingReport.tsx(69,29): error TS7006: Parameter 'day' implicitly has an 'any' type.
+src/app/dashboard/IGamingReport.tsx(176,64): error TS18048: 'percent' is possibly 'undefined'.

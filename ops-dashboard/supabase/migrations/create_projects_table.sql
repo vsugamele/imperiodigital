@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS dashboard_projects (
   tasks_total INTEGER DEFAULT 0,
   tasks_done INTEGER DEFAULT 0,
   team TEXT[] DEFAULT ARRAY[]::TEXT[],
+  workspace_path TEXT DEFAULT '',
   created_at TIMESTAMPTZ DEFAULT now(),
   updated_at TIMESTAMPTZ DEFAULT now()
 );

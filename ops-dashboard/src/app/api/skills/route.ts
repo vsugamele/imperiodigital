@@ -68,6 +68,14 @@ export async function GET() {
       installed: false,
       category: "Creative",
       icon: "🎨"
+    },
+    {
+      name: "Molt Lab Intelligence",
+      description: "Pesquisa científica e verificação de fatos via consenso cross-model.",
+      author: "MoltLab",
+      installed: false,
+      category: "Research",
+      icon: "🦞"
     }
   ];
 

@@ -1,0 +1,452 @@
+{
+    "verticais": [
+        {
+            "id": "igaming",
+            "nome": "iGaming Empire",
+            "perfis": [
+                "Teo",
+                "Jonathan",
+                "Laise"
+            ],
+            "status": "producao",
+            "tipo": "crescimento_audiencia",
+            "objetivo": "Crescer audiência e converter para afiliados",
+            "kpis": {
+                "posts_dia": 6,
+                "seguidores_meta": 100000,
+                "engajamento_meta": 5
+            },
+            "automacoes": [
+                "VaaS",
+                "Gemini Image Gen",
+                "FFmpeg Ken Burns"
+            ],
+            "gaps": [
+                "Integração de Checkout",
+                "Medição de ROI"
+            ]
+        },
+        {
+            "id": "religiao",
+            "nome": "Religião & Espiritual",
+            "perfis": [
+                "JP Freitas",
+                "RefugioDivinos"
+            ],
+            "status": "ativo",
+            "tipo": "funil_infoproduto",
+            "objetivo": "Tráfego orgânico para funil de vendas",
+            "kpis": {
+                "posts_hora": 1,
+                "leads_meta": 5000,
+                "conversao_meta": 2
+            },
+            "automacoes": [
+                "Religion Scheduler",
+                "Quote Overlay",
+                "Transcrição Gemini"
+            ],
+            "gaps": [
+                "Funil de Venda não conectado"
+            ]
+        },
+        {
+            "id": "vanessa",
+            "nome": "Vanessa Expert",
+            "perfis": [
+                "Vanessa"
+            ],
+            "status": "planejamento",
+            "tipo": "expert_personal",
+            "objetivo": "Posicionar como autoridade em Nutrição",
+            "kpis": {
+                "videos_semana": 3,
+                "seguidores_meta": 50000,
+                "engajamento_meta": 8
+            },
+            "automacoes": [
+                "Carrossel Generator",
+                "GIF Creator"
+            ],
+            "gaps": [
+                "Falta gravação de conteúdo"
+            ]
+        },
+        {
+            "id": "lancamentos",
+            "nome": "Hub de Lançamentos",
+            "perfis": [],
+            "status": "ativo",
+            "tipo": "fabrica_infoprodutos",
+            "objetivo": "Criar e validar novos infoprodutos",
+            "kpis": {
+                "ideias_pipeline": 10,
+                "produtos_validados": 3,
+                "taxa_conversao_meta": 5
+            },
+            "automacoes": [
+                "Worker Alex",
+                "Imperius CEO",
+                "Minds API"
+            ],
+            "gaps": [
+                "Checkout automático pós-copy"
+            ]
+        }
+    ],
+    "framework_lancamento": {
+        "estrategias": [
+            {
+                "tipo": "lancamento_pago",
+                "descricao": "Lançamento com tráfego pago direto"
+            },
+            {
+                "tipo": "lancamento_gratuito",
+                "descricao": "Evento gratuito para aquecimento"
+            },
+            {
+                "tipo": "low_ticket",
+                "descricao": "Produto de entrada (R$47-R$297)"
+            },
+            {
+                "tipo": "middle_product",
+                "descricao": "Produto intermediário"
+            },
+            {
+                "tipo": "lives",
+                "descricao": "Lives para engajamento e vendas"
+            },
+            {
+                "tipo": "grupos",
+                "descricao": "Comunidades de suporte"
+            },
+            {
+                "tipo": "seeding",
+                "descricao": "Conteúdo viral para alcance"
+            },
+            {
+                "tipo": "eventos",
+                "descricao": "Eventos presenciais ou online"
+            }
+        ],
+        "funil_conteudo": {
+            "etapas": [
+                {
+                    "fase": 1,
+                    "nome": "Conteúdo de Atração",
+                    "objetivo": "Capturar atenção"
+                },
+                {
+                    "fase": 2,
+                    "nome": "Assistem Vídeos",
+                    "objetivo": "Educar e engajar"
+                },
+                {
+                    "fase": 3,
+                    "nome": "Botão Seguidor",
+                    "objetivo": "Converter em seguidor"
+                },
+                {
+                    "fase": 4,
+                    "nome": "Conhecem Oferta",
+                    "objetivo": "Apresentar solução"
+                },
+                {
+                    "fase": 5,
+                    "nome": "Vendas",
+                    "objetivo": "Conversão final"
+                }
+            ]
+        },
+        "framework_criativo": {
+            "elementos": [
+                "Atenção",
+                "Emoção",
+                "Persuasão",
+                "Identidade",
+                "Prova",
+                "Ângulo",
+                "Estratégia"
+            ],
+            "prova_social": [
+                "Prints",
+                "Vídeos",
+                "Depoimentos",
+                "Antes/Depois",
+                "Resultados Semanais",
+                "Ranking",
+                "Casos Reais"
+            ]
+        },
+        "dores_avatar": {
+            "categorias": [
+                {
+                    "tipo": "medos_dominantes",
+                    "exemplos": [
+                        "Medo de falhar",
+                        "Medo de julgamento"
+                    ]
+                },
+                {
+                    "tipo": "sonhos_reprimidos",
+                    "exemplos": [
+                        "Liberdade financeira",
+                        "Reconhecimento"
+                    ]
+                },
+                {
+                    "tipo": "dores_agudas",
+                    "exemplos": [
+                        "Falta de dinheiro agora",
+                        "Problema urgente"
+                    ]
+                }
+            ]
+        },
+        "niveis_consciencia": {
+            "estagio": "Inconsciente Incompetente",
+            "avatar_exemplo": "Maria",
+            "crencas": [
+                "Riqueza é para 'pessoas especiais'",
+                "Riqueza é para 'quem nasceu em berço de ouro'",
+                "Riqueza é questão de sorte ou privilégio"
+            ],
+            "comportamento": [
+                "Consome conteúdo passivamente no Instagram",
+                "Vê outros prosperarem",
+                "Acredita que é 'sorte' ou 'privilégio'"
+            ]
+        }
+    },
+    "produtos_jp_freitas": [
+        {
+            "nome": "Corte Express",
+            "tipo": "low_ticket",
+            "preco": 47,
+            "objetivo": "Captar Lead"
+        },
+        {
+            "nome": "Universidade JP Freitas",
+            "tipo": "low_ticket",
+            "preco": 1497,
+            "objetivo": "Captar Lead"
+        },
+        {
+            "nome": "Cortes Descomplicados",
+            "tipo": "low_ticket",
+            "preco": 297,
+            "objetivo": "Captar Lead"
+        },
+        {
+            "nome": "Arte da Finalização",
+            "tipo": "low_ticket",
+            "preco": null,
+            "objetivo": "Captar Lead"
+        }
+    ],
+    "frameworks_conhecimento": {
+        "niveis_criativo": {
+            "descricao": "Todo criativo nasce de 4 camadas",
+            "camadas": [
+                {
+                    "nivel": 1,
+                    "nome": "O Ângulo (psicologia)",
+                    "elementos": [
+                        "Dor",
+                        "Prova",
+                        "Benefício",
+                        "Mecanismo",
+                        "Inimigo",
+                        "Transformação"
+                    ]
+                },
+                {
+                    "nivel": 2,
+                    "nome": "O Gancho (atenção)",
+                    "elementos": [
+                        "Ruptura",
+                        "Surpresa",
+                        "Contraste",
+                        "Pergunta penetrante",
+                        "Revelação"
+                    ]
+                },
+                {
+                    "nivel": 3,
+                    "nome": "O Corpo (emoção + copy)",
+                    "elementos": [
+                        "PAS",
+                        "AIDA",
+                        "Storytelling",
+                        "Mecanismo",
+                        "Demonstração",
+                        "Prova"
+                    ]
+                },
+                {
+                    "nivel": 4,
+                    "nome": "O Final (ação + retenção)",
+                    "elementos": [
+                        "CTA",
+                        "Loop de engajamento",
+                        "Abertura para comentário",
+                        "Teaser"
+                    ]
+                }
+            ]
+        },
+        "sistema_historias": {
+            "premissa": "Histórias constroem movimentos",
+            "tipos": [
+                "Clientes",
+                "Transformações",
+                "Quedas",
+                "Vitórias",
+                "Vulnerabilidades",
+                "Antes/depois emocionais",
+                "Criação do método"
+            ]
+        },
+        "nivel_intelectual_avatar": {
+            "caracteristicas": [
+                "Conhecimento zero sobre marketing digital",
+                "Não sabe diferença entre tráfego orgânico e pago",
+                "Nunca ouviu falar de funil de vendas",
+                "Acha que vender na internet é criar perfil no Instagram"
+            ]
+        },
+        "transformacoes_necessarias": [
+            {
+                "de": "Não nasceu para isso",
+                "para": "Quebrar crença limitante"
+            },
+            {
+                "de": "Escassez",
+                "para": "Mentalidade de abundância"
+            },
+            {
+                "de": "Ver problemas",
+                "para": "Ver oportunidades"
+            },
+            {
+                "de": "Sem rotina",
+                "para": "Disciplina de execução diária"
+            },
+            {
+                "de": "Desistir fácil",
+                "para": "Grit (paixão + persistência)"
+            }
+        ]
+    },
+    "auditoria_projetos": [
+        {
+            "id": "pet_select",
+            "nome": "🐶 PET SELECT",
+            "vertical": "lancamentos",
+            "checklists": {
+                "bio_estrutura": [
+                    "Adicionar link do site na bio",
+                    "Criar Link-in-bio (página própria ou Beacons/Stan/Lovable)",
+                    "Ajustar bio: Pet Store UK 🇬🇧",
+                    "Ajustar bio: benefício (frete rápido / best deals)",
+                    "Ajustar bio: CTA (Shop Now)"
+                ],
+                "destaques": [
+                    "Produtos",
+                    "Ofertas",
+                    "Reviews/Clientes",
+                    "Entregas",
+                    "FAQ"
+                ]
+            }
+        },
+        {
+            "id": "jhonattan_viieira",
+            "nome": "👤 Jhonattan Viieira",
+            "vertical": "igaming",
+            "checklists": {
+                "perfil_base": [
+                    "Criar destaques",
+                    "Melhorar bio (posicionamento + personalidade)",
+                    "Foto de perfil mais forte/autoridade"
+                ],
+                "conteudo_lifestyle": [
+                    "Stories simulando viagens",
+                    "Stories rotina real (café, treino, ganhos)",
+                    "Conteúdo casual humanizado"
+                ],
+                "monetizacao": [
+                    "Planejar pack premium/OnlyFans",
+                    "Linkar na página da bio"
+                ]
+            }
+        },
+        {
+            "id": "theo_viieiraa",
+            "nome": "👤 Theo Viieira",
+            "vertical": "igaming",
+            "checklists": {
+                "auditoria_urgente": [
+                    "Avaliar perfil inteiro (estética, bio)",
+                    "Definir persona",
+                    "Refazer foto de perfil"
+                ],
+                "conteudo": [
+                    "Criar destaques",
+                    "Stories lifestyle + jogos",
+                    "Padronizar feed"
+                ]
+            }
+        },
+        {
+            "id": "laise",
+            "nome": "👤 Laise",
+            "vertical": "igaming",
+            "checklists": {
+                "ajustes_imediatos": [
+                    "Arquivar vídeo do Theo (post indevido)",
+                    "Criar destaques organizados"
+                ],
+                "monetizacao": [
+                    "Avaliar criação de pack premium",
+                    "Definir posicionamento",
+                    "Linkar na bio"
+                ]
+            }
+        },
+        {
+            "id": "infraestrutura",
+            "nome": "🌐 INFRAESTRUTURA",
+            "vertical": "lancamentos",
+            "checklists": {
+                "pagina_bio": [
+                    "Criar landing central (Lovable/Carrd/Stan)",
+                    "Add botões: Plataforma, Grupo VIP, Pack, Whats/Tel",
+                    "Pixel + tracking (Meta/Google)"
+                ]
+            }
+        }
+    ],
+    "learning_engine": {
+        "padronizacao_universal": {
+            "identidade": [
+                "Mesmo estilo visual",
+                "Paleta parecida",
+                "Stories diários"
+            ],
+            "conteudo_minimo": [
+                "5-10 stories/dia",
+                "1 prova social",
+                "1 lifestyle",
+                "1 CTA",
+                "1 entretenimento"
+            ],
+            "crescimento_ativo": [
+                "Interação manual 20-30 min/dia",
+                "Comentários em perfis do nicho",
+                "Reels semanais"
+            ]
+        }
+    },
+    "ultima_atualizacao": "2026-02-06T14:59:00Z"
+}

@@ -1,64 +1,81 @@
 {
-  "version": "2026-02-03",
-  "updatedAt": "2026-02-03T21:04:35.638Z",
+  "version": "2026-02-07-autonomous",
+  "updatedAt": "2026-02-08T03:00:00.000Z",
+  "alexStatus": "standby",
+  "activityLog": [
+    {
+      "timestamp": "2026-02-08T21:00:00.000Z",
+      "action": "autopilot_check",
+      "status": "no_action",
+      "note": "18h check: 0 Backlog, 0 Doing, 2 Blocked (no_input). Kanban estável. Alex standby."
+    },
+    {
+      "timestamp": "2026-02-08T12:00:00.000Z",
+      "action": "autopilot_check",
+      "status": "no_action",
+      "note": "12h check: 0 Backlog, 2 Blocked (no_cost, Vanessa), 11 Done. Alex em standby."
+    },
+    {
+      "timestamp": "2026-02-08T09:00:00.000Z",
+      "action": "autopilot_check",
+      "status": "no_action",
+      "note": "06h check: Kanban estável. 0 Backlog, 10 Done, 2 Blocked. Nenhuma tarefa actionável. Alex em standby."
+    },
+    {
+      "timestamp": "2026-02-07T07:15:00.000Z",
+      "action": "daily_automation",
+      "status": "partial",
+      "note": "iGaming: 24 Reels agendados (100% no_cost). Religion: ERRO (~12/48 posts, FFmpeg lento). Re-run manual recomendado."
+    },
+    {
+      "timestamp": "2026-02-07T03:00:00.000Z",
+      "action": "autopilot_check",
+      "status": "no_action",
+      "note": "Religion scheduler executado (6h - pulado). Kanban: 0 Backlog, 10 Done, 2 Blocked. Nenhuma tarefa actionável."
+    },
+    {
+      "timestamp": "2026-02-07T01:12:00.000Z",
+      "action": "system_init",
+      "status": "completed",
+      "note": "Autonomy system v3.0 fully operational. GUIA-OPERACIONAL, config files, docs structure created."
+    }
+  ],
   "tasks": [
+    {
+      "id": "A1",
+      "title": "CORRIGIDO - Bugs de Duplicatas (iGaming + Religion)",
+      "description": "Duplicatas criadas por schedulers rodando múltiplas vezes sem verificação.",
+      "status": "done",
+      "priority": "high",
+      "labels": ["bug", "scheduler", "duplicate", "fixed"],
+      "assignee": "Alex",
+      "createdAt": "2026-02-07T15:45:00Z",
+      "updatedAt": "2026-02-07T16:35:00Z",
+      "notes": "DONE: (1) iGaming: Removidos 24 duplicados, adicionado hasScheduledPost() em schedule-next-day.js. (2) Religion: Corrigido scheduler hourly, desabilitado daily. (3) PetSelectUK + JP: Adicionada verificação de duplicatas."
+    },
+    {
+      "id": "Q1",
+      "title": "CRIAR - Quote Profiles (Motivação + Salmos)",
+      "description": "Criar 2 perfis de quotes (Motivação + Salmos) com 24 posts/dia usando Canva API",
+      "status": "done",
+      "priority": "high",
+      "labels": ["quotes", "canva", "automation"],
+      "assignee": "Alex",
+      "createdAt": "2026-02-05T12:00:00Z",
+      "updatedAt": "2026-02-05T18:00:00Z",
+      "notes": "DONE: Perfil @refugiodivinos criado! Scheduler funcionando com 1 post/hora (Reels + Feed). Templates sincronizados do Drive. Áudio para Reels pendente (adicionar MPs na pasta audio/)."
+    },
     {
       "id": "1",
       "title": "Corrigir scheduler do no_cost",
       "description": "Verificar por que imagens no_cost não estão sendo usadas",
       "status": "blocked",
       "priority": "high",
-      "labels": [
-        "bug",
-        "scheduler"
-      ],
+      "labels": ["bug", "scheduler"],
       "assignee": "Alex",
       "createdAt": "2026-01-26T00:00:00Z",
-      "updatedAt": "2026-02-04T00:30:00Z",
-      "notes": "BLOCKED: Necesário input do Vinicius. O que é 'no_cost'? Quais scripts/images estão envolvidos? Quais logs verificar?"
-    },
-    {
-      "id": "2",
-      "title": "Melhorar tracking de custos",
-      "description": "Adicionar custo por imagem gerada no dashboard",
-      "status": "done",
-      "priority": "medium",
-      "labels": [
-        "feature",
-        "dashboard"
-      ],
-      "assignee": "Autopilot",
-      "createdAt": "2026-01-27T00:00:00Z",
-      "updatedAt": "2026-02-02T12:00:00Z",
-      "notes": "Implementado no Dashboard v2.0 - card de custos com dia/semana/mês"
-    },
-    {
-      "id": "3",
-      "title": "Criar alerts automáticos",
-      "description": "Enviar Telegram quando pipeline falhar",
-      "status": "blocked",
-      "priority": "high",
-      "labels": [
-        "automation"
-      ],
-      "assignee": "Alex",
-      "createdAt": "2026-01-28T00:00:00Z",
-      "updatedAt": "2026-02-04T00:30:00Z",
-      "notes": "BLOCKED: Necesário input do Vinicius. Quais eventos dispara alert? Template da mensagem? Channel priority?"
-    },
-    {
-      "id": "4",
-      "title": "Atualizar logo do Command Center",
-      "description": "Substituir por design mais profissional",
-      "status": "done",
-      "priority": "low",
-      "labels": [
-        "design"
-      ],
-      "assignee": null,
-      "createdAt": "2026-01-29T00:00:00Z",
-      "updatedAt": "2026-02-01T00:00:00Z",
-      "notes": "Concluído pelo Alex"
+      "updatedAt": "2026-02-04T15:50:00Z",
+      "notes": "BLOCKED: Necesário input do Vinicius. O que é 'no_cost'?"
     },
     {
       "id": "V1",
@@ -66,367 +83,94 @@
       "description": "Projeto de automação para Vanessa - EM PAUSA",
       "status": "blocked",
       "priority": "low",
-      "labels": [
-        "vanessa",
-        "paused"
-      ],
+      "labels": ["vanessa", "paused"],
       "assignee": null,
       "createdAt": "2026-01-01T00:00:00Z",
-      "updatedAt": "2026-02-03T15:50:00Z",
-      "notes": "Mudança de fluxo - em standby temporariamente"
-    },
-    {
-      "id": "B1",
-      "title": "BOLO - Definir nome oficial do produto",
-      "description": "Escolher nome final do SaaS (BOLO, ConteúdoIA, etc)",
-      "status": "done",
-      "priority": "medium",
-      "labels": [
-        "bolo",
-        "product"
-      ],
-      "assignee": null,
-      "createdAt": "2026-02-02T23:27:00Z",
-      "notes": "Nome definido: BOLO 🇧🇻"
-    },
-    {
-      "id": "B2",
-      "title": "BOLO - Criar estrutura de arquivos",
-      "description": "Criar estrutura de pastas e arquivos base do projeto",
-      "status": "done",
-      "priority": "medium",
-      "labels": [
-        "bolo",
-        "devops"
-      ],
-      "assignee": "Alex",
-      "createdAt": "2026-02-02T23:27:00Z",
-      "notes": "Next.js 15, Tailwind, TypeScript, Supabase client"
-    },
-    {
-      "id": "B3",
-      "title": "BOLO - Setup Next.js + Supabase",
-      "description": "Inicializar projeto Next.js 15 e configurar Supabase",
-      "status": "done",
-      "priority": "high",
-      "labels": [
-        "bolo",
-        "dev"
-      ],
-      "assignee": "Alex",
-      "createdAt": "2026-02-02T23:27:00Z",
-      "notes": "Build OK! 11 páginas geradas."
-    },
-    {
-      "id": "B4",
-      "title": "BOLO - Implementar Auth",
-      "description": "Configurar Supabase Auth (email + social login)",
-      "status": "done",
-      "priority": "high",
-      "labels": [
-        "bolo",
-        "dev"
-      ],
-      "assignee": "Alex",
-      "createdAt": "2026-02-02T23:27:00Z",
-      "notes": "AuthProvider, Login/Register functional pages, Middleware protection - DONE"
-    },
-    {
-      "id": "B5",
-      "title": "BOLO - Criar Dashboard base",
-      "description": "Implementar interface principal do SaaS",
-      "status": "done",
-      "priority": "high",
-      "labels": [
-        "bolo",
-        "dev"
-      ],
-      "assignee": "Alex",
-      "createdAt": "2026-02-02T23:27:00Z",
-      "notes": "Layout, sidebar, stats cards, activity feed, Billing page - DONE"
-    },
-    {
-      "id": "B6",
-      "title": "BOLO - Implementar fluxo de geração de posts",
-      "description": "Criar stepper de geração: plataforma → nicho → tom → prompt",
-      "status": "done",
-      "priority": "high",
-      "labels": [
-        "bolo",
-        "dev"
-      ],
-      "assignee": "Alex",
-      "createdAt": "2026-02-02T23:27:00Z",
-      "notes": "Implementado! UI + API com Gemini (5 niches: ecommerce, igaming, saude, educacao, b2b)"
-    },
-    {
-      "id": "B7",
-      "title": "BOLO - Integrar Mercado Pago",
-      "description": "Implementar pagamentos PIX + cartão e credits system",
-      "status": "backlog",
-      "priority": "high",
-      "labels": [
-        "bolo",
-        "payments"
-      ],
-      "assignee": null,
-      "createdAt": "2026-02-02T23:27:00Z",
-      "notes": ""
-    },
-    {
-      "id": "B8",
-      "title": "BOLO - Integrar TikTok API",
-      "description": "Adicionar publicação automática no TikTok",
-      "status": "backlog",
-      "priority": "medium",
-      "labels": [
-        "bolo",
-        "integration"
-      ],
-      "assignee": null,
-      "createdAt": "2026-02-02T23:27:00Z",
-      "notes": ""
-    },
-    {
-      "id": "B9",
-      "title": "BOLO - Implementar Brand Voice Engine",
-      "description": "IA aprende tom da marca do cliente",
-      "status": "backlog",
-      "priority": "medium",
-      "labels": [
-        "bolo",
-        "ai"
-      ],
-      "assignee": null,
-      "createdAt": "2026-02-02T23:27:00Z",
-      "notes": ""
-    },
-    {
-      "id": "B10",
-      "title": "BOLO - Criar templates marketplace",
-      "description": "Popular banco com templates iniciais por nicho (iGaming, E-commerce, Saúde)",
-      "status": "backlog",
-      "priority": "medium",
-      "labels": [
-        "bolo",
-        "content"
-      ],
-      "assignee": null,
-      "createdAt": "2026-02-02T23:27:00Z",
-      "notes": ""
-    },
-    {
-      "id": "B11",
-      "title": "BOLO - Criar página de Billing",
-      "description": "Exibir créditos, planos e histórico de transações",
-      "status": "done",
-      "priority": "high",
-      "labels": [
-        "bolo",
-        "billing"
-      ],
-      "assignee": "Alex",
-      "createdAt": "2026-02-03T02:00:00Z",
-      "notes": "Página criada com planos e histórico de transações - DONE"
-    },
-    {
-      "id": "B0",
-      "title": "BOLO - PROJETO EM PAUSA",
-      "description": "Gerador de carrosséis com IA - Em standby temporário",
-      "status": "blocked",
-      "priority": "low",
-      "labels": [
-        "bolo",
-        "paused"
-      ],
-      "assignee": null,
-      "createdAt": "2026-02-03T15:50:00Z",
-      "notes": "Foco no ecossistema autônomo.回头再回来做这个。"
-    },
-    {
-      "id": "E1",
-      "title": "ECOSSISTEMA - Dashboard Unificado",
-      "description": "Criar dashboard com todas as verticais em tempo real",
-      "status": "backlog",
-      "priority": "high",
-      "labels": [
-        "ecossistema",
-        "dashboard"
-      ],
-      "assignee": "Alex",
-      "createdAt": "2026-02-03T16:40:00Z",
-      "notes": "V1:Perfis, V2:Produtos, V3:Lançamentos, V4:Europa, V5:UK"
-    },
-    {
-      "id": "E2",
-      "title": "ECOSSISTEMA - Scripts OpenClaw",
-      "description": "Criar scripts de automação (métricas, reflexão, alertas)",
-      "status": "backlog",
-      "priority": "high",
-      "labels": [
-        "ecossistema",
-        "automation"
-      ],
-      "assignee": "Alex",
-      "createdAt": "2026-02-03T16:40:00Z",
-      "notes": "Scripts Node.js para métricas, reflexão, alertas"
-    },
-    {
-      "id": "E3",
-      "title": "ECOSSISTEMA - Reflection Layer",
-      "description": "Implementar journal diário automático",
-      "status": "backlog",
-      "priority": "high",
-      "labels": [
-        "ecossistema",
-        "reflection"
-      ],
-      "assignee": "Alex",
-      "createdAt": "2026-02-03T16:40:00Z",
-      "notes": "Script: reflection-generator.js, cron: 20:00 diário"
-    },
-    {
-      "id": "E4",
-      "title": "ECOSSISTEMA - Worker GARY",
-      "description": "Worker de Growth & Conteúdo operacional",
-      "status": "done",
-      "priority": "high",
-      "labels": [
-        "ecossistema",
-        "worker",
-        "gary"
-      ],
-      "assignee": "Alex",
-      "createdAt": "2026-02-03T17:00:00Z",
-      "notes": "DONE: Worker GARY operacional. Scripts: metrics, reflection, orchestrator. 50.400 seguidores ativos.",
-      "updatedAt": "2026-02-03T21:04:35.638Z"
-    },
-    {
-      "id": "E5",
-      "title": "ECOSSISTEMA - Worker EUGENE",
-      "description": "Worker de Copy & Posicionamento operacional",
-      "status": "done",
-      "priority": "high",
-      "labels": [
-        "ecossistema",
-        "worker",
-        "eugene"
-      ],
-      "assignee": "Alex",
-      "createdAt": "2026-02-03T17:00:00Z",
-      "notes": "DONE: Worker EUGENE operacional. eugene-generator.js criando headlines e copy.",
-      "updatedAt": "2026-02-03T21:04:35.638Z"
-    },
-    {
-      "id": "E6",
-      "title": "ECOSSISTEMA - Worker ALEX HORMOZI",
-      "description": "Worker de Offers & Vendas operacional",
-      "status": "done",
-      "priority": "high",
-      "labels": [
-        "ecossistema",
-        "worker",
-        "alex-hormozi"
-      ],
-      "assignee": "Alex",
-      "createdAt": "2026-02-03T17:00:00Z",
-      "notes": "DONE: Worker ALEX HORMOZI operacional. alex-generator.js gerando Value Ladder e Offers.",
-      "updatedAt": "2026-02-03T21:04:35.638Z"
-    },
-    {
-      "id": "V1-01",
-      "title": "V1: Worker GARY operacional",
-      "description": "Worker GARY criando conteúdo e crescendo perfis",
-      "status": "done",
-      "priority": "high",
-      "labels": [
-        "vertical",
-        "perfis",
-        "worker-gary"
-      ],
-      "assignee": null,
-      "createdAt": "2026-02-03T16:40:00Z",
-      "notes": "DONE: Worker GARY operando. 5 perfis com 50.400 seguidores totais.",
-      "updatedAt": "2026-02-03T21:04:35.638Z"
-    },
-    {
-      "id": "V2-01",
-      "title": "V2: Worker EUGENE operacional",
-      "description": "Worker EUGENE criando copy e posicionamento",
-      "status": "done",
-      "priority": "high",
-      "labels": [
-        "vertical",
-        "infoprodutos",
-        "worker-eugene"
-      ],
-      "assignee": null,
-      "createdAt": "2026-02-03T17:00:00Z",
-      "notes": "DONE: Worker EUGENE operacional. Headlines e copy para cold ads e landing pages.",
-      "updatedAt": "2026-02-03T21:04:35.638Z"
-    },
-    {
-      "id": "V3-01",
-      "title": "V3: Worker JEFF operacional",
-      "description": "Worker JEFF estruturando lançamentos PLF",
-      "status": "done",
-      "priority": "high",
-      "labels": [
-        "vertical",
-        "lancamentos",
-        "worker-jeff"
-      ],
-      "assignee": null,
-      "createdAt": "2026-02-03T16:40:00Z",
-      "notes": "DONE: Worker JEFF operacional. PLF de 7 dias estruturado.",
-      "updatedAt": "2026-02-03T21:04:35.638Z"
+      "notes": "Projeto em pausa. Quer continuar?"
     },
     {
       "id": "E7",
-      "title": "ECOSSISTEMA - API HUB & Integração",
-      "description": "Workers comunicando via API centralizada",
-      "status": "in_progress",
+      "title": "ECOSSISTEMA - API HUB (Auditoria Interna)",
+      "description": "Workers comunicando via API para auditoria de projetos e necessidades",
+      "status": "done",
       "priority": "high",
-      "labels": [
-        "ecossistema",
-        "integration"
-      ],
+      "labels": ["ecossistema", "integration", "api"],
       "assignee": "Alex",
       "createdAt": "2026-02-03T21:04:35.638Z",
-      "updatedAt": "2026-02-03T21:04:35.638Z",
-      "notes": "Implementando comunicação entre workers e data lake unificado"
+      "updatedAt": "2026-02-04T15:52:00Z",
+      "notes": "DONE: API Hub criado em scripts/ops/api-hub.js. Endpoints: /api/workers/status, /api/projects, /api/analytics."
     },
     {
       "id": "E8",
       "title": "ECOSSISTEMA - Browser Automation",
-      "description": "Análise automática de Instagram, YouTube, TikTok",
-      "status": "in_progress",
+      "description": "Análise automática de Instagram, YouTube, TikTok via URLs públicas",
+      "status": "done",
       "priority": "high",
-      "labels": [
-        "ecossistema",
-        "browser",
-        "automation"
-      ],
+      "labels": ["ecossistema", "browser", "automation"],
       "assignee": "Alex",
       "createdAt": "2026-02-03T21:04:35.638Z",
-      "updatedAt": "2026-02-03T21:04:35.638Z",
-      "notes": "Implementando análise de gaps e recomendações automáticas"
+      "updatedAt": "2026-02-05T00:05:00Z",
+      "notes": "DONE: Script melhorado com web_fetch via curl. Suporta Instagram, TikTok, YouTube."
     },
     {
       "id": "E9",
-      "title": "ECOSSISTEMA - Project Reports",
-      "description": "Relatórios detalhados por projeto com análise de gaps",
-      "status": "in_progress",
+      "title": "ECOSSISTEMA - Daily Reports",
+      "description": "Relatórios diários com análise e evolução para decisões",
+      "status": "done",
       "priority": "high",
-      "labels": [
-        "ecossistema",
-        "reports",
-        "analytics"
-      ],
+      "labels": ["ecossistema", "reports", "analytics"],
       "assignee": "Alex",
       "createdAt": "2026-02-03T21:04:35.638Z",
-      "updatedAt": "2026-02-03T21:04:35.638Z",
-      "notes": "Implementando relatórios com métricas, gaps e projeções"
+      "updatedAt": "2026-02-04T15:52:00Z",
+      "notes": "DONE: Daily Reporter criado em scripts/ops/daily-reporter.js. Gera relatório completo."
+    },
+    {
+      "id": "C1",
+      "title": "COPYWRITING ENGINE - Guru Prompts",
+      "description": "Integrar prompts avançados dos gurus",
+      "status": "done",
+      "priority": "high",
+      "labels": ["copywriting", "ai", "automation"],
+      "assignee": "Alex",
+      "createdAt": "2026-02-04T12:00:00Z",
+      "updatedAt": "2026-02-04T15:40:00Z",
+      "notes": "DONE: 8 gurus implementados - fascinations, yoshitani, bencivenga, kennedy, makepeace, halbert, sugarman, carlton"
+    },
+    {
+      "id": "R1",
+      "title": "YOUTUBE RESEARCH SYSTEM",
+      "description": "Sistema genérico para analisar comentários do YouTube e identificar dores/oportunidades",
+      "status": "done",
+      "priority": "medium",
+      "labels": ["research", "youtube", "analytics"],
+      "assignee": "Alex",
+      "createdAt": "2026-02-05T19:25:00Z",
+      "updatedAt": "2026-02-05T19:30:00Z",
+      "notes": "DONE: Scripts criados em scripts/research/. Projetos: Religião, iGaming, PetSelectUK."
+    },
+    {
+      "id": "B1",
+      "title": "SISTEMA AUTÔNOMO v3.0",
+      "description": "Sistema completo de autonomia com GUIA-OPERACIONAL, configs, docs estrutura",
+      "status": "done",
+      "priority": "high",
+      "labels": ["system", "autonomy", "documentation"],
+      "assignee": "Alex",
+      "createdAt": "2026-02-06T00:00:00Z",
+      "updatedAt": "2026-02-07T01:00:00Z",
+      "notes": "DONE: GUIA-OPERACIONAL-MINMAX.md v3.0, config/bu-thresholds.json, config/autonomy-rules.json, docs/bu/, docs/agents/, docs/prompts/, BU1-PROFILE-FACTORY.md, BU2-INFOPRODUCT-LAB.md"
+    },
+    {
+      "id": "B2",
+      "title": "BU2 - AVATARES AUTOMÁTICOS",
+      "description": "Gerar avatares para projetos Viver Sem Cigarro, Astrologia, Dormir de Lado",
+      "status": "done",
+      "priority": "high",
+      "labels": ["bu2", "infoproduct", "avatar"],
+      "assignee": "Alex",
+      "createdAt": "2026-02-06T00:00:00Z",
+      "updatedAt": "2026-02-07T01:18:00Z",
+      "notes": "DONE: 3 avatares gerados. Scripts: avatar-generator.js, market-analyzer.js, mechanism-creator.js, offer-architect.js, copy-generator.js, validator.js. Proyectos: Viver Sem Cigarro (F3), Astrologia (F4), Dormir de Lado (F3)."
     }
   ]
 }

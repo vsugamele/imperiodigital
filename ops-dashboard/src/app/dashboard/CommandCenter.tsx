@@ -22,27 +22,38 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 
 // Hook de estado centralizado
 import { useCommandCenter } from "./hooks/useCommandCenter";
 
 // Componentes
+// Basic Components (Pre-loaded)
 import {
   Header,
   TabNavigation,
   OverviewTab,
-  AlexTab,
-  PipelinesTab,
-  ScheduleTab,
-  ArchitectureTab,
-  ChatTab,
-  ResearchTab,
-  CrabwalkTab,
 } from "./components";
 import type { TabId } from "./components";
 
-// OfertasHub ainda não foi refatorado
-import OfertasHub from "./OfertasHub";
+// Lazy Loaded Tabs
+const BusinessUnitsHub = dynamic(() => import("./components/tabs/BusinessUnitsHub").then(mod => mod.BusinessUnitsHub), { loading: () => <p>Loading Hub...</p> });
+const AlexTab = dynamic(() => import("./components/tabs/AlexTab").then(mod => mod.AlexTab), { loading: () => <p>Loading Alex...</p> });
+const PipelinesTab = dynamic(() => import("./components/tabs/PipelinesTab").then(mod => mod.PipelinesTab), { loading: () => <p>Loading Pipelines...</p> });
+const ScheduleTab = dynamic(() => import("./components/tabs/ScheduleTab").then(mod => mod.ScheduleTab), { loading: () => <p>Loading Schedule...</p> });
+const ArchitectureTab = dynamic(() => import("./components/tabs/ArchitectureTab").then(mod => mod.ArchitectureTab), { loading: () => <p>Loading Architecture...</p> });
+const ChatTab = dynamic(() => import("./components/tabs/ChatTab").then(mod => mod.ChatTab), { loading: () => <p>Loading Chat...</p> });
+const ResearchTab = dynamic(() => import("./components/tabs/ResearchTab").then(mod => mod.ResearchTab), { loading: () => <p>Loading Research...</p> });
+const CrabwalkTab = dynamic(() => import("./components/tabs/CrabwalkTab").then(mod => mod.CrabwalkTab), { loading: () => <p>Loading Crabwalk...</p> });
+const MapaTab = dynamic(() => import("./components/tabs/MapaTab").then(mod => mod.MapaTab), { loading: () => <p>Loading Map...</p> });
+const OperacionalTab = dynamic(() => import("./components/tabs/OperacionalTab").then(mod => mod.OperacionalTab), { loading: () => <p>Loading Operations...</p> });
+const FinanceiroTab = dynamic(() => import("./components/tabs/FinanceiroTab").then(mod => mod.FinanceiroTab), { loading: () => <p>Loading Finance...</p> });
+const SegurancaTab = dynamic(() => import("./components/tabs/SegurancaTab").then(mod => mod.SegurancaTab), { loading: () => <p>Loading Security...</p> });
+
+// Other Components
+const OfertasHub = dynamic(() => import("./ofertas"), { loading: () => <p>Loading Ofertas...</p> });
+const VerticaisHub = dynamic(() => import("./VerticaisHub"), { loading: () => <p>Loading Projects...</p> });
+const DocsTab = dynamic(() => import("./components/tabs/DocsTab").then(mod => mod.DocsTab), { loading: () => <p>Loading Docs...</p> });
 
 // ============================================
 // COMPONENT
@@ -55,7 +66,6 @@ export default function CommandCenter() {
     pipelines,
     cronJobs,
     metrics,
-    currentTime,
     loading,
     error
   } = useCommandCenter();
@@ -122,7 +132,6 @@ export default function CommandCenter() {
         pipelines={pipelines}
         cronJobs={cronJobs}
         metrics={metrics}
-        currentTime={currentTime}
       />
 
       {/* Tab Navigation */}
@@ -165,10 +174,39 @@ export default function CommandCenter() {
           <CrabwalkTab />
         )}
 
+        {activeTab === "bu_hub" && (
+          <BusinessUnitsHub />
+        )}
+
         {activeTab === "ofertas" && (
           <OfertasHub />
         )}
+
+        {activeTab === "verticais" && (
+          <VerticaisHub />
+        )}
+
+        {activeTab === "mapa" && (
+          <MapaTab />
+        )}
+
+        {activeTab === "operacional" && (
+          <OperacionalTab />
+        )}
+
+        {activeTab === "financeiro" && (
+          <FinanceiroTab />
+        )}
+
+        {activeTab === "seguranca" && (
+          <SegurancaTab />
+        )}
+
+        {activeTab === "docs" && (
+          <DocsTab />
+        )}
       </main>
+
 
       {/* Global Styles */}
       <style jsx>{`

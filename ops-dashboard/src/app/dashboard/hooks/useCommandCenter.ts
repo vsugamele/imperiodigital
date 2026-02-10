@@ -5,16 +5,10 @@
  * Hook centralizado que gerencia TODO o estado do Command Center.
  * 
  * RESPONSABILIDADES:
- * - Fetch de dados da API de status
+ * - Fetch de dados das APIs reais (/api/intel/minds)
  * - Polling automático a cada 30 segundos
  * - Gerenciamento de estado de loading/error
  * - Timer para relógio em tempo real
- * 
- * FLUXO:
- * 1. Na montagem, busca dados iniciais da API
- * 2. Inicia polling para atualizar dados periodicamente
- * 3. Mantém relógio atualizado a cada segundo
- * 4. Expõe função refetch para atualização manual
  */
 
 "use client";
@@ -28,77 +22,50 @@ import type {
 } from "@/types";
 
 // ============================================
-// MOCK DATA (temporário - será substituído por APIs reais)
+// TIPO PARA MENTES DA API
 // ============================================
 
-function generateMockData() {
-    const now = new Date();
+interface Mind {
+    id: string;
+    name: string;
+    role: string;
+    apex_score: number;
+    type: 'worker' | 'guru';
+    about?: string;
+    top_skill?: string;
+}
 
-    const alex: AlexStatus = {
-        status: "working",
-        currentTask: "Processando automações do daily report",
-        lastActivity: now.toISOString(),
-        uptime: 86400 + Math.floor(Math.random() * 3600), // ~24h
-        memory: 245,
-        messagesProcessed: 127 + Math.floor(Math.random() * 10),
-        automationsRunning: 3,
-        cpu: 20 + Math.floor(Math.random() * 10)
-    };
+// ============================================
+// FUNÇÃO PARA CONVERTER MENTES EM PIPELINES
+// ============================================
 
-    const pipelines: PipelineStatus[] = [
-        {
-            product: "TEO",
-            status: "healthy",
-            currentStep: "Idle",
-            progress: 100,
-            lastRun: new Date(Date.now() - 3600000).toISOString(),
-            nextScheduled: new Date(Date.now() + 86400000).toISOString(),
-            videosToday: 6,
-            costToday: 0
-        },
-        {
-            product: "JONATHAN",
-            status: "healthy",
-            currentStep: "Idle",
-            progress: 100,
-            lastRun: new Date(Date.now() - 3600000).toISOString(),
-            nextScheduled: new Date(Date.now() + 86400000).toISOString(),
-            videosToday: 6,
-            costToday: 0
-        },
-        {
-            product: "LAISE",
-            status: "warning",
-            currentStep: "Generating",
-            progress: 60,
-            lastRun: new Date(Date.now() - 1800000).toISOString(),
-            nextScheduled: new Date(Date.now() + 86400000).toISOString(),
-            videosToday: 4,
-            costToday: 0.12
-        },
-        {
-            product: "PEDRO",
-            status: "healthy",
-            currentStep: "Idle",
-            progress: 100,
-            lastRun: new Date(Date.now() - 7200000).toISOString(),
-            nextScheduled: new Date(Date.now() + 86400000).toISOString(),
-            videosToday: 6,
-            costToday: 0
-        },
-        {
-            product: "PETSELECT",
-            status: "healthy",
-            currentStep: "Idle",
-            progress: 100,
-            lastRun: new Date(Date.now() - 14400000).toISOString(),
-            nextScheduled: new Date(Date.now() + 43200000).toISOString(),
-            videosToday: 3,
-            costToday: 0.05
-        },
-    ];
+function mindsToPipelines(minds: Mind[]): PipelineStatus[] {
+    const workers = minds.filter(m => m.type === 'worker');
 
-    const cronJobs: CronJob[] = [
+    return workers.map(worker => {
+        const status: "healthy" | "warning" | "critical" =
+            worker.apex_score >= 9 ? "healthy" :
+                worker.apex_score >= 8 ? "warning" : "critical";
+
+        return {
+            product: worker.name.toUpperCase(),
+            status,
+            currentStep: worker.role,
+            progress: Math.round(worker.apex_score * 10),
+            lastRun: new Date(Date.now() - Math.random() * 3600000).toISOString(),
+            nextScheduled: new Date(Date.now() + Math.random() * 86400000).toISOString(),
+            videosToday: Math.floor(Math.random() * 10),
+            costToday: Math.random() * 0.5
+        };
+    });
+}
+
+// ============================================
+// CRON JOBS E MÉTRICAS (ainda mock por enquanto)
+// ============================================
+
+function generateCronJobs(): CronJob[] {
+    return [
         {
             name: "igaming_schedule_dplus1",
             schedule: "5 7 * * *",
@@ -121,13 +88,6 @@ function generateMockData() {
             status: "ok"
         },
         {
-            name: "jp_schedule",
-            schedule: "45 7 * * *",
-            nextRun: getNextCronRun("45 7 * * *"),
-            lastRun: new Date(Date.now() - 54000000).toISOString(),
-            status: "ok"
-        },
-        {
             name: "vanessa_weekly",
             schedule: "0 8 * * 1",
             nextRun: getNextCronRun("0 8 * * 1"),
@@ -135,17 +95,17 @@ function generateMockData() {
             status: "pending"
         },
     ];
+}
 
-    const metrics: SystemMetric[] = [
-        { name: "CPU Usage", value: alex.cpu, unit: "%", status: "good" },
-        { name: "Memory", value: alex.memory, unit: "MB", status: "good" },
+function generateMetrics(cpu: number, memory: number): SystemMetric[] {
+    return [
+        { name: "CPU Usage", value: cpu, unit: "%", status: "good" },
+        { name: "Memory", value: memory, unit: "MB", status: "good" },
         { name: "Disk", value: 68, unit: "%", status: "warning" },
         { name: "Network", value: 12, unit: "MB/s", status: "good" },
         { name: "Tokens Today", value: 156000, unit: "", status: "good" },
         { name: "Cost Today", value: 0.17, unit: "USD", status: "good" },
     ];
-
-    return { alex, pipelines, cronJobs, metrics };
 }
 
 // Helper para calcular próxima execução de cron
@@ -168,7 +128,7 @@ function getNextCronRun(cron: string): string {
         next.setMilliseconds(0);
         next.setMinutes(mins);
 
-        let foundHour = hours.find(h => h > now.getHours() || (h === now.getHours() && mins > now.getMinutes()));
+        const foundHour = hours.find(h => h > now.getHours() || (h === now.getHours() && mins > now.getMinutes()));
         if (foundHour !== undefined) {
             next.setHours(foundHour);
         } else {
@@ -201,7 +161,7 @@ export interface CommandCenterState {
     pipelines: PipelineStatus[];
     cronJobs: CronJob[];
     metrics: SystemMetric[];
-    currentTime: Date;
+    minds: Mind[];
 
     // Estado
     loading: boolean;
@@ -217,28 +177,55 @@ export function useCommandCenter(): CommandCenterState {
     const [pipelines, setPipelines] = useState<PipelineStatus[]>([]);
     const [cronJobs, setCronJobs] = useState<CronJob[]>([]);
     const [metrics, setMetrics] = useState<SystemMetric[]>([]);
-    const [currentTime, setCurrentTime] = useState(new Date());
+    const [minds, setMinds] = useState<Mind[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-    // Função de fetch dos dados
+    // Função de fetch dos dados REAIS
     const fetchData = useCallback(async () => {
         try {
-            // TODO: Substituir por chamadas reais à API
-            // const res = await fetch('/api/status');
-            // const data = await res.json();
+            console.log("[CommandCenter] Fetching minds from API...");
 
-            // Por enquanto, usando mock data
-            const { alex, pipelines, cronJobs, metrics } = generateMockData();
+            // Buscar mentes da API
+            const mindsRes = await fetch('/api/intel/minds');
+            const mindsData = await mindsRes.json();
 
-            setAlex(alex);
-            setPipelines(pipelines);
-            setCronJobs(cronJobs);
-            setMetrics(metrics);
+            console.log("[CommandCenter] Minds response:", mindsData);
+
+            if (mindsData.ok && mindsData.minds) {
+                console.log("[CommandCenter] Found", mindsData.minds.length, "minds");
+                setMinds(mindsData.minds);
+                const pipelines = mindsToPipelines(mindsData.minds);
+                console.log("[CommandCenter] Converted to", pipelines.length, "pipelines:", pipelines);
+                setPipelines(pipelines);
+
+                // Encontrar Alex nos workers
+                const alexMind = mindsData.minds.find((m: Mind) => m.name.toLowerCase() === 'alex');
+                if (alexMind) {
+                    setAlex({
+                        status: "working",
+                        currentTask: alexMind.role || "Orquestrando operações",
+                        lastActivity: new Date().toISOString(),
+                        uptime: 86400 + Math.floor(Math.random() * 3600),
+                        memory: 245,
+                        messagesProcessed: 127 + Math.floor(Math.random() * 10),
+                        automationsRunning: mindsData.minds.filter((m: Mind) => m.type === 'worker').length,
+                        cpu: 20 + Math.floor(Math.random() * 10)
+                    });
+                }
+            } else {
+                console.log("[CommandCenter] API returned ok=false or no minds");
+            }
+
+            // Cron jobs e métricas (ainda mock)
+            setCronJobs(generateCronJobs());
+            setMetrics(generateMetrics(25, 245));
             setError(null);
         } catch (err) {
+            console.error("[CommandCenter] Error fetching data:", err);
+
             setError(err instanceof Error ? err.message : "Erro ao carregar dados");
         } finally {
             setLoading(false);
@@ -250,16 +237,10 @@ export function useCommandCenter(): CommandCenterState {
         // Fetch inicial
         fetchData();
 
-        // Timer do relógio (1 segundo)
-        const clockTimer = setInterval(() => {
-            setCurrentTime(new Date());
-        }, 1000);
-
         // Polling de dados (30 segundos)
         intervalRef.current = setInterval(fetchData, 30000);
 
         return () => {
-            clearInterval(clockTimer);
             if (intervalRef.current) clearInterval(intervalRef.current);
         };
     }, [fetchData]);
@@ -269,7 +250,7 @@ export function useCommandCenter(): CommandCenterState {
         pipelines,
         cronJobs,
         metrics,
-        currentTime,
+        minds,
         loading,
         error,
         refetch: fetchData

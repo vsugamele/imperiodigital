@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 
 type Script = {
     name: string;
@@ -10,9 +10,27 @@ type Script = {
     description?: string;
 };
 
-type ScriptsData = {
-    scripts: Script[];
-    total: number;
+type ExecutionStatus = {
+    status: "idle" | "running" | "completed" | "error";
+    executionId: string | null;
+    script: string;
+    message: string;
+    elapsed?: number;
+    log?: string;
+    logPath?: string;
+};
+
+type RunningExec = {
+    executionId: string;
+    script: string;
+    elapsedSeconds: number;
+    pid?: number;
+};
+
+type RecentLog = {
+    executionId: string;
+    createdAt: string;
+    size: number;
 };
 
 const categoryConfig: Record<string, { color: string; icon: string; label: string }> = {
@@ -22,6 +40,9 @@ const categoryConfig: Record<string, { color: string; icon: string; label: strin
     "image-gen": { color: "#fb923c", icon: "🖼️", label: "Imagem" },
     transcribe: { color: "#a855f7", icon: "🎙️", label: "Transcrição" },
     infrastructure: { color: "#4edc88", icon: "⚙️", label: "Infra" },
+    religion: { color: "#60a5fa", icon: "🙏", label: "Religion" },
+    autonomous: { color: "#ec4899", icon: "🤖", label: "Autonomous" },
+    high_ticket: { color: "#22c55e", icon: "💰", label: "High Ticket" },
     other: { color: "#6b7280", icon: "📦", label: "Outros" }
 };
 
@@ -32,27 +53,35 @@ const typeIcons: Record<string, string> = {
     other: "📄"
 };
 
-// Skeleton component
-const Skeleton = ({ width = "100%", height = "20px" }: { width?: string; height?: string }) => (
-    <div className="skeleton" style={{ width, height, minHeight: height }} />
-);
-
 export default function ScriptRunner() {
-    const [data, setData] = useState<ScriptsData | null>(null);
-    const [filter, setFilter] = useState<string>("all");
+    const [scripts, setScripts] = useState<Script[]>([]);
+    const [filter, setFilter] = useState("all");
     const [search, setSearch] = useState("");
-    const [runningScript, setRunningScript] = useState<string | null>(null);
-    const [runResult, setRunResult] = useState<{ script: string; success: boolean; message: string } | null>(null);
     const [loading, setLoading] = useState(true);
+    
+    // Execution state
+    const [execution, setExecution] = useState<ExecutionStatus>({
+        status: "idle",
+        executionId: null,
+        script: "",
+        message: ""
+    });
+    const [runningExecs, setRunningExecs] = useState<RunningExec[]>([]);
+    const [recentLogs, setRecentLogs] = useState<RecentLog[]>([]);
+    const [showLogModal, setShowLogModal] = useState(false);
+    const [currentLog, setCurrentLog] = useState("");
+    const [currentScript, setCurrentScript] = useState("");
+    const pollingRef = useRef<NodeJS.Timeout | null>(null);
 
+    // Load scripts
     useEffect(() => {
         async function load() {
             try {
-                const res = await fetch("/api/scripts", {
-                    cache: "force-cache",
-                    next: { revalidate: 300 } // Cache for 5 minutes
-                });
-                if (res.ok) setData(await res.json());
+                const res = await fetch("/api/scripts");
+                if (res.ok) {
+                    const data = await res.json();
+                    setScripts(data.scripts || []);
+                }
             } finally {
                 setLoading(false);
             }
@@ -60,29 +89,37 @@ export default function ScriptRunner() {
         load();
     }, []);
 
-    // Memoize filtered scripts
-    const { filteredScripts, categories } = useMemo(() => {
-        const scripts = data?.scripts || [];
-        const cats = [...new Set(scripts.map(s => s.category))].sort();
+    // Poll for running executions
+    useEffect(() => {
+        const poll = async () => {
+            try {
+                const res = await fetch("/api/run-script?action=status");
+                if (res.ok) {
+                    const data = await res.json();
+                    setRunningExecs(data.runningExecutions || []);
+                    setRecentLogs(data.recent || []);
+                }
+            } catch (e) {
+                console.error("Polling error:", e);
+            }
+        };
 
-        let filtered = scripts;
-        if (filter !== "all") {
-            filtered = filtered.filter(s => s.category === filter);
-        }
-        if (search.trim()) {
-            const q = search.toLowerCase();
-            filtered = filtered.filter(s =>
-                s.name.toLowerCase().includes(q) ||
-                s.description?.toLowerCase().includes(q)
-            );
-        }
+        poll();
+        pollingRef.current = setInterval(poll, 3000);
+        return () => {
+            if (pollingRef.current) clearInterval(pollingRef.current);
+        };
+    }, []);
 
-        return { filteredScripts: filtered, categories: cats };
-    }, [data, filter, search]);
+    // Update execution status
+    const updateExecutionStatus = (status: ExecutionStatus["status"], message: string, log?: string) => {
+        setExecution(prev => ({ ...prev, status, message, log }));
+    };
 
     const runScript = useCallback(async (scriptPath: string, scriptName: string) => {
-        setRunningScript(scriptName);
-        setRunResult(null);
+        // Start execution
+        updateExecutionStatus("running", "Iniciando...", "");
+        setShowLogModal(true);
 
         try {
             const res = await fetch("/api/run-script", {
@@ -92,246 +129,178 @@ export default function ScriptRunner() {
             });
 
             if (res.ok) {
-                setRunResult({ script: scriptName, success: true, message: "Iniciado!" });
+                const data = await res.json();
+                setExecution({
+                    status: "running",
+                    executionId: data.executionId,
+                    script: scriptName,
+                    message: "Executando...",
+                    logPath: data.logPath
+                });
             } else {
                 const err = await res.json();
-                setRunResult({ script: scriptName, success: false, message: err.error || "Erro" });
+                updateExecutionStatus("error", err.error || "Erro");
             }
         } catch {
-            setRunResult({ script: scriptName, success: false, message: "Falha na conexão" });
-        } finally {
-            setRunningScript(null);
-            setTimeout(() => setRunResult(null), 3000);
+            updateExecutionStatus("error", "Falha na conexão");
         }
     }, []);
 
-    const hasData = filteredScripts.length > 0;
+    // Load log for viewing
+    const viewLog = async (executionId: string, scriptName: string) => {
+        try {
+            const res = await fetch(`/api/run-script?action=log&executionId=${executionId}`);
+            if (res.ok) {
+                const data = await res.json();
+                setCurrentScript(scriptName);
+                setCurrentLog(data.truncated || data.log || "Log vazio");
+                setShowLogModal(true);
+            }
+        } catch {
+            alert("Erro ao carregar log");
+        }
+    };
+
+    // Filtered scripts
+    const filteredScripts = scripts.filter(s => {
+        if (filter !== "all" && s.category !== filter) return false;
+        if (search.trim()) {
+            const q = search.toLowerCase();
+            if (!s.name.toLowerCase().includes(q) && !s.description?.toLowerCase().includes(q)) return false;
+        }
+        return true;
+    });
+
+    const categories = [...new Set(scripts.map(s => s.category))].sort();
+
+    // Check if script is running
+    const isRunning = (name: string) => runningExecs.some(e => e.script === name);
 
     return (
         <section className="glass-card" style={{ padding: "24px" }}>
             {/* Header */}
-            <div style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBottom: "20px"
-            }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
                 <div>
-                    <h3 style={{
-                        margin: 0,
-                        fontSize: "18px",
-                        fontWeight: 700,
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "8px"
-                    }}>
+                    <h3 style={{ margin: 0, fontSize: "18px", fontWeight: 700, display: "flex", alignItems: "center", gap: "8px" }}>
                         <span style={{ color: "var(--accent)" }}>🚀</span>
                         Script Runner
-                        <span style={{
-                            fontSize: "10px",
-                            background: "rgba(78, 220, 136, 0.1)",
-                            color: "#4edc88",
-                            padding: "2px 8px",
-                            borderRadius: "10px",
-                            fontWeight: 700
-                        }}>
-                            {data?.total || 0}
+                        <span style={{ fontSize: "10px", background: "rgba(78, 220, 136, 0.1)", color: "#4edc88", padding: "2px 8px", borderRadius: "10px", fontWeight: 700 }}>
+                            {scripts.length}
                         </span>
+                        {runningExecs.length > 0 && (
+                            <span style={{ fontSize: "10px", background: "rgba(251, 191, 36, 0.2)", color: "#fbbf24", padding: "2px 8px", borderRadius: "10px", fontWeight: 700 }}>
+                                {runningExecs.length} executando
+                            </span>
+                        )}
                     </h3>
                 </div>
-
-                {/* Search */}
                 <input
                     type="text"
                     placeholder="🔍 Buscar..."
                     value={search}
                     onChange={e => setSearch(e.target.value)}
-                    style={{
-                        padding: "8px 16px",
-                        borderRadius: "8px",
-                        border: "1px solid rgba(255,255,255,0.1)",
-                        background: "rgba(0,0,0,0.3)",
-                        color: "#fff",
-                        fontSize: "12px",
-                        width: "200px",
-                        outline: "none"
-                    }}
+                    style={{ padding: "8px 16px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(0,0,0,0.3)", color: "#fff", fontSize: "12px", width: "200px", outline: "none" }}
                 />
             </div>
 
+            {/* Running Executions */}
+            {runningExecs.length > 0 && (
+                <div style={{ background: "rgba(251, 191, 36, 0.1)", borderRadius: "8px", padding: "12px", marginBottom: "16px", border: "1px solid rgba(251, 191, 36, 0.3)" }}>
+                    <div style={{ fontSize: "11px", fontWeight: 600, color: "#fbbf24", marginBottom: "8px" }}>⚡ EXECUTANDO AGORA</div>
+                    {runningExecs.map(exec => (
+                        <div key={exec.executionId} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "12px" }}>
+                            <span>🔄 {exec.script}</span>
+                            <span style={{ opacity: 0.7 }}>{exec.elapsedSeconds}s</span>
+                        </div>
+                    ))}
+                </div>
+            )}
+
             {/* Category Filters */}
-            <div style={{
-                display: "flex",
-                gap: "8px",
-                marginBottom: "20px",
-                flexWrap: "wrap"
-            }}>
-                <button
-                    onClick={() => setFilter("all")}
-                    style={{
-                        padding: "6px 14px",
-                        borderRadius: "8px",
-                        border: "none",
-                        background: filter === "all" ? "rgba(78, 220, 136, 0.2)" : "rgba(255,255,255,0.03)",
-                        color: filter === "all" ? "#4edc88" : "#fff",
-                        fontSize: "11px",
-                        fontWeight: 600,
-                        cursor: "pointer",
-                        transition: "all 0.2s"
-                    }}
-                >
+            <div style={{ display: "flex", gap: "8px", marginBottom: "20px", flexWrap: "wrap" }}>
+                <button onClick={() => setFilter("all")} style={{ padding: "6px 14px", borderRadius: "8px", border: "none", background: filter === "all" ? "rgba(78, 220, 136, 0.2)" : "rgba(255,255,255,0.03)", color: filter === "all" ? "#4edc88" : "#fff", fontSize: "11px", fontWeight: 600, cursor: "pointer" }}>
                     Todos
                 </button>
                 {categories.map(cat => {
                     const config = categoryConfig[cat] || categoryConfig.other;
                     return (
-                        <button
-                            key={cat}
-                            onClick={() => setFilter(cat)}
-                            style={{
-                                padding: "6px 14px",
-                                borderRadius: "8px",
-                                border: "none",
-                                background: filter === cat ? `${config.color}20` : "rgba(255,255,255,0.03)",
-                                color: filter === cat ? config.color : "#fff",
-                                fontSize: "11px",
-                                fontWeight: 600,
-                                cursor: "pointer",
-                                transition: "all 0.2s"
-                            }}
-                        >
+                        <button key={cat} onClick={() => setFilter(cat)} style={{ padding: "6px 14px", borderRadius: "8px", border: "none", background: filter === cat ? `${config.color}20` : "rgba(255,255,255,0.03)", color: filter === cat ? config.color : "#fff", fontSize: "11px", fontWeight: 600, cursor: "pointer" }}>
                             {config.icon} {config.label}
                         </button>
                     );
                 })}
             </div>
 
-            {/* Toast */}
-            {runResult && (
-                <div style={{
-                    position: "fixed",
-                    bottom: "100px",
-                    right: "24px",
-                    padding: "12px 20px",
-                    borderRadius: "10px",
-                    background: runResult.success ? "rgba(78, 220, 136, 0.9)" : "rgba(255, 107, 107, 0.9)",
-                    color: "#fff",
-                    fontSize: "13px",
-                    fontWeight: 600,
-                    boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
-                    zIndex: 1000,
-                    animation: "slideIn 0.3s ease"
-                }}>
-                    {runResult.success ? "✅" : "❌"} {runResult.script}: {runResult.message}
-                </div>
-            )}
-
             {/* Scripts Grid */}
-            {!hasData ? (
-                <div style={{
-                    background: 'rgba(0,0,0,0.2)',
-                    borderRadius: '10px',
-                    padding: '24px',
-                    textAlign: 'center'
-                }}>
-                    <div style={{ fontSize: '28px', marginBottom: '10px' }}>🚀</div>
-                    <div style={{ fontSize: '12px', opacity: 0.6 }}>
-                        {loading ? "Carregando scripts..." : "Nenhum script encontrado"}
-                    </div>
-                    <div style={{ fontSize: '10px', opacity: 0.4, marginTop: '4px' }}>
-                        Verifique a pasta de scripts
-                    </div>
+            {!loading && filteredScripts.length === 0 ? (
+                <div style={{ background: "rgba(0,0,0,0.2)", borderRadius: "10px", padding: "24px", textAlign: "center" }}>
+                    <div style={{ fontSize: "28px", marginBottom: "10px" }}>🚀</div>
+                    <div style={{ fontSize: "12px", opacity: 0.6 }}>Nenhum script encontrado</div>
                 </div>
             ) : (
-                <div style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-                    gap: "10px",
-                    maxHeight: "360px",
-                    overflowY: "auto",
-                    paddingRight: "8px"
-                }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "10px", maxHeight: "360px", overflowY: "auto", paddingRight: "8px" }}>
                     {filteredScripts.slice(0, 24).map(script => {
                         const catConfig = categoryConfig[script.category] || categoryConfig.other;
-                        const isRunning = runningScript === script.name;
+                        const running = isRunning(script.name);
+                        const isCurrent = execution.script === script.name;
 
                         return (
-                            <div key={script.path} style={{
-                                background: "rgba(255,255,255,0.02)",
-                                borderRadius: "10px",
-                                padding: "12px",
-                                borderLeft: `3px solid ${catConfig.color}`,
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                                transition: "all 0.2s"
-                            }}>
-                                <div style={{ flex: 1, minWidth: 0 }}>
-                                    <div style={{
-                                        fontSize: "12px",
-                                        fontWeight: 600,
-                                        display: "flex",
-                                        alignItems: "center",
-                                        gap: "6px"
-                                    }}>
-                                        <span>{typeIcons[script.type] || "📄"}</span>
-                                        <span style={{
-                                            overflow: "hidden",
-                                            textOverflow: "ellipsis",
-                                            whiteSpace: "nowrap"
-                                        }}>
-                                            {script.name.replace(/\.[^.]+$/, "")}
-                                        </span>
-                                    </div>
-                                    {script.description && (
-                                        <div style={{
-                                            fontSize: "10px",
-                                            opacity: 0.5,
-                                            marginTop: "4px",
-                                            overflow: "hidden",
-                                            textOverflow: "ellipsis",
-                                            whiteSpace: "nowrap"
-                                        }}>
-                                            {script.description}
+                            <div key={script.path} style={{ background: "rgba(255,255,255,0.02)", borderRadius: "10px", padding: "12px", borderLeft: `3px solid ${catConfig.color}`, transition: "all 0.2s" }}>
+                                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                                    <div style={{ flex: 1, minWidth: 0 }}>
+                                        <div style={{ fontSize: "12px", fontWeight: 600, display: "flex", alignItems: "center", gap: "6px" }}>
+                                            <span>{typeIcons[script.type] || "📄"}</span>
+                                            <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{script.name.replace(/\.[^.]+$/, "")}</span>
                                         </div>
-                                    )}
+                                        {script.description && <div style={{ fontSize: "10px", opacity: 0.5, marginTop: "4px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{script.description}</div>}
+                                    </div>
+                                    <button onClick={() => runScript(script.path, script.name)} disabled={running} style={{ width: "32px", height: "32px", borderRadius: "8px", border: "none", background: running ? "rgba(255,255,255,0.1)" : `${catConfig.color}20`, color: catConfig.color, fontSize: "14px", cursor: running ? "wait" : "pointer", opacity: running ? 0.5 : 1 }}>
+                                        {running ? "⏳" : "▶"}
+                                    </button>
                                 </div>
-
-                                <button
-                                    onClick={() => runScript(script.path, script.name)}
-                                    disabled={isRunning}
-                                    style={{
-                                        width: "32px",
-                                        height: "32px",
-                                        borderRadius: "8px",
-                                        border: "none",
-                                        background: isRunning
-                                            ? "rgba(255,255,255,0.1)"
-                                            : `${catConfig.color}20`,
-                                        color: catConfig.color,
-                                        fontSize: "14px",
-                                        cursor: isRunning ? "wait" : "pointer",
-                                        opacity: isRunning ? 0.5 : 1,
-                                        transition: "all 0.2s",
-                                        flexShrink: 0
-                                    }}
-                                >
-                                    {isRunning ? "⏳" : "▶"}
-                                </button>
+                                {isCurrent && execution.status === "running" && (
+                                    <div style={{ marginTop: "8px", fontSize: "10px", color: "#fbbf24" }}>⏳ Executando...</div>
+                                )}
                             </div>
                         );
                     })}
                 </div>
             )}
 
-            {filteredScripts.length > 24 && (
-                <div style={{
-                    textAlign: "center",
-                    marginTop: "12px",
-                    fontSize: "11px",
-                    opacity: 0.5
-                }}>
-                    Mostrando 24 de {filteredScripts.length} scripts
+            {/* Recent Logs */}
+            {recentLogs.length > 0 && (
+                <div style={{ marginTop: "20px", paddingTop: "16px", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+                    <div style={{ fontSize: "11px", opacity: 0.5, marginBottom: "8px" }}>📋 EXECUÇÕES RECENTES</div>
+                    <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                        {recentLogs.slice(0, 5).map(log => (
+                            <button key={log.executionId} onClick={() => viewLog(log.executionId, log.executionId.split("-")[0])} style={{ padding: "4px 10px", borderRadius: "6px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(0,0,0,0.3)", color: "#fff", fontSize: "10px", cursor: "pointer" }}>
+                                📄 {log.executionId.split("-")[0]}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {/* Log Modal */}
+            {showLogModal && (
+                <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, background: "rgba(0,0,0,0.8)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000 }}>
+                    <div style={{ background: "#1a1a2e", borderRadius: "12px", padding: "24px", width: "80%", maxWidth: "800px", maxHeight: "80vh", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+                            <h4 style={{ margin: 0, fontSize: "16px" }}>📋 {execution.script || currentScript}</h4>
+                            <button onClick={() => setShowLogModal(false)} style={{ background: "none", border: "none", color: "#fff", fontSize: "20px", cursor: "pointer" }}>✕</button>
+                        </div>
+                        {execution.status === "running" && (
+                            <div style={{ background: "rgba(251, 191, 36, 0.1)", padding: "8px", borderRadius: "6px", marginBottom: "12px", fontSize: "12px", color: "#fbbf24" }}>
+                                ⚡ Executando... (aguarde output)
+                            </div>
+                        )}
+                        <div style={{ flex: 1, overflow: "auto", background: "#0a0a0a", borderRadius: "8px", padding: "12px", fontFamily: "monospace", fontSize: "11px", whiteSpace: "pre-wrap", color: "#22c55e" }}>
+                            {currentLog || "Aguardando output..."}
+                        </div>
+                        <div style={{ marginTop: "16px", display: "flex", justifyContent: "flex-end", gap: "8px" }}>
+                            <button onClick={() => setShowLogModal(false)} style={{ padding: "8px 16px", borderRadius: "6px", border: "none", background: "rgba(255,255,255,0.1)", color: "#fff", cursor: "pointer" }}>Fechar</button>
+                        </div>
+                    </div>
                 </div>
             )}
         </section>

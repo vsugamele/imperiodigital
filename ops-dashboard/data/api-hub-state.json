@@ -1,0 +1,67 @@
+{
+  "workers": {
+    "WORKER_RELIGION_SCHEDULER": {
+      "name": "Religion Content Scheduler",
+      "capabilities": [
+        "content_scheduling",
+        "canvas_rendering",
+        "instagram_automation"
+      ],
+      "registeredAt": "2026-02-06T20:02:25.339Z",
+      "lastHeartbeat": "2026-02-06T20:02:25.340Z",
+      "status": "active",
+      "ip": "::1"
+    },
+    "WORKER_IGAMING_TEO": {
+      "name": "iGaming Video Creator (teo)",
+      "capabilities": [
+        "video_generation",
+        "no_cost_sync",
+        "reels_master"
+      ],
+      "registeredAt": "2026-02-06T10:05:10.136Z",
+      "lastHeartbeat": "2026-02-06T10:05:10.136Z",
+      "status": "active",
+      "ip": "::1"
+    },
+    "WORKER_IGAMING_JONATHAN": {
+      "name": "iGaming Video Creator (jonathan)",
+      "capabilities": [
+        "video_generation",
+        "no_cost_sync",
+        "reels_master"
+      ],
+      "registeredAt": "2026-02-06T10:05:20.024Z",
+      "lastHeartbeat": "2026-02-06T10:05:20.024Z",
+      "status": "active",
+      "ip": "::1"
+    },
+    "WORKER_IGAMING_LAISE": {
+      "name": "iGaming Video Creator (laise)",
+      "capabilities": [
+        "video_generation",
+        "no_cost_sync",
+        "reels_master"
+      ],
+      "registeredAt": "2026-02-06T10:05:30.042Z",
+      "lastHeartbeat": "2026-02-06T10:05:30.042Z",
+      "status": "active",
+      "ip": "::1"
+    },
+    "WORKER_IGAMING_PEDRO": {
+      "name": "iGaming Video Creator (pedro)",
+      "capabilities": [
+        "video_generation",
+        "no_cost_sync",
+        "reels_master"
+      ],
+      "registeredAt": "2026-02-06T10:05:40.111Z",
+      "lastHeartbeat": "2026-02-06T10:05:40.111Z",
+      "status": "active",
+      "ip": "::1"
+    }
+  },
+  "projects": {},
+  "analytics": {},
+  "lastUpdate": "2026-02-06T20:02:25.340Z"
+}

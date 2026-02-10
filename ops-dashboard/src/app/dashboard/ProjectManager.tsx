@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import ProjectExplorer from "./ProjectExplorer";
 
 type Project = {
     id: string;
@@ -12,6 +13,7 @@ type Project = {
     tasks_total: number;
     tasks_done: number;
     team: string[];
+    workspace_path: string;
     updated_at: string;
 };
 
@@ -28,8 +30,10 @@ export default function ProjectManager() {
         emoji: "🚀",
         description: "",
         color: "#4edc88",
-        team: ""
+        team: "",
+        workspace_path: ""
     });
+    const [activeExplorer, setActiveExplorer] = useState<{ path: string; name: string } | null>(null);
 
     // Load projects from API
     useEffect(() => {
@@ -62,7 +66,8 @@ export default function ProjectManager() {
                     emoji: newProject.emoji,
                     description: newProject.description,
                     color: newProject.color,
-                    team: newProject.team ? newProject.team.split(",").map(t => t.trim()) : []
+                    team: newProject.team ? newProject.team.split(",").map(t => t.trim()) : [],
+                    workspace_path: newProject.workspace_path
                 })
             });
             const data = await res.json();
@@ -81,12 +86,13 @@ export default function ProjectManager() {
                     tasks_total: 0,
                     tasks_done: 0,
                     team: newProject.team ? newProject.team.split(",").map(t => t.trim()) : [],
+                    workspace_path: newProject.workspace_path,
                     updated_at: new Date().toISOString()
                 };
                 setProjects([localProject, ...projects]);
             }
 
-            setNewProject({ name: "", emoji: "🚀", description: "", color: "#4edc88", team: "" });
+            setNewProject({ name: "", emoji: "🚀", description: "", color: "#4edc88", team: "", workspace_path: "" });
             setShowNewForm(false);
         } catch (err) {
             console.error("Failed to create project:", err);
@@ -189,6 +195,27 @@ export default function ProjectManager() {
                             />
                         </div>
                         <div>
+                            <label style={{ display: "block", fontSize: "12px", marginBottom: "6px", opacity: 0.6 }}>Local Workspace Path</label>
+                            <input
+                                type="text"
+                                value={newProject.workspace_path}
+                                onChange={(e) => setNewProject({ ...newProject, workspace_path: e.target.value })}
+                                placeholder="C:/Users/vsuga/Desktop/Agentes/..."
+                                style={{
+                                    width: "100%",
+                                    padding: "10px 14px",
+                                    background: "rgba(255,255,255,0.05)",
+                                    border: "1px solid rgba(255,255,255,0.1)",
+                                    borderRadius: "8px",
+                                    color: "#fff",
+                                    fontSize: "14px"
+                                }}
+                            />
+                        </div>
+                    </div>
+
+                    <div style={{ marginTop: "16px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                        <div>
                             <label style={{ display: "block", fontSize: "12px", marginBottom: "6px", opacity: 0.6 }}>Team (separar por vírgula)</label>
                             <input
                                 type="text"
@@ -206,25 +233,24 @@ export default function ProjectManager() {
                                 }}
                             />
                         </div>
-                    </div>
-
-                    <div style={{ marginTop: "16px" }}>
-                        <label style={{ display: "block", fontSize: "12px", marginBottom: "6px", opacity: 0.6 }}>Descrição</label>
-                        <input
-                            type="text"
-                            value={newProject.description}
-                            onChange={(e) => setNewProject({ ...newProject, description: e.target.value })}
-                            placeholder="Descrição curta do projeto"
-                            style={{
-                                width: "100%",
-                                padding: "10px 14px",
-                                background: "rgba(255,255,255,0.05)",
-                                border: "1px solid rgba(255,255,255,0.1)",
-                                borderRadius: "8px",
-                                color: "#fff",
-                                fontSize: "14px"
-                            }}
-                        />
+                        <div>
+                            <label style={{ display: "block", fontSize: "12px", marginBottom: "6px", opacity: 0.6 }}>Descrição</label>
+                            <input
+                                type="text"
+                                value={newProject.description}
+                                onChange={(e) => setNewProject({ ...newProject, description: e.target.value })}
+                                placeholder="Descrição curta do projeto"
+                                style={{
+                                    width: "100%",
+                                    padding: "10px 14px",
+                                    background: "rgba(255,255,255,0.05)",
+                                    border: "1px solid rgba(255,255,255,0.1)",
+                                    borderRadius: "8px",
+                                    color: "#fff",
+                                    fontSize: "14px"
+                                }}
+                            />
+                        </div>
                     </div>
 
                     {/* Emoji Selector */}
@@ -331,21 +357,40 @@ export default function ProjectManager() {
                                     <p style={{ margin: "2px 0 0", fontSize: "12px", opacity: 0.6 }}>{project.description}</p>
                                 </div>
                             </div>
-                            <button
-                                onClick={() => handleDeleteProject(project.id)}
-                                style={{
-                                    width: "28px",
-                                    height: "28px",
-                                    background: "rgba(255,107,107,0.1)",
-                                    border: "none",
-                                    borderRadius: "6px",
-                                    color: "#ff6b6b",
-                                    cursor: "pointer",
-                                    fontSize: "12px"
-                                }}
-                            >
-                                ✕
-                            </button>
+                            <div style={{ display: "flex", gap: "4px" }}>
+                                <button
+                                    onClick={() => setActiveExplorer({ path: project.workspace_path, name: project.name })}
+                                    disabled={!project.workspace_path}
+                                    style={{
+                                        width: "28px",
+                                        height: "28px",
+                                        background: project.workspace_path ? "rgba(78,220,136,0.1)" : "rgba(255,255,255,0.05)",
+                                        border: "none",
+                                        borderRadius: "6px",
+                                        color: project.workspace_path ? "var(--accent)" : "#666",
+                                        cursor: project.workspace_path ? "pointer" : "not-allowed",
+                                        fontSize: "12px"
+                                    }}
+                                    title={project.workspace_path ? "Abrir Explorer" : "Workspace não configurado"}
+                                >
+                                    🔍
+                                </button>
+                                <button
+                                    onClick={() => handleDeleteProject(project.id)}
+                                    style={{
+                                        width: "28px",
+                                        height: "28px",
+                                        background: "rgba(255,107,107,0.1)",
+                                        border: "none",
+                                        borderRadius: "6px",
+                                        color: "#ff6b6b",
+                                        cursor: "pointer",
+                                        fontSize: "12px"
+                                    }}
+                                >
+                                    ✕
+                                </button>
+                            </div>
                         </div>
 
                         {/* Status Badge */}
@@ -424,6 +469,15 @@ export default function ProjectManager() {
                     </div>
                 ))}
             </div>
+
+            {/* Project Explorer Modal */}
+            {activeExplorer && (
+                <ProjectExplorer
+                    initialPath={activeExplorer.path}
+                    projectName={activeExplorer.name}
+                    onClose={() => setActiveExplorer(null)}
+                />
+            )}
         </div>
     );
 }

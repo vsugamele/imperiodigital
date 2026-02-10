@@ -223,7 +223,7 @@ export default function PipelineHealth() {
     return () => clearInterval(interval);
   }, []);
 
-  const hasData = data.products.length > 0;
+  const hasData = (data.products || []).length > 0;
 
   return (
     <section className="glass-card" style={{ padding: '24px' }}>
@@ -238,15 +238,15 @@ export default function PipelineHealth() {
         </div>
         <div style={{ display: 'flex', gap: '12px', fontSize: '11px' }}>
           <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '18px', fontWeight: 900, color: '#4edc88' }}>{data.summary.healthy}</div>
+            <div style={{ fontSize: '18px', fontWeight: 900, color: '#4edc88' }}>{data.summary?.healthy || 0}</div>
             <div style={{ opacity: 0.5 }}>OK</div>
           </div>
           <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '18px', fontWeight: 900, color: '#ffd93d' }}>{data.summary.running}</div>
+            <div style={{ fontSize: '18px', fontWeight: 900, color: '#ffd93d' }}>{data.summary?.running || 0}</div>
             <div style={{ opacity: 0.5 }}>Run</div>
           </div>
           <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '18px', fontWeight: 900, color: '#ff6b6b' }}>{data.summary.failed}</div>
+            <div style={{ fontSize: '18px', fontWeight: 900, color: '#ff6b6b' }}>{data.summary?.failed || 0}</div>
             <div style={{ opacity: 0.5 }}>Fail</div>
           </div>
         </div>

@@ -11,6 +11,7 @@ export type Project = {
     tasks_total: number;
     tasks_done: number;
     team: string[];
+    workspace_path: string;
     created_at: string;
     updated_at: string;
 };
@@ -57,7 +58,7 @@ export async function GET() {
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { name, emoji, description, color, team } = body;
+        const { name, emoji, description, color, team, workspace_path } = body;
 
         if (!name) {
             return NextResponse.json({ ok: false, error: "Name is required" }, { status: 400 });
@@ -74,6 +75,7 @@ export async function POST(request: NextRequest) {
             tasks_total: 0,
             tasks_done: 0,
             team: team || [],
+            workspace_path: workspace_path || "",
             created_at: new Date().toISOString(),
             updated_at: new Date().toISOString()
         };
@@ -169,6 +171,7 @@ function getDefaultProjects(): Project[] {
             tasks_total: 12,
             tasks_done: 8,
             team: ["TEO", "JONATHAN", "LAISE", "PEDRO"],
+            workspace_path: "C:/Users/vsuga/Desktop/Agentes",
             created_at: new Date(Date.now() - 86400000 * 30).toISOString(),
             updated_at: new Date(Date.now() - 3600000).toISOString()
         },
@@ -182,6 +185,7 @@ function getDefaultProjects(): Project[] {
             tasks_total: 8,
             tasks_done: 5,
             team: ["PETSELECT"],
+            workspace_path: "",
             created_at: new Date(Date.now() - 86400000 * 20).toISOString(),
             updated_at: new Date(Date.now() - 7200000).toISOString()
         },
@@ -195,6 +199,7 @@ function getDefaultProjects(): Project[] {
             tasks_total: 20,
             tasks_done: 4,
             team: [],
+            workspace_path: "",
             created_at: new Date(Date.now() - 86400000 * 60).toISOString(),
             updated_at: new Date(Date.now() - 259200000).toISOString()
         },
@@ -208,6 +213,7 @@ function getDefaultProjects(): Project[] {
             tasks_total: 15,
             tasks_done: 10,
             team: ["ALEX"],
+            workspace_path: "",
             created_at: new Date(Date.now() - 86400000 * 90).toISOString(),
             updated_at: new Date().toISOString()
         }
