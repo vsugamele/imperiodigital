@@ -3,6 +3,9 @@ import { NextResponse, type NextRequest } from "next/server";
 
 const AUTH_PIN = process.env.AUTH_PIN || "000000";
 
+// Force edge runtime explicitly if needed, though it's default
+export const runtime = 'experimental-edge';
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
