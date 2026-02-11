@@ -46,13 +46,6 @@ export default function HackerversoTab({ hackerverso, onViewFile }: HackerversoT
         );
     }
 
-    // Group files by category
-    const categories = [
-        { name: 'Fundação', range: [0, 4], icon: '🎯' },
-        { name: 'Oferta', range: [5, 7], icon: '💰' },
-        { name: 'Copy', range: [8, 10], icon: '✍️' },
-        { name: 'Avançado', range: [11, 14], icon: '🧠' }
-    ];
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>

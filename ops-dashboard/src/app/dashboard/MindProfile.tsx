@@ -5,19 +5,19 @@ import React, { useState } from "react";
 type Mind = {
     id: string;
     name: string;
-    avatar_url: string;
+    avatar_url?: string;
     role: string;
     apex_score: number;
     neural_data_files: number;
-    top_skill: string;
-    dna: {
-        mbti: { type: string; stats: any };
-        enneagram: { type: string; wing: string; label: string; subtype: string };
-        disc: { D: number; I: number; S: number; C: number; label: string };
-        specific_behaviors: string[];
+    top_skill?: string;
+    dna?: {
+        mbti?: { type: string; stats?: any };
+        enneagram?: { type: string; wing: string; label: string; subtype: string };
+        disc?: { D: number; I: number; S: number; C: number; label: string };
+        specific_behaviors?: string[];
     };
-    proficiencies: { name: string; level: number }[];
-    about: string;
+    proficiencies?: { name: string; level: number }[];
+    about?: string;
 };
 
 export default function MindProfile({ mind }: { mind: Mind }) {
@@ -237,24 +237,29 @@ export default function MindProfile({ mind }: { mind: Mind }) {
                     </div>
                     <div className="glass-card" style={{ padding: "32px" }}>
                         <h3 style={{ margin: "0 0 24px" }}>Proficiências</h3>
-                        {mind.proficiencies.map((p, i) => (
-                            <div key={i} style={{ marginBottom: "20px" }}>
-                                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
-                                    <span style={{ fontWeight: 700 }}>{p.name}</span>
-                                    <span style={{ fontSize: "12px", color: "var(--accent)" }}>LVL {p.level}</span>
+                        {(mind.proficiencies || []).map((p: any, i) => {
+                            const name = typeof p === 'string' ? p : p.name;
+                            const level = typeof p === 'string' ? 5 : p.level;
+
+                            return (
+                                <div key={i} style={{ marginBottom: "20px" }}>
+                                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
+                                        <span style={{ fontWeight: 700 }}>{name}</span>
+                                        <span style={{ fontSize: "12px", color: "var(--accent)" }}>LVL {level}</span>
+                                    </div>
+                                    <div style={{ display: "flex", gap: "4px" }}>
+                                        {[1, 2, 3, 4, 5].map(lvl => (
+                                            <div key={lvl} style={{
+                                                height: "4px",
+                                                flex: 1,
+                                                background: lvl <= level ? "var(--accent)" : "rgba(255,255,255,0.1)",
+                                                borderRadius: "2px"
+                                            }} />
+                                        ))}
+                                    </div>
                                 </div>
-                                <div style={{ display: "flex", gap: "4px" }}>
-                                    {[1, 2, 3, 4, 5].map(lvl => (
-                                        <div key={lvl} style={{
-                                            height: "4px",
-                                            flex: 1,
-                                            background: lvl <= p.level ? "var(--accent)" : "rgba(255,255,255,0.1)",
-                                            borderRadius: "2px"
-                                        }} />
-                                    ))}
-                                </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
             )}

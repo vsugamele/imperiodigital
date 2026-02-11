@@ -54,7 +54,7 @@ export function OperacionalTab() {
                     <div className="glass-card" style={{ padding: "24px", borderLeft: "4px solid #22c55e" }}>
                         <h3 style={{ margin: "0 0 12px", fontSize: "14px", color: "#22c55e" }}>💡 Insight de Processo</h3>
                         <p style={{ fontSize: "13px", opacity: 0.8 }}>
-                            Injetar o framework **"4 Níveis do Criativo"** no Alex reduziu o tempo de revisão em 45%.
+                            Injetar o framework &quot;4 Níveis do Criativo&quot; no Alex reduziu o tempo de revisão em 45%.
                         </p>
                     </div>
                 </div>

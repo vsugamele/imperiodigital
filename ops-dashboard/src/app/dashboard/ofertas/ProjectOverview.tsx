@@ -5,10 +5,9 @@ import { Oferta } from './types';
 interface ProjectOverviewProps {
     oferta: Oferta;
     onCopyHeadlines: () => void;
-    onViewFile: (path: string) => void;
 }
 
-export default function ProjectOverview({ oferta, onCopyHeadlines, onViewFile }: ProjectOverviewProps) {
+export default function ProjectOverview({ oferta, onCopyHeadlines }: ProjectOverviewProps) {
     const avatar = oferta.fases?.['2-avatar']?.avatar;
     const mecanismo = oferta.fases?.['4-mecanismo']?.mecanismo;
     const ofertaData = oferta.fases?.['5-oferta']?.oferta;

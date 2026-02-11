@@ -76,7 +76,7 @@ export default function OfertasHub() {
             const response = await fetch(`/api/ofertas/hackerverso?projeto=${encodeURIComponent(projeto)}`);
             if (!response.ok) return setHackerverso({ arquivos: [] });
             const data = await response.json();
-            const arquivos = (data.arquivos || []).map((a: any) => ({
+            const arquivos = (data.arquivos || []).map((a: { nome: string; caminho: string; tamanho: number; modificado: string }) => ({
                 nome: a.nome,
                 caminho: a.caminho,
                 tipo: a.nome.endsWith('.json') ? 'json' : 'arquivo',
@@ -423,7 +423,6 @@ export default function OfertasHub() {
                                     <ProjectOverview
                                         oferta={selectedOferta}
                                         onCopyHeadlines={copyHeadlines}
-                                        onViewFile={abrirArquivo}
                                     />
                                 )}
 

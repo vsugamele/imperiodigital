@@ -39,16 +39,26 @@ export default function SkillsSummary() {
   useEffect(() => {
     if (!showLive) return;
 
+    let mounted = true;
+
+    // Use a small timeout or state guard if needed, but here we just ensure we set loading
     setLiveLoading(true);
+
     fetch("/api/skills", { cache: "no-store" })
       .then(res => res.ok ? res.json() : { ok: false })
       .then(data => {
-        if (data.ok && data.skills) {
+        if (mounted && data.ok && data.skills) {
           setLiveSkills(data.skills);
         }
       })
       .catch(() => { })
-      .finally(() => setLiveLoading(false));
+      .finally(() => {
+        if (mounted) setLiveLoading(false);
+      });
+
+    return () => {
+      mounted = false;
+    };
   }, [showLive]);
 
   // Determine which skills to show

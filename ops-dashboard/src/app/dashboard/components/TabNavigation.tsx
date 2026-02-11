@@ -118,29 +118,3 @@ export function TabNavigation({ activeTab, onTabChange }: TabNavigationProps) {
     );
 }
 
-// Componente auxiliar para botão de tab
-function TabButton({ tab, isActive, onClick }: { tab: { id: TabId; label: string; icon: string; }; isActive: boolean; onClick: () => void }) {
-    return (
-        <button
-            onClick={onClick}
-            style={{
-                padding: "10px 20px",
-                borderRadius: "8px",
-                border: "none",
-                background: isActive ? "rgba(78, 220, 136, 0.2)" : "transparent",
-                color: isActive ? "var(--accent)" : "rgba(255,255,255,0.6)",
-                fontSize: "14px",
-                fontWeight: 600,
-                cursor: "pointer",
-                transition: "all 0.2s",
-                whiteSpace: "nowrap",
-                display: "flex",
-                alignItems: "center",
-                gap: "6px"
-            }}
-        >
-            <span>{tab.icon}</span>
-            <span>{tab.label}</span>
-        </button>
-    );
-}

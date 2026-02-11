@@ -37,9 +37,10 @@ export async function sendEmail({ to, subject, text, html }: EmailOptions) {
 
         console.log('✅ Email sent:', info.messageId);
         return { success: true, messageId: info.messageId };
-    } catch (error: any) {
-        console.error('❌ Error sending email:', error.message);
-        return { success: false, error: error.message };
+    } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        console.error('❌ Error sending email:', errorMessage);
+        return { success: false, error: errorMessage };
     }
 }
 

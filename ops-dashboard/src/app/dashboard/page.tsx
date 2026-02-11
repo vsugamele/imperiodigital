@@ -16,9 +16,7 @@ import HackerversoIntegration from "./HackerversoIntegration";
 import ResearchHub from "./ResearchHub";
 import OfertasHub from "./ofertas";
 import IGamingReport from "./IGamingReport";
-import ScriptRunner from "./ScriptRunner";
 import UnifiedOpsBoard from "./UnifiedOpsBoard";
-import { createCard, moveCard, deleteCard } from "./actions";
 import CopyGenerator from "../copy-generator/page";
 
 export default async function DashboardPage({
@@ -30,7 +28,7 @@ export default async function DashboardPage({
   const currentTab = (params?.tab as string) || "overview";
 
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  await supabase.auth.getUser();
 
   const renderContent = () => {
     switch (currentTab) {

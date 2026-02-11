@@ -11,6 +11,7 @@ type Task = {
   labels?: string[];
   notes?: string;
   updatedAt?: string;
+  createdAt?: string;
 };
 
 type TasksPayload = {
@@ -72,7 +73,7 @@ export default function UnifiedOpsBoard() {
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
           notes: "Criada via Ops Kanban",
-        } as any,
+        },
         ...(data.tasks || []),
       ],
     };
@@ -121,12 +122,12 @@ export default function UnifiedOpsBoard() {
             placeholder="Nova tarefa..."
             style={{ background: '#111', color: '#fff', border: '1px solid #333', borderRadius: 8, padding: 8, minWidth: 220 }}
           />
-          <select value={newAssignee} onChange={(e) => setNewAssignee(e.target.value as any)} style={{ background: "#111", color: "#fff", border: "1px solid #333", borderRadius: 8, padding: 8 }}>
+          <select value={newAssignee} onChange={(e) => setNewAssignee(e.target.value as "Alex" | "Vinicius")} style={{ background: "#111", color: "#fff", border: "1px solid #333", borderRadius: 8, padding: 8 }}>
             <option value="Alex">Alex</option>
             <option value="Vinicius">Vinicius</option>
           </select>
           <button onClick={addTask} style={{ background: '#4EDC88', color: '#031', border: 'none', borderRadius: 8, padding: '8px 12px', fontWeight: 700, cursor: 'pointer' }}>+ Criar</button>
-          <select value={owner} onChange={(e) => setOwner(e.target.value as any)} style={{ background: "#111", color: "#fff", border: "1px solid #333", borderRadius: 8, padding: 8 }}>
+          <select value={owner} onChange={(e) => setOwner(e.target.value as "all" | "alex" | "vinicius")} style={{ background: "#111", color: "#fff", border: "1px solid #333", borderRadius: 8, padding: 8 }}>
             <option value="all">Todos</option>
             <option value="alex">Alex</option>
             <option value="vinicius">Vinicius</option>

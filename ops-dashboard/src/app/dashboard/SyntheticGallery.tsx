@@ -1,11 +1,29 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import MindProfile from "./MindProfile";
 
+interface Mind {
+    id: string;
+    name: string;
+    role: string;
+    avatar_url?: string;
+    apex_score: number;
+    neural_data_files: number;
+    top_skill?: string;
+    proficiencies?: { name: string; level: number }[];
+    about?: string;
+    dna?: {
+        mbti?: {
+            type: string;
+        };
+    };
+}
+
 export default function SyntheticGallery() {
-    const [minds, setMinds] = useState<any[]>([]);
-    const [selectedMind, setSelectedMind] = useState<any>(null);
+    const [minds, setMinds] = useState<Mind[]>([]);
+    const [selectedMind, setSelectedMind] = useState<Mind | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -81,11 +99,14 @@ export default function SyntheticGallery() {
                             }}
                         >
                             <div style={{ display: "flex", gap: "16px", alignItems: "center", marginBottom: "20px" }}>
-                                <div style={{ width: "60px", height: "60px", borderRadius: "16px", overflow: "hidden", background: "rgba(255,255,255,0.05)" }}>
-                                    <img
+                                <div style={{ width: "60px", height: "60px", borderRadius: "16px", overflow: "hidden", background: "rgba(255,255,255,0.05)", position: "relative" }}>
+                                    <Image
                                         src={mind.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${mind.name}`}
                                         alt={mind.name}
-                                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                                        fill
+                                        sizes="60px"
+                                        style={{ objectFit: "cover" }}
+                                        unoptimized
                                     />
                                 </div>
                                 <div>

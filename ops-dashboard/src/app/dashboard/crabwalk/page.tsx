@@ -14,7 +14,7 @@ export default function CrabwalkMonitor() {
       try {
         const response = await fetch(CRABWALK_URL, { mode: 'no-cors' });
         setStatus("connected");
-      } catch (e) {
+      } catch {
         setStatus("offline");
       }
     };
@@ -59,7 +59,7 @@ export default function CrabwalkMonitor() {
             </p>
           </div>
         </div>
-        
+
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <span style={{
             display: "flex",
@@ -68,31 +68,31 @@ export default function CrabwalkMonitor() {
             fontSize: "11px",
             padding: "6px 12px",
             borderRadius: "20px",
-            background: status === "connected" 
-              ? "rgba(78, 220, 136, 0.2)" 
+            background: status === "connected"
+              ? "rgba(78, 220, 136, 0.2)"
               : status === "connecting"
-              ? "rgba(255, 217, 61, 0.2)"
-              : "rgba(255, 107, 107, 0.2)",
-            color: status === "connected" 
-              ? "#4edc88" 
+                ? "rgba(255, 217, 61, 0.2)"
+                : "rgba(255, 107, 107, 0.2)",
+            color: status === "connected"
+              ? "#4edc88"
               : status === "connecting"
-              ? "#ffd93d"
-              : "#ff6b6b"
+                ? "#ffd93d"
+                : "#ff6b6b"
           }}>
             <span style={{
               width: "8px",
               height: "8px",
               borderRadius: "50%",
-              background: status === "connected" 
-                ? "#4edc88" 
+              background: status === "connected"
+                ? "#4edc88"
                 : status === "connecting"
-                ? "#ffd93d"
-                : "#ff6b6b",
+                  ? "#ffd93d"
+                  : "#ff6b6b",
               animation: status === "connected" ? "pulse 2s infinite" : "none"
             }} />
             {status === "connected" ? "Online" : status === "connecting" ? "Conectando..." : "Offline"}
           </span>
-          
+
           <button
             onClick={handleRefresh}
             style={{
@@ -127,10 +127,10 @@ export default function CrabwalkMonitor() {
               Crabwalk Offline
             </h4>
             <p style={{ margin: 0, opacity: 0.6, fontSize: "13px", textAlign: "center" }}>
-              Execute:<br/>
-              <code style={{ 
-                background: "rgba(255,255,255,0.1)", 
-                padding: "4px 8px", 
+              Execute:<br />
+              <code style={{
+                background: "rgba(255,255,255,0.1)",
+                padding: "4px 8px",
                 borderRadius: "4px",
                 marginTop: "8px",
                 display: "inline-block"
@@ -140,7 +140,7 @@ export default function CrabwalkMonitor() {
             </p>
           </div>
         )}
-        
+
         <iframe
           key={iframeKey}
           src={CRABWALK_URL}

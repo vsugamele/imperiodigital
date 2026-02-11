@@ -50,6 +50,15 @@ interface VerticaisData {
     learning_engine: {
         padronizacao_universal: Record<string, string[]>;
     };
+    frameworks_conhecimento?: {
+        niveis_criativo: {
+            camadas: {
+                nivel: number;
+                nome: string;
+                elementos: string[];
+            }[];
+        };
+    };
     resumo: {
         total_verticais: number;
         em_producao: number;
@@ -68,7 +77,7 @@ export default function VerticaisHub() {
     const [data, setData] = useState<VerticaisData | null>(null);
     const [loading, setLoading] = useState(true);
     const [selectedVertical, setSelectedVertical] = useState<Vertical | null>(null);
-    const [selectedAudit, setSelectedAudit] = useState<any>(null);
+    const [selectedAudit, setSelectedAudit] = useState<{ id?: string; nome?: string; type?: string; checklists?: Record<string, string[]> } | null>(null);
     const [activeTab, setActiveTab] = useState<'verticais' | 'framework' | 'produtos' | 'reflexoes' | 'auditoria'>('verticais');
 
     useEffect(() => {
@@ -181,7 +190,7 @@ export default function VerticaisHub() {
                 ].map(tab => (
                     <button
                         key={tab.id}
-                        onClick={() => setActiveTab(tab.id as any)}
+                        onClick={() => setActiveTab(tab.id as 'verticais' | 'framework' | 'produtos' | 'reflexoes' | 'auditoria')}
                         style={{
                             padding: '10px 20px',
                             background: activeTab === tab.id ? 'rgba(99, 102, 241, 0.3)' : 'rgba(255,255,255,0.05)',
@@ -455,12 +464,12 @@ export default function VerticaisHub() {
                 </div>
             )}
 
-            {activeTab === 'reflexoes' && (data as any).frameworks_conhecimento && (
+            {activeTab === 'reflexoes' && data.frameworks_conhecimento && (
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px' }}>
                     <div className="glass-card" style={{ padding: '24px' }}>
                         <h3 style={{ margin: '0 0 20px', fontSize: '18px' }}>🎥 OS 4 NÍVEIS DO CRIATIVO</h3>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                            {(data as any).frameworks_conhecimento.niveis_criativo.camadas.map((camada: any) => (
+                            {data.frameworks_conhecimento.niveis_criativo.camadas.map((camada) => (
                                 <div key={camada.nivel} style={{
                                     background: 'rgba(255,255,255,0.05)',
                                     padding: '16px',
@@ -540,7 +549,7 @@ export default function VerticaisHub() {
                             <div>
                                 <h2 style={{ fontSize: '24px', fontWeight: 900, marginBottom: '24px' }}>📈 Padronização Global</h2>
                                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                                    {Object.entries(data.learning_engine.padronizacao_universal).map(([key, items]: [string, any]) => (
+                                    {Object.entries(data.learning_engine.padronizacao_universal).map(([key, items]) => (
                                         <div key={key} className="glass-card" style={{ padding: '20px' }}>
                                             <h3 style={{ fontSize: '14px', fontWeight: 800, color: '#22c55e', textTransform: 'uppercase', marginBottom: '16px' }}>
                                                 {key.replace(/_/g, ' ')}
@@ -568,7 +577,7 @@ export default function VerticaisHub() {
                                 </div>
 
                                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
-                                    {Object.entries(selectedAudit.checklists).map(([category, items]: [string, any]) => (
+                                    {selectedAudit.checklists && Object.entries(selectedAudit.checklists).map(([category, items]) => (
                                         <div key={category} className="glass-card" style={{ padding: '20px' }}>
                                             <h3 style={{ fontSize: '14px', fontWeight: 800, color: '#6366f1', textTransform: 'uppercase', marginBottom: '16px', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '8px' }}>
                                                 {category.replace(/_/g, ' ')}
