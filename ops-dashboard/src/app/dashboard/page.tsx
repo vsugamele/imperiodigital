@@ -27,8 +27,14 @@ export default async function DashboardPage({
   const params = await searchParams;
   const currentTab = (params?.tab as string) || "overview";
 
-  const supabase = await createClient();
-  await supabase.auth.getUser();
+  try {
+    const supabase = await createClient();
+    if (supabase) {
+      await supabase.auth.getUser();
+    }
+  } catch (error) {
+    console.error("Supabase auth check failed:", error);
+  }
 
   const renderContent = () => {
     switch (currentTab) {

@@ -27,7 +27,7 @@ function statMtimeMs(p: string) {
 
 export async function GET() {
   const today = isoLocalDate();
-  const base = "C:/Users/vsuga/clawd";
+  const base = process.env.OPS_BASE_PATH || "C:/Users/vsuga/clawd";
 
   const paths = [
     `${base}/memory/heartbeat-state.json`,
