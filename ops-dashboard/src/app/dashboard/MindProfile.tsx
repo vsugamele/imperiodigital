@@ -20,39 +20,53 @@ type Mind = {
     about?: string;
 };
 
+// Helper for MBTI bars
+interface MBTIBarProps {
+    labelL: string;
+    labelR: string;
+    valL: number;
+    valR: number;
+    color: string;
+}
+
+const MBTIBar = ({ labelL, labelR, valL, valR, color }: MBTIBarProps) => (
+    <div style={{ marginBottom: "12px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "10px", fontWeight: 700, marginBottom: "4px", opacity: 0.8 }}>
+            <span>{labelL}</span>
+            <span>{labelR}</span>
+        </div>
+        <div style={{ height: "4px", background: "rgba(255,255,255,0.05)", borderRadius: "2px", display: "flex", overflow: "hidden" }}>
+            <div style={{ width: `${valL}%`, background: color, opacity: 0.8 }} />
+            <div style={{ width: `${valR}%`, background: "rgba(255,255,255,0.1)" }} />
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "10px", marginTop: "2px", opacity: 0.5 }}>
+            <span>{valL}%</span>
+            <span>{valR}%</span>
+        </div>
+    </div>
+);
+
+// Helper for DISC bars
+interface DISCBarProps {
+    label: string;
+    value: number;
+    color: string;
+}
+
+const DISCBar = ({ label, value, color }: DISCBarProps) => (
+    <div style={{ marginBottom: "12px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", fontWeight: 700, marginBottom: "6px" }}>
+            <span style={{ opacity: 0.6 }}>{label}</span>
+            <span>{value}/100</span>
+        </div>
+        <div style={{ height: "6px", background: "rgba(255,255,255,0.05)", borderRadius: "3px", overflow: "hidden" }}>
+            <div style={{ width: `${value}%`, height: "100%", background: color, borderRadius: "3px" }} />
+        </div>
+    </div>
+);
+
 export default function MindProfile({ mind }: { mind: Mind }) {
     const [activeTab, setActiveTab] = useState("dna");
-
-    // Helper for MBTI bars
-    const MBTIBar = ({ labelL, labelR, valL, valR, color }: any) => (
-        <div style={{ marginBottom: "12px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "10px", fontWeight: 700, marginBottom: "4px", opacity: 0.8 }}>
-                <span>{labelL}</span>
-                <span>{labelR}</span>
-            </div>
-            <div style={{ height: "4px", background: "rgba(255,255,255,0.05)", borderRadius: "2px", display: "flex", overflow: "hidden" }}>
-                <div style={{ width: `${valL}%`, background: color, opacity: 0.8 }} />
-                <div style={{ width: `${valR}%`, background: "rgba(255,255,255,0.1)" }} />
-            </div>
-            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "10px", marginTop: "2px", opacity: 0.5 }}>
-                <span>{valL}%</span>
-                <span>{valR}%</span>
-            </div>
-        </div>
-    );
-
-    // Helper for DISC bars
-    const DISCBar = ({ label, value, color }: any) => (
-        <div style={{ marginBottom: "12px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", fontWeight: 700, marginBottom: "6px" }}>
-                <span style={{ opacity: 0.6 }}>{label}</span>
-                <span>{value}/100</span>
-            </div>
-            <div style={{ height: "6px", background: "rgba(255,255,255,0.05)", borderRadius: "3px", overflow: "hidden" }}>
-                <div style={{ width: `${value}%`, height: "100%", background: color, borderRadius: "3px" }} />
-            </div>
-        </div>
-    );
 
     return (
         <div style={{ color: "#fff", fontFamily: "Inter, sans-serif" }}>
@@ -237,9 +251,10 @@ export default function MindProfile({ mind }: { mind: Mind }) {
                     </div>
                     <div className="glass-card" style={{ padding: "32px" }}>
                         <h3 style={{ margin: "0 0 24px" }}>Proficiências</h3>
-                        {(mind.proficiencies || []).map((p: any, i) => {
-                            const name = typeof p === 'string' ? p : p.name;
-                            const level = typeof p === 'string' ? 5 : p.level;
+                        {(mind.proficiencies || []).map((p, i) => {
+                            const isString = typeof p === 'string';
+                            const name = isString ? p : (p as { name: string }).name;
+                            const level = isString ? 5 : (p as { level: number }).level;
 
                             return (
                                 <div key={i} style={{ marginBottom: "20px" }}>

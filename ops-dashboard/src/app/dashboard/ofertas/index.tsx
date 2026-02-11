@@ -8,6 +8,23 @@ import ProjectPhases from './ProjectPhases';
 import ProjectLogs from './ProjectLogs';
 import HackerversoTab from './HackerversoTab';
 
+const formatTamanho = (bytes?: number) => {
+    if (!bytes) return '-';
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+};
+
+const getIconTipo = (tipo: string) => {
+    switch (tipo) {
+        case 'markdown': return '📝';
+        case 'json': return '⚙️';
+        case 'texto': return '📄';
+        case 'codigo': return '💻';
+        default: return '📁';
+    }
+};
+
 export default function OfertasHub() {
     const [ofertas, setOfertas] = useState<Oferta[]>([]);
     const [loading, setLoading] = useState(true);
@@ -209,23 +226,6 @@ export default function OfertasHub() {
         { id: 'hackerverso', label: 'Hackerverso', icon: '🧬' },
         { id: 'logs', label: 'Logs', icon: '📜' },
     ];
-
-    const formatTamanho = (bytes?: number) => {
-        if (!bytes) return '-';
-        if (bytes < 1024) return bytes + ' B';
-        if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-        return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
-    };
-
-    const getIconTipo = (tipo: string) => {
-        switch (tipo) {
-            case 'markdown': return '📝';
-            case 'json': return '⚙️';
-            case 'texto': return '📄';
-            case 'codigo': return '💻';
-            default: return '📁';
-        }
-    };
 
     return (
         <div style={{

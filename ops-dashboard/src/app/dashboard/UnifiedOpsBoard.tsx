@@ -26,6 +26,30 @@ const BLOCKED = new Set(["blocked", "paused", "waiting"]);
 const NEXT = new Set(["todo", "backlog", "next", "open"]);
 const DONE = new Set(["done", "completed", "closed"]);
 
+interface KanbanColumnProps {
+  title: string;
+  items: Task[];
+  color: string;
+}
+
+const KanbanColumn = ({ title, items, color }: KanbanColumnProps) => (
+  <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: 16 }}>
+    <h3 style={{ margin: 0, marginBottom: 12, color }}>{title} ({items.length})</h3>
+    <div style={{ display: "grid", gap: 10 }}>
+      {items.length === 0 && <div style={{ opacity: 0.5, fontSize: 13 }}>Sem itens</div>}
+      {items.map((t) => (
+        <div key={t.id} style={{ background: "rgba(0,0,0,0.25)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 10, padding: 10 }}>
+          <div style={{ fontSize: 13, fontWeight: 700 }}>{t.title}</div>
+          <div style={{ fontSize: 12, opacity: 0.7, marginTop: 6 }}>
+            #{t.id} • {t.assignee || "sem responsável"} • {t.priority || "sem prioridade"}
+          </div>
+          {t.notes && <div style={{ fontSize: 12, opacity: 0.75, marginTop: 6 }}>{t.notes}</div>}
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
 export default function UnifiedOpsBoard() {
   const [data, setData] = useState<TasksPayload>({ tasks: [] });
   const [owner, setOwner] = useState<"all" | "alex" | "vinicius">("all");
@@ -88,24 +112,6 @@ export default function UnifiedOpsBoard() {
     }
   };
 
-  const col = (title: string, items: Task[], color: string) => (
-    <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: 16 }}>
-      <h3 style={{ margin: 0, marginBottom: 12, color }}>{title} ({items.length})</h3>
-      <div style={{ display: "grid", gap: 10 }}>
-        {items.length === 0 && <div style={{ opacity: 0.5, fontSize: 13 }}>Sem itens</div>}
-        {items.map((t) => (
-          <div key={t.id} style={{ background: "rgba(0,0,0,0.25)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 10, padding: 10 }}>
-            <div style={{ fontSize: 13, fontWeight: 700 }}>{t.title}</div>
-            <div style={{ fontSize: 12, opacity: 0.7, marginTop: 6 }}>
-              #{t.id} • {t.assignee || "sem responsável"} • {t.priority || "sem prioridade"}
-            </div>
-            {t.notes && <div style={{ fontSize: 12, opacity: 0.75, marginTop: 6 }}>{t.notes}</div>}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-
   return (
     <section className="glass-card" style={{ padding: 24 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14, gap: 10, flexWrap: 'wrap' }}>
@@ -142,10 +148,10 @@ export default function UnifiedOpsBoard() {
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4, minmax(220px, 1fr))", gap: 14 }}>
-        {col("Pendente", next, "#ffd166")}
-        {col("Fazendo agora", doing, "#4EDC88")}
-        {col("Parado/Bloqueado", blocked, "#ff6b6b")}
-        {col("Concluído", done, "#8ecae6")}
+        <KanbanColumn title="Pendente" items={next} color="#ffd166" />
+        <KanbanColumn title="Fazendo agora" items={doing} color="#4EDC88" />
+        <KanbanColumn title="Parado/Bloqueado" items={blocked} color="#ff6b6b" />
+        <KanbanColumn title="Concluído" items={done} color="#8ecae6" />
       </div>
     </section>
   );
