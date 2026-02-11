@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-const AUTH_PIN = process.env.AUTH_PIN || "000000";
+const AUTH_PIN = process.env.AUTH_PIN || "464321";
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
