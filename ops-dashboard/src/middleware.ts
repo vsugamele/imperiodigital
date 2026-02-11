@@ -3,16 +3,15 @@ import { NextResponse, type NextRequest } from "next/server";
 
 const AUTH_PIN = process.env.AUTH_PIN || "000000";
 
-// Use standard edge runtime
-export const runtime = 'edge';
+// Use experimental-edge runtime as requested by Next.js build
+export const runtime = 'experimental-edge';
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-
-  // 1. PIN Protection Logic
   const authPin = request.cookies.get("auth_pin")?.value;
   const isLoginPage = pathname === "/login";
 
+  // 1. PIN Protection
   if (authPin === AUTH_PIN) {
     if (isLoginPage) {
       return NextResponse.redirect(new URL("/dashboard", request.url));
@@ -20,7 +19,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Not authenticated
+  // 2. Not authenticated
   if (!isLoginPage) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
@@ -35,8 +34,9 @@ export const config = {
      * - api (API routes)
      * - _next/static (static files)
      * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
+     * - favicon.ico, sitemap.xml, robots.txt (metadata files)
+     * - Any file with an extension (e.g. .png, .jpg, .svg)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|.*\\..*).*)',
   ],
 };
