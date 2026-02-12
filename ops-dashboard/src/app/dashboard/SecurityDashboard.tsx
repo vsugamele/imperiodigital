@@ -11,25 +11,27 @@ type Receipt = {
     signature: string;
 };
 
+const INITIAL_RECEIPTS: Receipt[] = [
+    {
+        id: "rcpt-5521",
+        timestamp: new Date().toISOString(),
+        action: "exec: igaming-video.js",
+        actor: "Alex (Automator)",
+        status: "verified",
+        signature: "0x7f3a...8e2b"
+    },
+    {
+        id: "rcpt-5520",
+        timestamp: new Date(Date.now() - 3600000).toISOString(),
+        action: "read: .env.local",
+        actor: "Clawdbot",
+        status: "warning",
+        signature: "0x1a2b...c3d4"
+    }
+];
+
 export default function SecurityDashboard() {
-    const [receipts, setReceipts] = useState<Receipt[]>([
-        {
-            id: "rcpt-5521",
-            timestamp: new Date().toISOString(),
-            action: "exec: igaming-video.js",
-            actor: "Alex (Automator)",
-            status: "verified",
-            signature: "0x7f3a...8e2b"
-        },
-        {
-            id: "rcpt-5520",
-            timestamp: new Date(Date.now() - 3600000).toISOString(),
-            action: "read: .env.local",
-            actor: "Clawdbot",
-            status: "warning",
-            signature: "0x1a2b...c3d4"
-        }
-    ]);
+    const [receipts, setReceipts] = useState<Receipt[]>(INITIAL_RECEIPTS);
 
     return (
         <div style={{ padding: "0" }}>

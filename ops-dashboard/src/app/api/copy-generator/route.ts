@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { execSync } from 'child_process';
 import path from 'path';
+import fs from 'fs';
 
 // Usar caminho absoluto do workspace
 const WORKSPACE_ROOT = 'C:\\Users\\vsuga\\clawd';
@@ -56,12 +57,13 @@ export async function POST(request: NextRequest) {
       message: 'Copy gerado com sucesso!'
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Erro ao gerar copy:', error);
 
+    const errorMessage = error instanceof Error ? error.message : 'Erro ao executar copy generator';
     return NextResponse.json({
       success: false,
-      error: error.message || 'Erro ao executar copy generator'
+      error: errorMessage
     }, { status: 500 });
   }
 }
@@ -69,7 +71,6 @@ export async function POST(request: NextRequest) {
 export async function GET() {
   // Listar projetos existentes
   try {
-    const fs = require('fs');
 
     if (!fs.existsSync(OUTPUT_DIR)) {
       return NextResponse.json({ success: true, projetos: [] });
@@ -87,17 +88,18 @@ export async function GET() {
         arquivos: files.length,
         data: fs.statSync(dirPath).birthtime
       };
-    }).sort((a: any, b: any) => b.data.getTime() - a.data.getTime());
+    }).sort((a, b) => b.data.getTime() - a.data.getTime());
 
     return NextResponse.json({
       success: true,
       projetos
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json({
       success: false,
-      error: error.message
+      error: errorMessage
     }, { status: 500 });
   }
 }

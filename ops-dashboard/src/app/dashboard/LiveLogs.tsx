@@ -9,19 +9,19 @@ type LogEntry = {
     message: string;
 };
 
+const INITIAL_LOGS: LogEntry[] = [
+    { timestamp: new Date().toISOString(), level: "info", source: "System", message: "Kernel booting..." },
+    { timestamp: new Date().toISOString(), level: "info", source: "OpenClaw", message: "Gateway connected to wss://ops.clawd.local" },
+    { timestamp: new Date().toISOString(), level: "debug", source: "Alex", message: "Loading neural pathways..." }
+];
+
 export default function LiveLogs() {
-    const [logs, setLogs] = useState<LogEntry[]>([]);
+    const [logs, setLogs] = useState<LogEntry[]>(INITIAL_LOGS);
     const [paused, setPaused] = useState(false);
     const scrollRef = useRef<HTMLDivElement>(null);
 
-    // Initial logs mock
+    // Dynamic logs updates
     useEffect(() => {
-        const initialLogs: LogEntry[] = [
-            { timestamp: new Date().toISOString(), level: "info", source: "System", message: "Kernel booting..." },
-            { timestamp: new Date().toISOString(), level: "info", source: "OpenClaw", message: "Gateway connected to wss://ops.clawd.local" },
-            { timestamp: new Date().toISOString(), level: "debug", source: "Alex", message: "Loading neural pathways..." }
-        ];
-        setLogs(initialLogs);
 
         const interval = setInterval(() => {
             if (paused) return;

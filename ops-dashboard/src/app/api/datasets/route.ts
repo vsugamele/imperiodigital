@@ -19,7 +19,7 @@ export async function GET() {
   const syncPath = path.join(BASE, "results", "datasets-sync.json");
   const syncStat = statSafe(syncPath);
 
-  let payload: any = null;
+  let payload: unknown = null;
   if (syncStat.exists) {
     try {
       payload = JSON.parse(fs.readFileSync(syncPath, "utf8"));

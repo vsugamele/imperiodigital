@@ -26,18 +26,21 @@ function getSB1SupabaseAdmin() {
     });
 }
 
-interface WebhookHandler {
-    description: string;
-    handler: (payload: any) => Promise<any>;
-}
+import { WebhookHandler } from '../types';
 
 export const jpHandlers: Record<string, WebhookHandler> = {
 
     // ==================== CRIAR USUÁRIO ====================
     'create-user': {
         description: 'Cria novo usuário no SB1 (Brabas), insere no c_profiles e envia email de boas-vindas',
-        handler: async (payload: any) => {
-            const { email, password, name, phone, metadata } = payload;
+        handler: async (payload: Record<string, unknown>) => {
+            const { email, password, name, phone, metadata } = payload as {
+                email: string;
+                password?: string;
+                name?: string;
+                phone?: string;
+                metadata?: Record<string, unknown>;
+            };
             console.log('🚀 Webhook: create-user starting for:', email);
 
             if (!email) throw new Error('Email é obrigatório');
@@ -93,12 +96,12 @@ export const jpHandlers: Record<string, WebhookHandler> = {
             if (password) {
                 const { subject, html } = generateWelcomeEmail(name || email.split('@')[0], email, password);
                 const res = await sendEmail({ to: email, subject, html });
-                emailResult = res as any;
+                emailResult = res as { success: boolean; error?: string; messageId?: string };
             } else {
                 // Se não tem password, enviar invite
                 const { error: inviteError } = await sb1.auth.admin.inviteUserByEmail(email);
                 if (inviteError) console.error(`⚠️ Invite error: ${inviteError.message}`);
-                else emailResult = { success: true, message: 'Invite sent' } as any;
+                else emailResult = { success: true, message: 'Invite sent' } as unknown as { success: boolean; error?: string; messageId?: string };
             }
 
             return {
@@ -106,7 +109,7 @@ export const jpHandlers: Record<string, WebhookHandler> = {
                 user_id: userId,
                 profile_status: profileError ? 'failed' : 'success',
                 email_status: emailResult.success ? 'sent' : 'failed',
-                email_error: (emailResult as any).error
+                email_error: emailResult.error
             };
         },
     },
@@ -114,8 +117,8 @@ export const jpHandlers: Record<string, WebhookHandler> = {
     // ==================== RESET DE SENHA ====================
     'reset-password': {
         description: 'Envia email de recuperação de senha no SB1',
-        handler: async (payload: any) => {
-            const { email, redirect_url } = payload;
+        handler: async (payload: Record<string, unknown>) => {
+            const { email, redirect_url } = payload as { email: string; redirect_url?: string };
 
             if (!email) throw new Error('Email é obrigatório');
 

@@ -10,7 +10,27 @@ function nowIso() {
   return new Date().toISOString();
 }
 
-function appendLog(dashboard: any, msg: string) {
+interface Dashboard {
+  createdAt?: string;
+  updatedAt?: string;
+  nome?: string;
+  safeName?: string;
+  ideia?: string;
+  status: {
+    fase: number;
+    progresso: string;
+    executando: boolean;
+    mensagem: string;
+    proximo: string;
+    erro?: string;
+    logs: { data: string; msg: string }[];
+    imperiusInsight?: { acaoSugerida: string };
+  };
+  fases: Record<string, { status: string; completo: boolean; arquivo?: string }>;
+  metricas?: Record<string, number>;
+}
+
+function appendLog(dashboard: Dashboard, msg: string) {
   dashboard.status.logs = dashboard.status.logs || [];
   dashboard.status.logs.push({ data: nowIso(), msg });
   if (dashboard.status.logs.length > 120) {
@@ -18,13 +38,13 @@ function appendLog(dashboard: any, msg: string) {
   }
 }
 
-function saveDashboard(safeName: string, dashboard: any) {
+function saveDashboard(safeName: string, dashboard: Dashboard) {
   dashboard.updatedAt = nowIso();
   const p = path.join(OUTPUT_DIR, safeName, 'dashboard.json');
   fs.writeFileSync(p, JSON.stringify(dashboard, null, 2));
 }
 
-function markStaleIfNeeded(safeName: string, dashboard: any) {
+function markStaleIfNeeded(safeName: string, dashboard: Dashboard) {
   if (!dashboard?.status?.executando) return dashboard;
   const ref = dashboard.updatedAt || dashboard.createdAt || nowIso();
   const ageMs = Date.now() - new Date(ref).getTime();
@@ -39,17 +59,17 @@ function markStaleIfNeeded(safeName: string, dashboard: any) {
   return dashboard;
 }
 
-function getOfertas(): any[] {
+function getOfertas(): Dashboard[] {
   if (!fs.existsSync(OUTPUT_DIR)) return [];
 
-  const ofertas: any[] = [];
+  const ofertas: Dashboard[] = [];
   const dirs = fs.readdirSync(OUTPUT_DIR);
 
   dirs.forEach(dir => {
     const dashboardPath = path.join(OUTPUT_DIR, dir, 'dashboard.json');
     if (fs.existsSync(dashboardPath)) {
       try {
-        const dashboard = JSON.parse(fs.readFileSync(dashboardPath, 'utf8'));
+        const dashboard = JSON.parse(fs.readFileSync(dashboardPath, 'utf8')) as Dashboard;
         ofertas.push(markStaleIfNeeded(dir, dashboard));
       } catch (e) {
         // Ignore invalid JSON
@@ -60,13 +80,13 @@ function getOfertas(): any[] {
   return ofertas;
 }
 
-function jsonToMarkdown(title: string, obj: any) {
+function jsonToMarkdown(title: string, obj: unknown) {
   return '# ' + title + '\n\n'
     + 'Gerado em: ' + nowIso() + '\n\n'
     + '`json\n' + JSON.stringify(obj, null, 2) + '\n`\n';
 }
 
-function runHackerversoAndMaterialize(dash: any, projectDir: string) {
+function runHackerversoAndMaterialize(dash: Dashboard, projectDir: string) {
   const workspaceRoot = path.join(process.cwd(), '..');
   const script = path.join(workspaceRoot, 'scripts', 'copy-generator.js');
   const tema = (dash.ideia && String(dash.ideia).trim()) || dash.nome || dash.safeName;
@@ -77,7 +97,7 @@ function runHackerversoAndMaterialize(dash: any, projectDir: string) {
     encoding: 'utf8',
     timeout: 300000,
     cwd: workspaceRoot,
-    env: { ...process.env } // Pass all env vars including GEMINI_API_KEY
+    env: { ...process.env } as NodeJS.ProcessEnv // Pass all env vars including GEMINI_API_KEY
   });
   const m = output.match(/Output:\s*(.+?)$/m);
   const outputRel = m ? m[1].trim() : '';
@@ -86,13 +106,13 @@ function runHackerversoAndMaterialize(dash: any, projectDir: string) {
   const outDir = path.isAbsolute(outputRel) ? outputRel : path.join(workspaceRoot, outputRel);
   if (!fs.existsSync(outDir)) throw new Error(`Output não encontrado: ${outDir}`);
 
-  const map: Array<{ json: string; pasta: string; md: string; title: string; faseKey: string; metrica?: (v: any, dash: any) => void }> = [
+  const map: Array<{ json: string; pasta: string; md: string; title: string; faseKey: string; metrica?: (v: unknown, dash: Dashboard) => void }> = [
     { json: '01-multidao-faminta.json', pasta: '01-pesquisa', md: 'pesquisa_avatar.md', title: 'Pesquisa & Avatar', faseKey: '1-pesquisa' },
-    { json: '02-problemas.json', pasta: '02-avatar', md: 'problemas_avatar.md', title: 'Problemas do Avatar', faseKey: '2-avatar', metrica: (v, d) => { d.metricas = d.metricas || {}; d.metricas.doresIdentificadas = (v?.top15 || []).length || 0; } },
+    { json: '02-problemas.json', pasta: '02-avatar', md: 'problemas_avatar.md', title: 'Problemas do Avatar', faseKey: '2-avatar', metrica: (v, d) => { const val = v as { top15?: string[] }; d.metricas = d.metricas || {}; d.metricas.doresIdentificadas = (val?.top15 || []).length || 0; } },
     { json: '03-lago.json', pasta: '03-mercado', md: 'lago_submercado.md', title: 'O Lago', faseKey: '3-mercado' },
     { json: '05-mecanismo.json', pasta: '04-mecanismo', md: 'mecanismo_unico.md', title: 'Mecanismo Único', faseKey: '4-mecanismo' },
     { json: '06-escada.json', pasta: '05-oferta', md: 'escada_valor.md', title: 'Escada de Valor', faseKey: '5-oferta' },
-    { json: '09-vsl.json', pasta: '06-copy', md: 'copy_vsl.md', title: 'Copy (VSL)', faseKey: '6-copy', metrica: (v, d) => { d.metricas = d.metricas || {}; d.metricas.headlinesCriadas = (v?.blocos || []).length || 0; } },
+    { json: '09-vsl.json', pasta: '06-copy', md: 'copy_vsl.md', title: 'Copy (VSL)', faseKey: '6-copy', metrica: (v, d) => { const val = v as { blocos?: unknown[] }; d.metricas = d.metricas || {}; d.metricas.headlinesCriadas = (val?.blocos || []).length || 0; } },
     { json: '10-pagina.json', pasta: '07-validacao', md: 'validacao_pagina_ab.md', title: 'Validação (Página A/B)', faseKey: '7-validacao' }
   ];
 
@@ -110,7 +130,7 @@ function runHackerversoAndMaterialize(dash: any, projectDir: string) {
   return { outDir, generated };
 }
 
-function triggerMesaMentes(dash: any) {
+function triggerMesaMentes(dash: Dashboard) {
   try {
     const projeto = dash?.safeName || dash?.nome;
     if (!projeto) return;
@@ -183,13 +203,14 @@ function runPipelineAsync(safeName: string) {
       dash.status.progresso = '100%';
       appendLog(dash, '🎉 Pipeline concluído com sucesso');
       saveDashboard(safeName, dash);
-    } catch (err: any) {
+    } catch (err: unknown) {
       try {
-        const dash = JSON.parse(fs.readFileSync(dashboardPath, 'utf8'));
+        const errorMsg = err instanceof Error ? err.message : String(err);
+        const dash = JSON.parse(fs.readFileSync(dashboardPath, 'utf8')) as Dashboard;
         dash.status.executando = false;
         dash.status.mensagem = 'Falha no pipeline';
         dash.status.proximo = 'Reprocessar';
-        dash.status.erro = err?.message || String(err);
+        dash.status.erro = errorMsg;
         appendLog(dash, `❌ Erro no pipeline: ${dash.status.erro}`);
         saveDashboard(safeName, dash);
       } catch { }
@@ -257,9 +278,10 @@ export async function POST(request: Request) {
     runPipelineAsync(safeName);
 
     return NextResponse.json({ success: true, oferta: dashboard });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMsg = error instanceof Error ? error.message : 'Unknown error';
     console.error('Error creating oferta:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: errorMsg }, { status: 500 });
   }
 }
 
@@ -277,7 +299,7 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: 'Projeto não encontrado' }, { status: 404 });
     }
 
-    const dashboard = JSON.parse(fs.readFileSync(dashboardPath, 'utf8'));
+    const dashboard = JSON.parse(fs.readFileSync(dashboardPath, 'utf8')) as Dashboard;
 
     if (tipo === 'aplicar_imperius') {
       if (dashboard.status.imperiusInsight) {
@@ -307,7 +329,7 @@ export async function PATCH(request: Request) {
 
       // Recalcular progresso
       const fasesCount = Object.keys(dashboard.fases).length;
-      const completas = Object.values(dashboard.fases).filter((f: any) => f.completo).length;
+      const completas = Object.values(dashboard.fases).filter((f) => f.completo).length;
       dashboard.status.progresso = `${Math.round((completas / fasesCount) * 100)}%`;
       dashboard.status.fase = completo ? fase + 1 : fase;
     }
@@ -315,8 +337,9 @@ export async function PATCH(request: Request) {
     fs.writeFileSync(dashboardPath, JSON.stringify(dashboard, null, 2));
 
     return NextResponse.json({ success: true, dashboard });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMsg = error instanceof Error ? error.message : 'Unknown error';
     console.error('Error updating oferta:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: errorMsg }, { status: 500 });
   }
 }

@@ -17,7 +17,7 @@ export async function GET(request: Request) {
     }
 
     const stat = fs.statSync(filePath);
-    
+
     // Se for diretório, listar arquivos
     if (stat.isDirectory()) {
       const items = fs.readdirSync(filePath).map(item => {
@@ -37,7 +37,7 @@ export async function GET(request: Request) {
     // Se for arquivo, ler conteúdo
     const content = fs.readFileSync(filePath, 'utf8');
     const extensao = path.extname(filePath).toLowerCase();
-    
+
     let tipo = 'outro';
     if (extensao === '.md') tipo = 'markdown';
     else if (extensao === '.json') tipo = 'json';
@@ -53,8 +53,9 @@ export async function GET(request: Request) {
       conteudo: content
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error reading file:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

@@ -124,7 +124,7 @@ export default function GovernanceCouncil() {
                                     }}>{d.status}</span>
                                 </div>
                                 <p style={{ margin: 0, fontSize: '12px', opacity: 0.7, lineHeight: 1.5, fontStyle: 'italic' }}>
-                                    "{d.rationale}"
+                                    &quot;{d.rationale}&quot;
                                 </p>
                             </div>
                         ))}

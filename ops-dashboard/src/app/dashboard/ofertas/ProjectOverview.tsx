@@ -131,7 +131,7 @@ export default function ProjectOverview({ oferta, onCopyHeadlines }: ProjectOver
                                 marginBottom: '12px'
                             }}>
                                 <div style={{ fontSize: '10px', opacity: 0.6, marginBottom: '4px' }}>INSIGHT CENTRAL</div>
-                                <div style={{ fontSize: '13px', fontStyle: 'italic' }}>"{mecanismo.insight}"</div>
+                                <div style={{ fontSize: '13px', fontStyle: 'italic' }}>&quot;{mecanismo.insight}&quot;</div>
                             </div>
                             <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                                 {mecanismo.passos?.map((passo, i) => (

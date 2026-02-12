@@ -20,6 +20,13 @@ export type Project = {
 export async function GET() {
     try {
         const supabase = await createClient();
+        if (!supabase) {
+            return NextResponse.json({
+                ok: true,
+                projects: getDefaultProjects(),
+                source: "fallback (no db)"
+            });
+        }
 
         const { data: projects, error } = await supabase
             .from("dashboard_projects")
@@ -44,12 +51,13 @@ export async function GET() {
             source: "supabase"
         });
 
-    } catch (error: any) {
+    } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : "Unknown error";
         return NextResponse.json({
             ok: true,
             projects: getDefaultProjects(),
             source: "fallback",
-            error: error.message
+            error: errorMessage
         });
     }
 }
@@ -65,6 +73,7 @@ export async function POST(request: NextRequest) {
         }
 
         const supabase = await createClient();
+        if (!supabase) throw new Error("Supabase client not initialized");
 
         const newProject = {
             name,
@@ -90,10 +99,11 @@ export async function POST(request: NextRequest) {
 
         return NextResponse.json({ ok: true, project: data });
 
-    } catch (error: any) {
+    } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : "Unknown error";
         return NextResponse.json({
             ok: false,
-            error: error.message
+            error: errorMessage
         }, { status: 500 });
     }
 }
@@ -109,6 +119,7 @@ export async function PUT(request: NextRequest) {
         }
 
         const supabase = await createClient();
+        if (!supabase) throw new Error("Supabase client not initialized");
 
         const { data, error } = await supabase
             .from("dashboard_projects")
@@ -121,10 +132,11 @@ export async function PUT(request: NextRequest) {
 
         return NextResponse.json({ ok: true, project: data });
 
-    } catch (error: any) {
+    } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : "Unknown error";
         return NextResponse.json({
             ok: false,
-            error: error.message
+            error: errorMessage
         }, { status: 500 });
     }
 }
@@ -140,6 +152,7 @@ export async function DELETE(request: NextRequest) {
         }
 
         const supabase = await createClient();
+        if (!supabase) throw new Error("Supabase client not initialized");
 
         const { error } = await supabase
             .from("dashboard_projects")
@@ -150,10 +163,11 @@ export async function DELETE(request: NextRequest) {
 
         return NextResponse.json({ ok: true, deleted: id });
 
-    } catch (error: any) {
+    } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : "Unknown error";
         return NextResponse.json({
             ok: false,
-            error: error.message
+            error: errorMessage
         }, { status: 500 });
     }
 }

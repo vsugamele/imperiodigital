@@ -12,6 +12,7 @@ export async function createBoard(formData: FormData): Promise<ActionResult> {
   if (!title) return { ok: false, error: "Título é obrigatório" };
 
   const supabase = await createClient();
+  if (!supabase) return { ok: false, error: "Serviço de autenticação indisponível" };
   const {
     data: { user },
     error: userErr,
@@ -57,6 +58,7 @@ export async function createCard(formData: FormData): Promise<ActionResult> {
   if (!title) return { ok: false, error: "Título é obrigatório" };
 
   const supabase = await createClient();
+  if (!supabase) return { ok: false, error: "Serviço de autenticação indisponível" };
   const {
     data: { user },
     error: userErr,
@@ -94,6 +96,7 @@ export async function moveCard(formData: FormData): Promise<ActionResult> {
   if (!cardId || !toColumnId) return { ok: false, error: "Dados inválidos" };
 
   const supabase = await createClient();
+  if (!supabase) return { ok: false, error: "Serviço de autenticação indisponível" };
   const {
     data: { user },
     error: userErr,
@@ -116,6 +119,7 @@ export async function deleteCard(formData: FormData): Promise<ActionResult> {
   if (!cardId) return { ok: false, error: "Card inválido" };
 
   const supabase = await createClient();
+  if (!supabase) return { ok: false, error: "Serviço de autenticação indisponível" };
   const {
     data: { user },
     error: userErr,

@@ -57,9 +57,9 @@ export async function POST(request: Request) {
             timestamp: new Date().toISOString()
         });
 
-    } catch (error: any) {
+    } catch (error: unknown) {
         // If OpenClaw is not running, return friendly error
-        const errorMessage = error.message || "Unknown error";
+        const errorMessage = error instanceof Error ? error.message : "Unknown error";
 
         if (errorMessage.includes("not recognized") || errorMessage.includes("not found")) {
             return NextResponse.json({

@@ -251,7 +251,7 @@ export default function OfertasHub() {
       const response = await fetch(`/api/ofertas/hackerverso?projeto=${encodeURIComponent(projeto)}`);
       if (!response.ok) return setHackerverso({ arquivos: [] });
       const data = await response.json();
-      const arquivos = (data.arquivos || []).map((a: any) => ({
+      const arquivos = (data.arquivos || []).map((a: { nome: string; caminho: string; tamanho: number; modificado: string }) => ({
         nome: a.nome,
         caminho: a.caminho,
         tipo: a.nome.endsWith('.json') ? 'json' : 'arquivo',
@@ -441,7 +441,7 @@ export default function OfertasHub() {
                 Nenhuma oferta criada ainda
               </div>
               <code style={{ color: '#F59E0B' }}>
-                node projects/ofertas/scripts/launcher.js --create "Nome"
+                node projects/ofertas/scripts/launcher.js --create &quot;Nome&quot;
               </code>
             </div>
           ) : (
@@ -775,7 +775,7 @@ export default function OfertasHub() {
                 </div>
 
                 <div style={{ fontSize: '15px', lineHeight: '1.6', color: 'rgba(255,255,255,0.9)', marginBottom: '20px' }}>
-                  " {selectedOferta.status.imperiusInsight.insight} "
+                  &quot; {selectedOferta.status.imperiusInsight.insight} &quot;
                 </div>
 
                 <div style={{

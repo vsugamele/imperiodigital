@@ -1,0 +1,205 @@
+﻿
+C:\Users\vsuga\clawd\ops-dashboard\src\app\api\intel\verticals\route.ts
+  57:63  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\vsuga\clawd\ops-dashboard\src\app\api\openclaw-chat\route.ts
+  36:13  error  'response' is never reassigned. Use 'const' instead  prefer-const
+
+C:\Users\vsuga\clawd\ops-dashboard\src\app\dashboard\AutoTraffic.tsx
+  55:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\vsuga\clawd\ops-dashboard\src\app\dashboard\AutoTraffic.tsx:55:5
+  53 |
+  54 |   useEffect(() => {
+> 55 |     loadTodayReport();
+     |     ^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  56 |   }, []);
+  57 |
+  58 |   const runOrchestrator = async () => {  react-hooks/set-state-in-effect
+
+C:\Users\vsuga\clawd\ops-dashboard\src\app\dashboard\CompanyMap.tsx
+  26:28  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\vsuga\clawd\ops-dashboard\src\app\dashboard\DashboardLayout.tsx
+  10:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\vsuga\clawd\ops-dashboard\src\app\dashboard\DashboardLayout.tsx:10:5
+   8 |
+   9 |   useEffect(() => {
+> 10 |     setMounted(true);
+     |     ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  11 |   }, []);
+  12 |
+  13 |   if (!mounted) {  react-hooks/set-state-in-effect
+
+C:\Users\vsuga\clawd\ops-dashboard\src\app\dashboard\GeminiTracker.tsx
+    8:52  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  134:52  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  204:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  211:56  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\vsuga\clawd\ops-dashboard\src\app\dashboard\GovernanceCouncil.tsx
+  127:37  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  127:51  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+C:\Users\vsuga\clawd\ops-dashboard\src\app\dashboard\LiveLogs.tsx
+  24:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\vsuga\clawd\ops-dashboard\src\app\dashboard\LiveLogs.tsx:24:9
+  22 |             { timestamp: new Date().toISOString(), level: "debug", source: "Alex", message: "Loading neural pathways..." }
+  23 |         ];
+> 24 |         setLogs(initialLogs);
+     |         ^^^^^^^ Avoid calling setState() directly within an effect
+  25 |
+  26 |         const interval = setInterval(() => {
+  27 |             if (paused) return;  react-hooks/set-state-in-effect
+
+C:\Users\vsuga\clawd\ops-dashboard\src\app\dashboard\MindProfile.tsx
+  14:40  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\vsuga\clawd\ops-dashboard\src\app\dashboard\NotificationCenter.tsx
+   84:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\vsuga\clawd\ops-dashboard\src\app\dashboard\NotificationCenter.tsx:84:13
+  82 |         const latestError = notifications.find(n => n.type === "error" && !n.read);
+  83 |         if (latestError && !showToast) {
+> 84 |             setShowToast(latestError);
+     |             ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  85 |             const timer = setTimeout(() => setShowToast(null), 5000);
+  86 |             return () => clearTimeout(timer);
+  87 |         }  react-hooks/set-state-in-effect
+   98:70  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-explicit-any
+  102:49  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-explicit-any
+
+C:\Users\vsuga\clawd\ops-dashboard\src\app\dashboard\ResearchHub.tsx
+   22:56  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-explicit-any
+   69:53  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\vsuga\clawd\ops-dashboard\src\app\dashboard\ResearchHub.tsx:69:53
+  67 |         insights: {
+  68 |           topPainPoints: [
+> 69 |             { keyword: 'ansioso', count: Math.floor(Math.random() * 20) + 5 },
+     |                                                     ^^^^^^^^^^^^^ Cannot call impure function
+  70 |             { keyword: 'sofrendo', count: Math.floor(Math.random() * 15) + 3 },
+  71 |             { keyword: 'triste', count: Math.floor(Math.random() * 12) + 2 }
+  72 |           ],                                                                react-hooks/purity
+   70:54  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\vsuga\clawd\ops-dashboard\src\app\dashboard\ResearchHub.tsx:70:54
+  68 |           topPainPoints: [
+  69 |             { keyword: 'ansioso', count: Math.floor(Math.random() * 20) + 5 },
+> 70 |             { keyword: 'sofrendo', count: Math.floor(Math.random() * 15) + 3 },
+     |                                                      ^^^^^^^^^^^^^ Cannot call impure function
+  71 |             { keyword: 'triste', count: Math.floor(Math.random() * 12) + 2 }
+  72 |           ],
+  73 |           topOpportunities: [                                                     react-hooks/purity
+   71:52  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\vsuga\clawd\ops-dashboard\src\app\dashboard\ResearchHub.tsx:71:52
+  69 |             { keyword: 'ansioso', count: Math.floor(Math.random() * 20) + 5 },
+  70 |             { keyword: 'sofrendo', count: Math.floor(Math.random() * 15) + 3 },
+> 71 |             { keyword: 'triste', count: Math.floor(Math.random() * 12) + 2 }
+     |                                                    ^^^^^^^^^^^^^ Cannot call impure function
+  72 |           ],
+  73 |           topOpportunities: [
+  74 |             { keyword: 'preciso', count: Math.floor(Math.random() * 25) + 10 },  react-hooks/purity
+   74:53  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\vsuga\clawd\ops-dashboard\src\app\dashboard\ResearchHub.tsx:74:53
+  72 |           ],
+  73 |           topOpportunities: [
+> 74 |             { keyword: 'preciso', count: Math.floor(Math.random() * 25) + 10 },
+     |                                                     ^^^^^^^^^^^^^ Cannot call impure function
+  75 |             { keyword: 'gostaria', count: Math.floor(Math.random() * 20) + 8 }
+  76 |           ],
+  77 |           contentSuggestions: [                                                                                                                 react-hooks/purity
+   75:54  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\vsuga\clawd\ops-dashboard\src\app\dashboard\ResearchHub.tsx:75:54
+  73 |           topOpportunities: [
+  74 |             { keyword: 'preciso', count: Math.floor(Math.random() * 25) + 10 },
+> 75 |             { keyword: 'gostaria', count: Math.floor(Math.random() * 20) + 8 }
+     |                                                      ^^^^^^^^^^^^^ Cannot call impure function
+  76 |           ],
+  77 |           contentSuggestions: [
+  78 |             'V├¡deo sobre como lidar com a ansiedade',                                                                       react-hooks/purity
+  352:67  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-explicit-any
+  394:69  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-explicit-any
+  708:59  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    react/no-unescaped-entities
+  708:73  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    react/no-unescaped-entities
+  712:56  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    react/no-unescaped-entities
+  712:69  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    react/no-unescaped-entities
+
+C:\Users\vsuga\clawd\ops-dashboard\src\app\dashboard\SkillsSummary.tsx
+  45:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\vsuga\clawd\ops-dashboard\src\app\dashboard\SkillsSummary.tsx:45:5
+  43 |
+  44 |     // Use a small timeout or state guard if needed, but here we just ensure we set loading
+> 45 |     setLiveLoading(true);
+     |     ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  46 |
+  47 |     fetch("/api/skills", { cache: "no-store" })
+  48 |       .then(res => res.ok ? res.json() : { ok: false })  react-hooks/set-state-in-effect
+
+C:\Users\vsuga\clawd\ops-dashboard\src\hooks\index.ts
+  185:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\vsuga\clawd\ops-dashboard\src\hooks\index.ts:185:9
+  183 |         const media = window.matchMedia(query);
+  184 |         // Initial check
+> 185 |         setMatches(media.matches);
+      |         ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  186 |
+  187 |         const listener = (e: MediaQueryListEvent) => setMatches(e.matches);
+  188 |         media.addEventListener("change", listener);  react-hooks/set-state-in-effect
+
+Ô£û 30 problems (30 errors, 0 warnings)
+  1 error and 0 warnings potentially fixable with the `--fix` option.
+

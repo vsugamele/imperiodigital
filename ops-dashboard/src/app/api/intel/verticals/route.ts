@@ -54,7 +54,7 @@ export async function GET() {
     const ofertasStats = getOfertasStats();
 
     // Atualizar KPIs da vertical de lançamentos
-    const verticaisEnriquecidas = verticalsData.verticais.map((v: any) => {
+    const verticaisEnriquecidas = (verticalsData.verticais as any[]).map((v) => {
         if (v.id === 'lancamentos') {
             return {
                 ...v,
@@ -76,9 +76,9 @@ export async function GET() {
         learning_engine: verticalsData.learning_engine,
         resumo: {
             total_verticais: verticalsData.verticais.length,
-            em_producao: verticalsData.verticais.filter((v: any) => v.status === 'producao').length,
-            ativas: verticalsData.verticais.filter((v: any) => v.status === 'ativo').length,
-            planejamento: verticalsData.verticais.filter((v: any) => v.status === 'planejamento').length
+            em_producao: (verticalsData.verticais as { status: string }[]).filter((v) => v.status === 'producao').length,
+            ativas: (verticalsData.verticais as { status: string }[]).filter((v) => v.status === 'ativo').length,
+            planejamento: (verticalsData.verticais as { status: string }[]).filter((v) => v.status === 'planejamento').length
         },
         ultima_atualizacao: verticalsData.ultima_atualizacao
     });
@@ -95,7 +95,7 @@ export async function POST(request: Request) {
 
         // Atualizar vertical específica
         if (updates.verticalId && updates.dados) {
-            const idx = verticalsData.verticais.findIndex((v: any) => v.id === updates.verticalId);
+            const idx = (verticalsData.verticais as { id: string }[]).findIndex((v) => v.id === updates.verticalId);
             if (idx !== -1) {
                 verticalsData.verticais[idx] = { ...verticalsData.verticais[idx], ...updates.dados };
                 verticalsData.ultima_atualizacao = new Date().toISOString();
@@ -107,8 +107,9 @@ export async function POST(request: Request) {
         }
 
         return NextResponse.json({ error: 'Dados inválidos' }, { status: 400 });
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('Error updating vertical:', error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        return NextResponse.json({ error: errorMessage }, { status: 500 });
     }
 }

@@ -7,7 +7,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
-import { Calendar, ChevronLeft, ChevronRight, Plus, Filter, Download, RefreshCw } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus, Filter, Download, RefreshCw } from 'lucide-react';
 
 // 📊 DADOS COLETADOS
 const METRICS_DATA = [
@@ -173,7 +173,7 @@ export default function IGamingReport() {
                     outerRadius={100}
                     paddingAngle={5}
                     dataKey="value"
-                    label={({ name, percent }: any) => `${name}: ${((percent || 0) * 100).toFixed(0)}%`}
+                    label={({ name, percent }: { name?: string; percent?: number }) => `${name}: ${((percent || 0) * 100).toFixed(0)}%`}
                   >
                     {pieData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />

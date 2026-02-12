@@ -64,7 +64,8 @@ export async function GET() {
             scripts,
             total: scripts.length
         });
-    } catch (e: any) {
-        return NextResponse.json({ error: e.message }, { status: 500 });
+    } catch (e: unknown) {
+        const errorMessage = e instanceof Error ? e.message : "Unknown error";
+        return NextResponse.json({ error: errorMessage }, { status: 500 });
     }
 }

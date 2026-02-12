@@ -66,10 +66,11 @@ export async function GET(request: NextRequest) {
             contents
         });
 
-    } catch (err: any) {
+    } catch (err: unknown) {
+        const errorMsg = err instanceof Error ? err.message : "Unknown error";
         return NextResponse.json({
             ok: false,
-            error: err.message
+            error: errorMsg
         }, { status: 500 });
     }
 }

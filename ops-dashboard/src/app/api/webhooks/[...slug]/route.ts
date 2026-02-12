@@ -10,7 +10,7 @@ function ensureDir(dir: string) {
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 }
 
-function logWebhook(projeto: string, acao: string, payload: any, result: any) {
+function logWebhook(projeto: string, acao: string, payload: unknown, result: unknown) {
     ensureDir(LOGS_DIR);
     const entry = {
         timestamp: new Date().toISOString(),
@@ -22,7 +22,7 @@ function logWebhook(projeto: string, acao: string, payload: any, result: any) {
 
     // Per-project log file
     const logFile = path.join(LOGS_DIR, `${projeto}.json`);
-    let logs: any[] = [];
+    let logs: unknown[] = [];
     if (fs.existsSync(logFile)) {
         try { logs = JSON.parse(fs.readFileSync(logFile, 'utf8')); } catch { }
     }
@@ -33,10 +33,7 @@ function logWebhook(projeto: string, acao: string, payload: any, result: any) {
 
 // ==================== HANDLER REGISTRY ====================
 
-interface WebhookHandler {
-    description: string;
-    handler: (payload: any) => Promise<any>;
-}
+import { WebhookHandler } from './types';
 
 type HandlersMap = Record<string, Record<string, WebhookHandler>>;
 
@@ -88,14 +85,15 @@ export async function POST(
 
     try {
         console.log(`📡 Executing handler for: ${projeto}/${acao}`);
-        const payload = await req.json().catch(() => ({}));
-        const result = await handlerDef.handler(payload);
+        const payload = await req.json().catch(() => ({})) as Record<string, unknown>;
+        const result = await handlerDef.handler(payload) as Record<string, unknown>;
         logWebhook(projeto, acao, payload, { success: true, ...result });
         return NextResponse.json({ success: true, projeto, acao, ...result });
-    } catch (error: any) {
-        logWebhook(projeto, acao, {}, { success: false, error: error.message });
+    } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        logWebhook(projeto, acao, {}, { success: false, error: errorMessage });
         return NextResponse.json(
-            { success: false, error: error.message },
+            { success: false, error: errorMessage },
             { status: 500 }
         );
     }
@@ -111,7 +109,7 @@ export async function GET() {
     }
 
     // Also return recent logs
-    let recentLogs: any[] = [];
+    let recentLogs: unknown[] = [];
     if (fs.existsSync(LOGS_DIR)) {
         const files = fs.readdirSync(LOGS_DIR).filter(f => f.endsWith('.json'));
         for (const file of files) {
@@ -120,7 +118,11 @@ export async function GET() {
                 recentLogs.push(...logs.slice(-10));
             } catch { }
         }
-        recentLogs.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+        recentLogs.sort((a, b) => {
+            const timeA = (a as { timestamp: string }).timestamp;
+            const timeB = (b as { timestamp: string }).timestamp;
+            return new Date(timeB).getTime() - new Date(timeA).getTime();
+        });
         recentLogs = recentLogs.slice(0, 20);
     }
 

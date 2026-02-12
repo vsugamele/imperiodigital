@@ -14,7 +14,7 @@ function normalize(s: string) {
 }
 
 function pickCandidateDirs(projeto: string) {
-  if (!fs.existsSync(COPY_OUTPUT_DIR)) return [] as any[];
+  if (!fs.existsSync(COPY_OUTPUT_DIR)) return [];
   const target = normalize(projeto);
   const tokens = target.split(' ').filter(t => t.length >= 4);
 
@@ -72,7 +72,8 @@ export async function GET(request: Request) {
       arquivos: files,
       candidatos: candidates.slice(0, 5).map(c => c.name)
     });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

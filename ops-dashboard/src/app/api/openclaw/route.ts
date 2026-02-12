@@ -17,10 +17,11 @@ async function checkGatewayHealth(): Promise<{ healthy: boolean; version?: strin
             healthy: true,
             version: versionMatch ? versionMatch[1] : "unknown"
         };
-    } catch (e: any) {
+    } catch (e: unknown) {
+        const errorMsg = e instanceof Error ? e.message : "Gateway unreachable";
         return {
             healthy: false,
-            error: e.message || "Gateway unreachable"
+            error: errorMsg
         };
     }
 }

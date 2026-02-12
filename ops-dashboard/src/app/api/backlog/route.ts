@@ -18,9 +18,10 @@ export async function GET() {
         const data = JSON.parse(raw);
 
         return NextResponse.json(data);
-    } catch (e: any) {
+    } catch (e: unknown) {
+        const errorMessage = e instanceof Error ? e.message : "Unknown error";
         return NextResponse.json(
-            { error: e.message },
+            { error: errorMessage },
             { status: 500 }
         );
     }

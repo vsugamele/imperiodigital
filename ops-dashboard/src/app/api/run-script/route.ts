@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
     const child = exec(command, { cwd: CLAWD_DIR }, (error, stdout, stderr) => {
       const endTime = Date.now();
       const duration = ((endTime - runningExecutions[executionId].startTime) / 1000).toFixed(2);
-      
+
       // Append output to log file
       const logContent = [
         ``,
@@ -84,9 +84,9 @@ export async function POST(request: NextRequest) {
         `=== STDERR ===`,
         stderr || ``
       ].join(`\n`);
-      
+
       fs.appendFileSync(logPath, logContent);
-      
+
       // Mark as completed (keep for 1 hour then cleanup)
       setTimeout(() => {
         delete runningExecutions[executionId];
@@ -120,8 +120,9 @@ export async function POST(request: NextRequest) {
       status: `/api/run-script/status/${executionId}`
     });
 
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message }, { status: 500 });
+  } catch (e: unknown) {
+    const errorMessage = e instanceof Error ? e.message : "Unknown error";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
 
@@ -135,7 +136,7 @@ export async function GET(request: NextRequest) {
     // Check single execution status
     const execution = runningExecutions[executionId];
     const logPath = path.join(LOGS_DIR, `${executionId}.log`);
-    
+
     if (execution) {
       const elapsed = ((Date.now() - execution.startTime) / 1000).toFixed(1);
       return NextResponse.json({
@@ -150,7 +151,7 @@ export async function GET(request: NextRequest) {
       const stats = fs.statSync(logPath);
       const content = fs.readFileSync(logPath, "utf8");
       const completed = content.includes("=== Script Finished ===");
-      
+
       return NextResponse.json({
         status: completed ? "completed" : "unknown",
         executionId,
@@ -158,7 +159,7 @@ export async function GET(request: NextRequest) {
         completedAt: stats.mtime.toISOString()
       });
     }
-    
+
     return NextResponse.json({ status: "not_found", executionId });
   }
 
@@ -180,11 +181,11 @@ export async function GET(request: NextRequest) {
   if (action === "log" && executionId) {
     // Get log content
     const logPath = path.join(LOGS_DIR, `${executionId}.log`);
-    
+
     if (fs.existsSync(logPath)) {
       const content = fs.readFileSync(logPath, "utf8");
       const lines = content.split("\n").length;
-      
+
       return NextResponse.json({
         success: true,
         executionId,
@@ -193,7 +194,7 @@ export async function GET(request: NextRequest) {
         truncated: lines > 500 ? content.split("\n").slice(-500).join("\n") : undefined
       });
     }
-    
+
     return NextResponse.json({ error: "Log not found" }, { status: 404 });
   }
 

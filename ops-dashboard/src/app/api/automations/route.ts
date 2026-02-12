@@ -20,7 +20,7 @@ type CronJob = {
   };
 };
 
-function safeReadJson(p: string): any {
+function safeReadJson(p: string): unknown {
   try {
     const raw = fs.readFileSync(p, "utf8");
     return JSON.parse(raw);
@@ -30,7 +30,7 @@ function safeReadJson(p: string): any {
 }
 
 export async function GET() {
-  const store = safeReadJson(JOBS_PATH);
+  const store = safeReadJson(JOBS_PATH) as { jobs?: CronJob[] } | null;
   const jobs: CronJob[] = Array.isArray(store?.jobs) ? store.jobs : [];
 
   const normalized = jobs

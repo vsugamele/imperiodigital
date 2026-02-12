@@ -7,7 +7,8 @@ export default function DashboardLayout({ children, currentTab }: { children: Re
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
   }, []);
 
   if (!mounted) {
@@ -76,7 +77,7 @@ export default function DashboardLayout({ children, currentTab }: { children: Re
           <div style={{ fontSize: '11px', opacity: 0.6, marginBottom: '8px' }}>STATUS ALEX</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#4edc88', boxShadow: '0 0 10px #4edc88' }}></span>
-            <span style={{ fontSize: '13px', fontWeight: 600, color: '#4edc88' }}>Online & Ready</span>
+            <span style={{ fontSize: '13px', fontWeight: 600, color: '#4edc88' }}>Online &amp; Ready</span>
           </div>
         </div>
       </aside>
